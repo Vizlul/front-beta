@@ -1,0 +1,24 @@
+.mainSlider {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.mainSliderLeft {
+  grid-column: span 6 / span 6;
+}
+
+.mainSliderRight {
+  grid-column: span 6 / span 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.mainSliderRightBox{
+  padding: 24px;
+  background-color: #fff;
+  width: 100%;
+}

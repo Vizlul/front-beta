@@ -1,0 +1,8 @@
+.button{
+  border-radius: 0 !important;
+  font-family: FarhangFanum, sans-serif !important;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+

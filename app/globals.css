@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "FarhangFanum";
+  src: local("FarhangFanum"), url(/fonts/farhangfanum-regular.woff2) format("truetype");
+}
+
+@font-face {
+  font-family: "FarhangFanumBold";
+  src: local("FarhangFanumBold"), url(/fonts/farhangfanum-bold.woff2) format("truetype");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: FarhangFanum, sans-serif !important;
+  box-sizing: border-box !important;
+  background-color: #f0f2f5;
+}
+
+.mainLayout{
+  height: calc(100vh - 170px);
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

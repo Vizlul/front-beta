@@ -1,0 +1,4 @@
+.mainLayout{
+  width: calc(100% - 600px);
+  margin: 0 auto;
+}
