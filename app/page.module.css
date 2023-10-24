@@ -1,4 +1,13 @@
-.mainLayout{
-  width: calc(100% - 600px);
-  margin: 0 auto;
+@media (min-width: 1600px) {
+  .mainLayout {
+    width: calc(100% - 600px) !important;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1366px) {
+  .mainLayout {
+    width: calc(100% - 260px) !important;
+    margin: 0 auto;
+  }
 }
