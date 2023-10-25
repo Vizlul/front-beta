@@ -4,18 +4,21 @@ import styles from "./StartingSlider.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useEffect } from "react";
-import { fetchPredictData, setPredictData } from "@/store/features/predictSlice";
+import { setPredictData } from "@/store/features/predictSlice";
+import CallApi from "@/utils/CallApi";
+
+interface PredictObjectInterface {
+  predictData: object;
+  chance: number;
+  loading: boolean;
+  error: any;
+}
 
 export default function StartingSlider() {
   const dispatch = useDispatch();
-  const predict = useSelector((state: { predict }) => state.predict);
   const handleClick = () => {
     dispatch(setToMain());
   };
-
-  useEffect(() => {
-    dispatch(fetchPredictData())
-  }, []);
 
   return (
     <div className={styles.startingSlider}>

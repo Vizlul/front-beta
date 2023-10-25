@@ -2,23 +2,155 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+  /* max-height: 460px; */
+  /* padding: 60px 0; */
 }
 
 .mainSliderLeft {
   grid-column: span 6 / span 6;
+  width: 100%;
 }
 
 .mainSliderRight {
   grid-column: span 6 / span 6;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 16px;
 }
 
-.mainSliderRightBox{
-  padding: 24px;
-  background-color: #fff;
+.mainSliderRightBox {
   width: 100%;
+}
+
+.mainSliderRightBox > div {
+  padding: 40px 24px;
+}
+
+.mainSliderRightBox:nth-child(2) > div {
+  padding: 0;
+}
+
+.mainSliderRightBox:last-of-type > div {
+  padding: 0;
+}
+
+.potansielChanceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.potansielChanceContainer .potansielChanceBox {
+  width: 100%;
+  background-color: #fff;
+  padding: 25px;
+}
+
+.questionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 55px 24px;
+}
+
+.questionBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 70%;
+  border-left: 1px solid #999999;
+}
+
+.questionBoxRight {
+  width: 90%;
+}
+
+.questionBoxRight p {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.questionBoxLeft {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #00554e;
+}
+
+.questionBoxButtonGroups {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.questionBoxButtonGroups button:first-of-type {
+  width: 30%;
+}
+
+.questionBoxButtonGroups button:last-of-type {
+  width: 100%;
+  max-width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.buttonChoices button {
+  width: 100%;
+  border: solid 1px #d9d9d9;
+  height: 40px !important;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 16px;
+  background-color: #fff;
+}
+
+.questionBoxButtonGroups button {
+  background-color: #fff;
+  border: solid 1px #d9d9d9;
+  height: 50px !important;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.questionBoxButtonGroups button:hover {
+  cursor: pointer;
+}
+
+.questionsAnswers {
+  display: flex;
+  align-items: center;
+}
+
+.questionsAnswers .sampleButton {
+  border-radius: 0;
+  font-family: FarhangFanum, sans-serif !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeButton {
+  background-color: #00554e !important;
+  color: #fff;
+  transition: all 0.3s ease;
 }

@@ -1,5 +1,6 @@
 // userSlice.js
 import CallApi from "@/utils/CallApi";
+import { questions } from "@/utils/QuestionJson";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { stat } from "fs";
 
@@ -45,86 +46,84 @@ interface PredictDataInterface {
   foreign_living_child_sibling_count: number;
 }
 
-interface PredictObjectInterface {
+export interface PredictInterface {
   predictData: object;
+  nextPredict: string;
   chance: number;
+  countAnswer: number;
+  questionIndex: number;
+  chartData: any;
+  xaiChartData: object;
+  chartDataKeys: any;
+  chartDataValues: any;
+  statusDataValues: boolean;
+  lastData: any;
   loading: boolean;
   error: any;
 }
 
 const initialState = {
-  predictData: {
-    sex: "FEMALE",
-    country_where_applying_country: "TURKEY",
-    country_where_applying_status: "OTHER",
-    previous_marriage_indicator: false,
-    purpose_of_visit: "tourism",
-    funds: 8000,
-    contact_relation_to_me: "hotel",
-    contact_relation_to_me2: "ukn",
-    education_field_of_study: "unedu",
-    occupation_title1: "OTHER",
-    occupation_title2: "OTHER",
-    occupation_title3: "OTHER",
-    no_authorized_stay: false,
-    refused_entry_or_deport: false,
-    previous_apply: false,
-    date_of_birth: 20,
-    country_where_applying_period: 30,
-    marriage_period: 0,
-    previous_marriage_period: 0,
-    passport_expiry_date_remaining: 3,
-    how_long_stay_period: 30,
-    education_period: 0,
-    occupation_period: 0,
-    occupation_period2: 0,
-    occupation_period3: 0,
-    applicant_marital_status: "single",
-    previous_country_of_residence_count: 0,
-    sibling_foreigner_count: 0,
-    child_mother_father_spouse_foreigner_count: 0,
-    child_accompany: 0,
-    parent_accompany: 0,
-    spouse_accompany: 0,
-    sibling_accompany: 0,
-    child_average_age: 0,
-    child_count: 0,
-    sibling_average_age: 0,
-    sibling_count: 0,
-    long_distance_child_sibling_count: 0,
-    foreign_living_child_sibling_count: 0,
-  },
+  predictData: {},
+  nextPredict: "",
   chance: 0,
-  loading: true,
+  potential: 0,
+  countAnswer: 1,
+  questionIndex: 0,
+  chartData: [],
+  xaiChartData: {
+    sample_one: "",
+    sample_two: "",
+    sample_three: "",
+    sample_four: "",
+    sample_five: "",
+    sample_six: "",
+  },
+  chartDataKeys: [],
+  chartDataValues: [-1, -1, -1, -1],
+  statusDataValues: false,
+  lastData: [],
+  loading: false,
   error: null,
 };
-
-// Create an async thunk action for making the API call
-export const fetchPredictData = createAsyncThunk(
-  "predict/fetchPredictData",
-  async (requestData, { dispatch, getState }) => {
-    try {
-      const response = await CallApi.post("/predict", initialState.predictData);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
 
 const predictSlice = createSlice({
   name: "predict",
   initialState,
   reducers: {
-    setPredictData: (state) => {
-      CallApi.post("/predict", state.predictData).then(async (resp) => {
-        console.log(resp.data.result)
-        state.chance = resp.data.result
-      }).catch((error) => {
-        console.log(error)
-      });
-      state.loading = false;
-      state.error = null;
+    addCounterQuestionIndex: (state, { payload }) => {
+      if (payload) {
+        console.log(payload)
+        console.log(questions.findIndex((item) => item.question_value === state.nextPredict))
+        state.questionIndex = questions.findIndex((item) => item.question_value === state.nextPredict)
+      } else {
+        state.questionIndex = state.questionIndex + 1;
+      }
+    },
+    addCountAnswer: (state) => {
+      state.countAnswer = state.countAnswer + 1
+    },
+    setNextPredictData: (state, { payload }) => {
+      console.log(payload);
+      state.nextPredict = payload.nextVariable;
+    },
+    setChanceData: (state, { payload }) => {
+      state.chance = Math.round(Number(payload.chance) * 100);
+    },
+    setChartData: (state, { payload }) => {
+      console.log(payload.data);
+      state.chartData = payload.data;
+      state.xaiChartData.sample_one = payload.data;
+      state.xaiChartData.sample_two = payload.data;
+      state.xaiChartData.sample_three = payload.data;
+      state.xaiChartData.sample_four = payload.data;
+      state.xaiChartData.sample_five = payload.data;
+      state.xaiChartData.sample_six = payload.data;
+    },
+    setGroupedXai: (state, { payload }) => {
+      console.log(payload);
+      state.chartDataKeys = Object.keys(payload.data.aggregated_shap_values);
+      state.chartDataValues = Object.values(payload.data.aggregated_shap_values);
+      state.statusDataValues = !state.statusDataValues;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -134,13 +133,9 @@ const predictSlice = createSlice({
       state.error = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchPredictData.fulfilled, (state, action) => {
-      state.chance = action.payload.result
-    })
-  }
 });
 
-export const { setPredictData, setLoading, setError } = predictSlice.actions;
+export const { setNextPredictData, setGroupedXai, setChartData, setChanceData, addCountAnswer, addCounterQuestionIndex, setLoading, setError } =
+  predictSlice.actions;
 
 export default predictSlice.reducer;
