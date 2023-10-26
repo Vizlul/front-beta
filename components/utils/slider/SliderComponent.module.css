@@ -7,13 +7,13 @@
   background-color: #00554e;
 }
 
-.borderBoxCompeleted span {
+.borderBoxCompeleted svg {
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
 }
 
 .carousel {

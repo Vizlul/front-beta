@@ -91,11 +91,15 @@ const predictSlice = createSlice({
   initialState,
   reducers: {
     addCounterQuestionIndex: (state, { payload }) => {
+      console.log(payload)
       if (payload) {
-        console.log(payload)
-        console.log(questions.findIndex((item) => item.question_value === state.nextPredict))
+        // console.log(payload)
+        // console.log(state.nextPredict)
+        // console.log(questions.findIndex((item) => item.question_value === state.nextPredict))
         state.questionIndex = questions.findIndex((item) => item.question_value === state.nextPredict)
+        // console.log(state.questionIndex)
       } else {
+        console.log("eh vared shodam")
         state.questionIndex = state.questionIndex + 1;
       }
     },
