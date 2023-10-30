@@ -1,4 +1,4 @@
-export const questions = [
+export const questions : any = [
   {
     question: "جنسیت شما چیست؟ ",
     answer: { value_fa: ["مرد", "زن"], value_en: ["Male", "Female"] },

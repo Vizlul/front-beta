@@ -6,6 +6,7 @@
   align-items: center;
   height: 100%;
   gap: 40px;
+  height: 100%;
   /* max-height: 460px; */
   /* padding: 60px 0; */
 }
@@ -13,6 +14,10 @@
 .mainSliderLeft {
   grid-column: span 6 / span 6;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .mainSliderRight {
@@ -23,10 +28,20 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
+  height: 100%;
+}
+
+.mainSliderRightBox:first-of-type{
+  height: fit-content;
 }
 
 .mainSliderRightBox {
   width: 100%;
+  height: 100%;
+}
+
+.mainSliderRightBox:last-of-type{
+  height: fit-content;
 }
 
 .mainSliderRightBox > div {
@@ -35,6 +50,8 @@
 
 .mainSliderRightBox:nth-child(2) > div {
   padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .mainSliderRightBox:last-of-type > div {
@@ -47,27 +64,40 @@
   justify-content: space-between;
   gap: 20px;
   width: 100%;
+  height: fit-content;
 }
 
 .potansielChanceContainer .potansielChanceBox {
   width: 100%;
   background-color: #fff;
   padding: 25px;
+  height: 100%;
+
 }
 
 .questionContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 55px 24px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  padding: 55px 20px;
+  height: 100%;
 }
 
 .questionBox {
+  grid-column: 7 span / 7 span;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  width: 70%;
   border-left: 1px solid #999999;
+}
+
+.questionBoxButtonGroups {
+  grid-column: 5 span / 5 span;
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 
 .questionBoxRight {
@@ -89,17 +119,9 @@
   color: #00554e;
 }
 
-.questionBoxButtonGroups {
-  width: 100%;
-  max-width: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
 .questionBoxButtonGroups button:first-of-type {
-  width: 30%;
+  width: 50px;
+  height: 50px;
 }
 
 .questionBoxButtonGroups button:last-of-type {
@@ -153,4 +175,65 @@
   background-color: #00554e !important;
   color: #fff;
   transition: all 0.3s ease;
+}
+
+.footerChart{
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.footerChart > div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.povNowAnswer {
+  width: 30px;
+  height: 10px;
+  background-color: rgba(0, 85, 78, 0.8);
+}
+
+.povOldAnswer {
+  width: 30px;
+  height: 10px;
+  background-color: rgba(0, 85, 78, 0.2);
+}
+
+.footerChart > div p{
+  font-size: 14px;
+}
+
+.potansielChanceBoxHeader{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.potansielChanceBoxHeader p{
+  margin: 0;
+}
+
+@media (max-width: 1366px) {
+  .questionContainer {
+    padding: 55px 10px;
+  }
+
+  .questionBox {
+    grid-column: span 8 / span 8;
+  }
+
+  .questionBoxButtonGroups {
+    grid-column: span 4 / span 4;
+    padding: 0 10px;
+  }
+
+  .questionBoxButtonGroups button:first-of-type {
+    width: 30px;
+  }
+
+  .questionBoxButtonGroups button:last-of-type {
+    width: 130px;
+  }
 }

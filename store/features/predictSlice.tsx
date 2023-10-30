@@ -49,8 +49,12 @@ interface PredictDataInterface {
 export interface PredictInterface {
   predictData: object;
   nextPredict: string;
+  nextPredictBackup: string,
   chance: number;
+  potential: number;
   countAnswer: number;
+  questionNumber: number;
+  countSlider: number;
   questionIndex: number;
   chartData: any;
   xaiChartData: object;
@@ -65,10 +69,13 @@ export interface PredictInterface {
 const initialState = {
   predictData: {},
   nextPredict: "",
+  nextPredictBackup: "",
   chance: 0,
   potential: 0,
   countAnswer: 1,
+  questionNumber: 1,
   questionIndex: 0,
+  countSlider: 1,
   chartData: [],
   xaiChartData: {
     sample_one: "",
@@ -91,30 +98,62 @@ const predictSlice = createSlice({
   initialState,
   reducers: {
     addCounterQuestionIndex: (state, { payload }) => {
-      console.log(payload)
       if (payload) {
         // console.log(payload)
         // console.log(state.nextPredict)
         // console.log(questions.findIndex((item) => item.question_value === state.nextPredict))
-        state.questionIndex = questions.findIndex((item) => item.question_value === state.nextPredict)
+        state.questionIndex = questions.findIndex((item) => item.question_value === state.nextPredict);
         // console.log(state.questionIndex)
       } else {
-        console.log("eh vared shodam")
+        
         state.questionIndex = state.questionIndex + 1;
       }
     },
+    setCountAnswer: (state) => {
+      state.countAnswer = state.questionNumber
+    },
     addCountAnswer: (state) => {
-      state.countAnswer = state.countAnswer + 1
+      if (state.countAnswer > 1) {
+        state.countSlider = state.countAnswer;
+      }
+      state.countAnswer = state.countAnswer + 1;
+    },
+    minusCountAnswer: (state) => {
+      state.countAnswer = state.countAnswer - 1;
+    },
+    setCountQuestion: (state) => {
+      state.questionNumber = state.countAnswer;
+    },
+    minusCountQuestion: (state) => {
+      state.questionNumber = state.questionNumber - 1;
+    },
+    addCountQuestion: (state) => {
+      state.questionNumber = state.questionNumber + 1;
     },
     setNextPredictData: (state, { payload }) => {
-      console.log(payload);
       state.nextPredict = payload.nextVariable;
     },
+    setNextPredictBackup: (state, { payload }) => {
+      state.nextPredictBackup = payload.nextVariable;
+    },
     setChanceData: (state, { payload }) => {
-      state.chance = Math.round(Number(payload.chance) * 100);
+      
+      if (payload.chance !== Math.floor(payload.chance)) {
+        state.chance = Math.round(Number(payload.chance) * 100);
+      } else {
+        state.chance = payload.chance;
+      }
+    },
+    setPotentialData: (state, { payload }) => {
+      console.log(payload)
+      if (payload !== Math.floor(payload)) {
+        state.potential = Math.round(Number(payload) * 100);
+      } else {
+        state.potential = payload
+      }
     },
     setChartData: (state, { payload }) => {
-      console.log(payload.data);
+      
       state.chartData = payload.data;
       state.xaiChartData.sample_one = payload.data;
       state.xaiChartData.sample_two = payload.data;
@@ -124,10 +163,13 @@ const predictSlice = createSlice({
       state.xaiChartData.sample_six = payload.data;
     },
     setGroupedXai: (state, { payload }) => {
-      console.log(payload);
+      
       state.chartDataKeys = Object.keys(payload.data.aggregated_shap_values);
       state.chartDataValues = Object.values(payload.data.aggregated_shap_values);
       state.statusDataValues = !state.statusDataValues;
+    },
+    setSubmitLastData: (state, { payload }) => {
+      
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -139,7 +181,23 @@ const predictSlice = createSlice({
   },
 });
 
-export const { setNextPredictData, setGroupedXai, setChartData, setChanceData, addCountAnswer, addCounterQuestionIndex, setLoading, setError } =
-  predictSlice.actions;
+export const {
+  setNextPredictData,
+  setNextPredictBackup,
+  setGroupedXai,
+  setChartData,
+  setChanceData,
+  addCountAnswer,
+  minusCountAnswer,
+  setCountQuestion,
+  setCountAnswer,
+  minusCountQuestion,
+  addCountQuestion,
+  addCounterQuestionIndex,
+  setSubmitLastData,
+  setPotentialData,
+  setLoading,
+  setError,
+} = predictSlice.actions;
 
 export default predictSlice.reducer;
