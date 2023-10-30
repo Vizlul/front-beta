@@ -27,9 +27,3 @@ export default function Home() {
     </div>
   );
 }
-
-export async function getStaticProps({ params = {} } = {}) {
-  return {
-    props: {}
-  }
-}
