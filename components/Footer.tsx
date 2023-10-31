@@ -1,8 +1,8 @@
-import styles from "./Footer.module.css"
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className={styles.footer}>
       <div className={styles.footerContainer}>
         <div className={styles.footerContent}>
           <img src="/visaland.svg" />
@@ -14,10 +14,10 @@ export default function Footer() {
 
         <div className={styles.footerSocial}>
           <a href="">
-            <img src="/Instagram.svg" />
+            <img src="/Linkedin.svg" />
           </a>
           <a href="">
-            <img src="/Linkedin.svg" />
+            <img src="/Instagram.svg" />
           </a>
         </div>
       </div>

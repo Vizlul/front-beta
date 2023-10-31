@@ -57,6 +57,39 @@ body {
   justify-content: flex-start;
 }
 
-.ant-progress-text{
+.ant-progress-text {
   display: none !important;
+}
+
+body
+  > main
+  > div
+  > div
+  > div.MainSlider_mainSliderRight__9qLKh
+  > div:nth-child(2)
+  > div
+  > div
+  > div.MainSlider_questionBox__SdCjy
+  > div.MainSlider_questionBoxRight__IesWe
+  > div
+  > div
+  > div.ant-input-number-handler-wrap {
+  opacity: 1;
+}
+
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
+  border-color: #d9d9d9;
+}
+
+@media (max-width: 768px) {
+  .mainLayout{
+    width: 96%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  body > main > div{
+    width: 100%;
+  }
+  
 }

@@ -38,12 +38,13 @@ export default function MainSlider() {
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState<any>("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
+  const [mobileSize, setMobileSize] = useState<boolean>(true);
 
   const handleChange = (value: any) => {
     if (editMode) {
       setEditChanges(true);
     }
-    setTestValue(value);
+    setTestValue(value.value);
     const lastKey = questions[predict.questionIndex].question_value;
     setEditkeyChanges(lastKey);
 
@@ -431,6 +432,12 @@ export default function MainSlider() {
     }
   };
 
+  // useEffect(() => {
+  //   if (window.innerWidth < 768) {
+  //     setMobileSize(true);
+  //   }
+  // }, []);
+
   useEffect(() => {
     if (predict.questionIndex > 0) {
       dispatch(addCounterQuestionIndex({ change: true }));
@@ -450,215 +457,457 @@ export default function MainSlider() {
 
   return (
     <div className={styles.mainSlider}>
-      <div className={styles.mainSliderRight}>
-        <div className={styles.mainSliderRightBox}>
-          <div style={{ background: "#fff", width: "100%", position: "relative" }}>
-            <SliderComponent swiper={swiper} setSwiper={setSwiper} />
+      {mobileSize ? (
+        <>
+          <div
+            className={styles.mainSliderLeft}
+            style={{
+              background: "#fff",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              padding: "10px",
+            }}
+          >
+            <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
+            <div className={styles.infoIconFirst}>
+              <Modal />
+            </div>
+            <div className={styles.infoIconSecond}>
+              <Modal />
+            </div>
+            <div className={styles.infoIconThird}>
+              <Modal />
+            </div>
+            <div className={styles.infoIconFour}>
+              <Modal />
+            </div>
+            <div className={styles.footerChart}>
+              <div>
+                <div className={styles.povNowAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
+              </div>
+              <div>
+                <div className={styles.povOldAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله قبل</p>
+              </div>
+            </div>
           </div>
-        </div>
+          <div className={styles.mainSliderRight}>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", position: "relative" }}>
+                <SliderComponent swiper={swiper} setSwiper={setSwiper} />
+              </div>
+            </div>
 
-        <div className={styles.mainSliderRightBox}>
-          <div style={{ background: "#fff", width: "100%", height: "100%" }}>
-            <div className={styles.questionContainer}>
-              <div className={styles.questionBox}>
-                <div className={styles.questionBoxRight}>
-                  <span>سوال فعلی</span>
-                  <p>
-                    {predict.questionIndex === 0
-                      ? questions[predict.questionIndex].question
-                      : questions.find((item : any) => item.question_value === predict.nextPredict)?.question}
-                  </p>
-                  {questions[predict.questionIndex].type === "number" ? (
-                    <div>
-                      <InputNumber
-                        onChange={handleSelectedChoiceNumber}
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", height: "100%" }}>
+                <div className={styles.questionContainer}>
+                  <div className={styles.questionBox}>
+                    <div className={styles.questionBoxRight}>
+                      <span>سوال فعلی</span>
+                      <p>
+                        {predict.questionIndex === 0
+                          ? questions[predict.questionIndex].question
+                          : questions.find((item: any) => item.question_value === predict.nextPredict)?.question}
+                      </p>
+                      {questions[predict.questionIndex].type === "number" ? (
+                        <div>
+                          <InputNumber
+                            onChange={handleSelectedChoiceNumber}
+                            value={testValue}
+                            className={styles.numberInput}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            controls={true}
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "dropdown" ? (
+                        <div className={styles.questionsAnswers}>
+                          {/* <select
                         value={testValue}
-                        className={styles.numberInput}
-                        min={questions[predict.questionIndex].answer.value_fa[0]}
-                        max={questions[predict.questionIndex].answer.value_fa[1]}
-                        controls={true}
-                      />
-                    </div>
-                  ) : questions[predict.questionIndex].type === "dropdown" ? (
-                    <div className={styles.questionsAnswers}>
-                      <Select
-                        className={styles.selectAnswer}
-                        size="large"
-                        labelInValue
-                        value={testValue}
+                        className={styles.selectAnswerMobile}
                         style={{ width: "100%", borderRadius: "0 !important" }}
                         onChange={handleChange}
-                        options={questions.find((item : any) => item.question_value === predict.nextPredict)?.options}
-                      />
-                    </div>
-                  ) : questions[predict.questionIndex].type === "radio" ? (
-                    <div className={styles.questionsAnswers}>
-                      {questions[predict.questionIndex].answer.value_fa.map((item : any, index: number) => (
-                        <div className={styles.buttonChoices} key={index}>
-                          <button
-                            onClick={() => handleSelectedChoice(index)}
-                            className={`${styles.sampleButton} ${
-                              (activeButton === index && styles.activeButton) ||
-                              (predict.lastData[predict.questionIndex]?.answer === item && styles.activeButton)
-                            }`}
-                          >
-                            {item}
-                          </button>
+                      >
+                        {questions
+                          .find((item: any) => item.question_value === predict.nextPredict)
+                          ?.answer.value_en.map((item, index) => (
+                            <option key={index}>{item}</option>
+                          ))}
+                      </select> */}
+                          <Select
+                            className={styles.selectAnswer}
+                            size="large"
+                            labelInValue
+                            value={testValue}
+                            style={{ width: "100%", borderRadius: "0 !important" }}
+                            onChange={handleChange}
+                            options={questions.find((item: any) => item.question_value === predict.nextPredict)?.options}
+                          />
                         </div>
-                      ))}
+                      ) : questions[predict.questionIndex].type === "radio" ? (
+                        <div className={styles.questionsAnswers}>
+                          {questions[predict.questionIndex].answer.value_fa.map((item: any, index: number) => (
+                            <div className={styles.buttonChoices} key={index}>
+                              <button
+                                onClick={() => handleSelectedChoice(index)}
+                                className={`${styles.sampleButton} ${
+                                  (activeButton === index && styles.activeButton) ||
+                                  (predict.lastData[predict.questionIndex]?.answer === item && styles.activeButton)
+                                }`}
+                              >
+                                {item}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
-                  ) : (
-                    ""
-                  )}
+                    <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
+                      <p>{predict.questionNumber}</p>
+                    </div>
+                  </div>
+                  <div className={styles.questionBoxButtonGroups}>
+                    <button onClick={() => handleBack()} className={styles.backButton} disabled={predict.questionIndex === 0}>
+                      <AiOutlineArrowRight />
+                    </button>
+                    <button
+                      disabled={
+                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0)
+                      }
+                      onClick={() => handleSubmit()}
+                      className={styles.submitButton}
+                    >
+                      ثبت پاسخ
+                      <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+                    </button>
+                  </div>
                 </div>
-                <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
-                  <p>{predict.questionNumber}</p>
-                </div>
-              </div>
-              <div className={styles.questionBoxButtonGroups}>
-                <button onClick={() => handleBack()} className={styles.backButton} disabled={predict.questionIndex === 0}>
-                  <AiOutlineArrowRight />
-                </button>
-                <button
-                  disabled={
-                    Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0)
-                  }
-                  onClick={() => handleSubmit()}
-                  className={styles.submitButton}
-                >
-                  ثبت پاسخ
-                  <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
-                </button>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className={styles.mainSliderRightBox}>
-          <div style={{ width: "100%", height: "100%" }}>
-            <div className={styles.potansielChanceContainer}>
-              <div className={styles.potansielChanceBox}>
-                <div className={styles.potansielChanceBoxHeader}>
-                  <div>
-                    <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
-                    <span>
-                      %<CountUp end={predict.chance} />
-                    </span>
-                  </div>
-                  <img src="/info.svg" alt="info" />
-                </div>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ width: "100%", height: "100%" }}>
+                <div className={styles.potansielChanceContainer}>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
+                        <span>
+                          %<CountUp end={predict.chance} />
+                        </span>
+                      </div>
+                      <img src="/info.svg" alt="info" />
+                    </div>
 
-                <Progress percent={predict.chance} status="active" />
-                <div className="potansielChanceBoxFooter">
-                  <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    {isNumberIncreasing(
-                      prevCounterQuestion[predict.questionNumber - 3]?.chance,
-                      prevCounterQuestion[predict.questionNumber - 2]?.chance
-                    ) === "more" ? (
-                      <img src="/CaretUp.svg" alt="icon" />
-                    ) : isNumberIncreasing(
-                        prevCounterQuestion[predict.questionNumber - 3]?.chance,
-                        prevCounterQuestion[predict.questionNumber - 2]?.chance
-                      ) === "low" ? (
-                      <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
-                    ) : (
-                      <img src="/CaretEqual.svg" alt="icon" />
-                    )}
-                    {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
-                    {prevCounterQuestion[predict.questionNumber - 3]
-                      ? Math.abs(
-                          prevCounterQuestion[predict.questionNumber - 3]?.chance - prevCounterQuestion[predict.questionNumber - 2]?.chance
-                        )
-                      : ""}{" "}
-                    {isNumberIncreasing(
-                      prevCounterQuestion[predict.questionNumber - 3]?.chance,
-                      prevCounterQuestion[predict.questionNumber - 2]?.chance
-                    ) === "equal"
-                      ? "بدون تغییر"
-                      : "تغییر به نسبت سوال قبل"}
-                  </p>
-                </div>
-              </div>
-              <div className={styles.potansielChanceBox}>
-                <div className={styles.potansielChanceBoxHeader}>
-                  <div>
-                    <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
-                    %<CountUp end={predict.potential} />
+                    <Progress percent={predict.chance} status="active" />
+                    <div className="potansielChanceBoxFooter">
+                      <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                            prevCounterQuestion[predict.questionNumber - 2]?.chance
+                          ) === "low" ? (
+                          <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                prevCounterQuestion[predict.questionNumber - 2]?.chance
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
                   </div>
-                  <img src="/info.svg" alt="info" />
-                </div>
-                <Progress percent={predict.potential} status="active" />
-                <div className="potansielChanceBoxFooter">
-                  <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    {isNumberIncreasing(
-                      prevCounterQuestion[predict.questionNumber - 3]?.potential,
-                      prevCounterQuestion[predict.questionNumber - 2]?.potential
-                    ) === "more" ? (
-                      <img src="/CaretUp.svg" alt="icon" />
-                    ) : isNumberIncreasing(
-                        prevCounterQuestion[predict.questionNumber - 3]?.potential,
-                        prevCounterQuestion[predict.questionNumber - 2]?.potential
-                      ) === "low" ? (
-                      <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
-                    ) : (
-                      <img src="/CaretEqual.svg" alt="icon" />
-                    )}
-                    {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
-                    {prevCounterQuestion[predict.questionNumber - 3]
-                      ? Math.abs(
-                          prevCounterQuestion[predict.questionNumber - 3]?.potential -
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
+                        %<CountUp end={predict.potential} />
+                      </div>
+                      <img src="/info.svg" alt="info" />
+                    </div>
+                    <Progress percent={predict.potential} status="active" />
+                    <div className="potansielChanceBoxFooter">
+                      <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.potential,
                             prevCounterQuestion[predict.questionNumber - 2]?.potential
-                        )
-                      : ""}{" "}
-                    {isNumberIncreasing(
-                      prevCounterQuestion[predict.questionNumber - 3]?.potential,
-                      prevCounterQuestion[predict.questionNumber - 2]?.potential
-                    ) === "equal"
-                      ? "بدون تغییر"
-                      : "تغییر به نسبت سوال قبل"}
-                  </p>
+                          ) === "low" ? (
+                          <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.potential -
+                                prevCounterQuestion[predict.questionNumber - 2]?.potential
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        className={styles.mainSliderLeft}
-        style={{
-          background: "#fff",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          padding: "10px",
-        }}
-      >
-        <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
-        <div style={{ position: "absolute", top: "26px", left: "44%" }}>
-          <Modal />
-        </div>
-        <div style={{ position: "absolute", top: "45%", left: "90%" }}>
-          <Modal />
-        </div>
-        <div style={{ position: "absolute", top: "86%", left: "43%" }}>
-          <Modal />
-        </div>
-        <div style={{ position: "absolute", top: "45%", left: "0" }}>
-          <Modal />
-        </div>
-        <div className={styles.footerChart}>
-          <div>
-            <div className={styles.povNowAnswer}></div>
-            <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
+        </>
+      ) : (
+        <>
+          <div className={styles.mainSliderRight}>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", position: "relative" }}>
+                <SliderComponent swiper={swiper} setSwiper={setSwiper} />
+              </div>
+            </div>
+
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", height: "100%" }}>
+                <div className={styles.questionContainer}>
+                  <div className={styles.questionBox}>
+                    <div className={styles.questionBoxRight}>
+                      <span>سوال فعلی</span>
+                      <p>
+                        {predict.questionIndex === 0
+                          ? questions[predict.questionIndex].question
+                          : questions.find((item: any) => item.question_value === predict.nextPredict)?.question}
+                      </p>
+                      {questions[predict.questionIndex].type === "number" ? (
+                        <div>
+                          <InputNumber
+                            onChange={handleSelectedChoiceNumber}
+                            value={testValue}
+                            className={styles.numberInput}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            controls={true}
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "dropdown" ? (
+                        <div className={styles.questionsAnswers}>
+                          {/* <select
+                        value={testValue}
+                        className={styles.selectAnswerMobile}
+                        style={{ width: "100%", borderRadius: "0 !important" }}
+                        onChange={handleChange}
+                      >
+                        {questions
+                          .find((item: any) => item.question_value === predict.nextPredict)
+                          ?.answer.value_en.map((item, index) => (
+                            <option key={index}>{item}</option>
+                          ))}
+                      </select> */}
+                          <Select
+                            className={styles.selectAnswer}
+                            size="large"
+                            labelInValue
+                            value={testValue}
+                            style={{ width: "100%", borderRadius: "0 !important" }}
+                            onChange={handleChange}
+                            options={questions.find((item: any) => item.question_value === predict.nextPredict)?.options}
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "radio" ? (
+                        <div className={styles.questionsAnswers}>
+                          {questions[predict.questionIndex].answer.value_fa.map((item: any, index: number) => (
+                            <div className={styles.buttonChoices} key={index}>
+                              <button
+                                onClick={() => handleSelectedChoice(index)}
+                                className={`${styles.sampleButton} ${
+                                  (activeButton === index && styles.activeButton) ||
+                                  (predict.lastData[predict.questionIndex]?.answer === item && styles.activeButton)
+                                }`}
+                              >
+                                {item}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
+                      <p>{predict.questionNumber}</p>
+                    </div>
+                  </div>
+                  <div className={styles.questionBoxButtonGroups}>
+                    <button onClick={() => handleBack()} className={styles.backButton} disabled={predict.questionIndex === 0}>
+                      <AiOutlineArrowRight />
+                    </button>
+                    <button
+                      disabled={
+                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0)
+                      }
+                      onClick={() => handleSubmit()}
+                      className={styles.submitButton}
+                    >
+                      ثبت پاسخ
+                      <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ width: "100%", height: "100%" }}>
+                <div className={styles.potansielChanceContainer}>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
+                        <span>
+                          %<CountUp end={predict.chance} />
+                        </span>
+                      </div>
+                      <img src="/info.svg" alt="info" />
+                    </div>
+
+                    <Progress percent={predict.chance} status="active" />
+                    <div className="potansielChanceBoxFooter">
+                      <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                            prevCounterQuestion[predict.questionNumber - 2]?.chance
+                          ) === "low" ? (
+                          <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                prevCounterQuestion[predict.questionNumber - 2]?.chance
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
+                        %<CountUp end={predict.potential} />
+                      </div>
+                      <img src="/info.svg" alt="info" />
+                    </div>
+                    <Progress percent={predict.potential} status="active" />
+                    <div className="potansielChanceBoxFooter">
+                      <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                            prevCounterQuestion[predict.questionNumber - 2]?.potential
+                          ) === "low" ? (
+                          <img src="/CaretDown.svg" style={{ color: "red", transform: "translate(rotate(-180deg))" }} alt="icon" />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.potential -
+                                prevCounterQuestion[predict.questionNumber - 2]?.potential
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className={styles.povOldAnswer}></div>
-            <p>موقعیت نسبت به پاسخ مرحله قبل</p>
+          <div
+            className={styles.mainSliderLeft}
+            style={{
+              background: "#fff",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              padding: "10px",
+            }}
+          >
+            <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
+            <div style={{ position: "absolute", top: "26px", left: "44%" }}>
+              <Modal />
+            </div>
+            <div style={{ position: "absolute", top: "45%", left: "90%" }}>
+              <Modal />
+            </div>
+            <div style={{ position: "absolute", top: "86%", left: "43%" }}>
+              <Modal />
+            </div>
+            <div style={{ position: "absolute", top: "45%", left: "0" }}>
+              <Modal />
+            </div>
+            <div className={styles.footerChart}>
+              <div>
+                <div className={styles.povNowAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
+              </div>
+              <div>
+                <div className={styles.povOldAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله قبل</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

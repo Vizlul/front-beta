@@ -31,7 +31,7 @@
   height: 100%;
 }
 
-.mainSliderRightBox:first-of-type{
+.mainSliderRightBox:first-of-type {
   height: fit-content;
 }
 
@@ -40,7 +40,7 @@
   height: 100%;
 }
 
-.mainSliderRightBox:last-of-type{
+.mainSliderRightBox:last-of-type {
   height: fit-content;
 }
 
@@ -72,7 +72,6 @@
   background-color: #fff;
   padding: 25px;
   height: 100%;
-
 }
 
 .questionContainer {
@@ -177,13 +176,13 @@
   transition: all 0.3s ease;
 }
 
-.footerChart{
+.footerChart {
   display: flex;
   align-items: center;
   gap: 50px;
 }
 
-.footerChart > div{
+.footerChart > div {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -201,18 +200,71 @@
   background-color: rgba(0, 85, 78, 0.2);
 }
 
-.footerChart > div p{
+.footerChart > div p {
   font-size: 14px;
 }
 
-.potansielChanceBoxHeader{
+.potansielChanceBoxHeader {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
 
-.potansielChanceBoxHeader p{
+.potansielChanceBoxHeader p {
   margin: 0;
+}
+
+.selectAnswer > div {
+  border-radius: 0 !important;
+}
+
+.selectAnswerMobile {
+  border: 1px solid #d9d9d9;
+  width: 260px;
+  height: 40px;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearence: none;
+  background-image: url("/Down.svg");
+  background-position: 10px center; /*Positioning*/
+  background-repeat: no-repeat; /*Prevent showing multiple background images*/
+  padding: 10px;
+  cursor: pointer;
+}
+
+.selectAnswer option {
+  padding: 10px;
+}
+
+.numberInput {
+  width: 100% !important;
+  height: 40px !important;
+  border-radius: 0;
+  border: 1px solid #d9d9d9 !important;
+  display: flex;
+  align-items: center;
+}
+
+.infoIconFirst {
+  position: absolute;
+  top: 26px;
+  left: 44%;
+}
+.infoIconSecond {
+  position: absolute;
+  top: 45%;
+  left: 90%;
+}
+.infoIconThird {
+  position: absolute;
+  top: 86%;
+  left: 43%;
+}
+.infoIconFour {
+  position: absolute;
+  top: 45%;
+  left: 0;
 }
 
 @media (max-width: 1366px) {
@@ -235,5 +287,74 @@
 
   .questionBoxButtonGroups button:last-of-type {
     width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainSlider {
+    gap: 0;
+    margin: 40px 0;
+  }
+  .mainSliderRight {
+    grid-column: span 12 / span 12;
+    margin-top: 20px;
+  }
+  .mainSliderLeft {
+    grid-column: span 12 / span 12;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .infoIconFirst {
+    position: absolute;
+    top: 10px;
+    left: 48%;
+  }
+  .infoIconSecond {
+    position: absolute;
+    top: 41%;
+    left: 96.5%;
+  }
+  .infoIconThird {
+    position: absolute;
+    top: 78%;
+    left: 48%;
+  }
+  .infoIconFour {
+    position: absolute;
+    top: 41%;
+    left: 0;
+  }
+
+  .footerChart {
+    gap: 10px;
+  }
+
+  .questionContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 10px;
+  }
+
+  .questionBox{
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid #d9d9d9;
+    padding-bottom: 24px;
+  }
+
+  .questionBoxButtonGroups{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .potansielChanceContainer{
+    display: flex;
+    flex-direction: column;
   }
 }

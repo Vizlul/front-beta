@@ -150,3 +150,18 @@
   background-color: #fff;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .sliderNext{
+    position: relative;
+  }
+
+  .sliderPrev{
+    position: relative;
+  }
+
+  .buttonGroupsQuestions{
+    margin-bottom: -36px;
+  }
+  
+}

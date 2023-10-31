@@ -47,6 +47,17 @@ export default function SliderComponent({ swiper, setSwiper }) {
         spaceBetween={10}
         slidesPerView={3}
         className={styles.mySwiper}
+        breakpoints={{
+          360: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
       >
         {questions.map((item, index) => (
           <SwiperSlide key={index}>

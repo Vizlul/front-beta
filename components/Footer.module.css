@@ -1,3 +1,10 @@
+.footer{
+  border-top: 1px solid #356e68;
+  background-color: #fff;
+  padding: 18px 0;
+  height: 100px;
+}
+
 .footerContainer {
   width: calc(100% - 430px);
   margin: 0 auto;
