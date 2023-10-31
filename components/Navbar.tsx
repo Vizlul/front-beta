@@ -2,6 +2,7 @@ import { setToStart } from "@/store/features/sliderSlice";
 import styles from "./Navbar.module.css";
 import ButtonComponent from "./utils/button/ButtonComponent";
 import { useDispatch, useSelector } from "react-redux";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 interface SliderInterface {
   name: number
@@ -27,8 +28,13 @@ export default function Navbar() {
         </div>
 
         <div className={styles.headerContentButton}>
-          <ButtonComponent title="درباره ویزارد" size="large"></ButtonComponent>
-          <ButtonComponent title="وبسایت ویزالند" size="large"></ButtonComponent>
+          <button>درباره ویزارد</button>
+
+          <button>
+          وبسایت ویزالند
+          <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+
+          </button>
         </div>
       </div>
     </header>

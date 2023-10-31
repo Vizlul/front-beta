@@ -32,13 +32,13 @@ export default function MyChart({ prevCounterQuestion }) {
         },
       },
       {
-        label: "Vizard",
+        label: "موقعیت نسبت به پاسخ مرحله فعلی",
         data: predict.chartDataValues,
         backgroundColor: "rgba(0, 85, 78, 0.6)",
       },
       // questionCounter
       {
-        label: "VizardSec",
+        label: "موقعیت نسبت به پاسخ مرحله قبل",
         data:
           predict.questionNumber > 1
             ? prevCounterQuestion[prevCounterQuestion.length - 1]?.chartValues

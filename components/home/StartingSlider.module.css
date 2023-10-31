@@ -88,6 +88,19 @@
   border-color: #317467 !important;
 }
 
+.startButton{
+  width: 140px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #00554e;
+  color: #fff;
+  border: 1px solid #00554e;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .startingSlider {
     height: 100%;
@@ -98,12 +111,18 @@
   .startingSlider > div {
     display: flex;
     flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
     padding: 0;
     width: 94%;
     margin: 0 auto;
   }
 
   .startingSliderRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 16px;
   }
 
   .startingSliderLeft {

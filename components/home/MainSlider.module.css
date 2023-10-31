@@ -64,7 +64,7 @@
   justify-content: space-between;
   gap: 20px;
   width: 100%;
-  height: fit-content;
+  height: 100%;
 }
 
 .potansielChanceContainer .potansielChanceBox {
@@ -86,7 +86,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-left: 1px solid #999999;
+  border-left: 1px solid #d9d9d9;
 }
 
 .questionBoxButtonGroups {
@@ -97,6 +97,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
+  padding: 10px;
 }
 
 .questionBoxRight {
@@ -128,6 +129,7 @@
   max-width: 150px;
   display: flex;
   align-items: center;
+  gap: 14px;
 }
 
 .buttonChoices button {

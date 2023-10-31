@@ -1,4 +1,4 @@
-import { Button, InputNumber, Progress, Select } from "antd";
+import { Button, InputNumber, Progress, Select, Slider } from "antd";
 import MyChart from "../utils/chart/Chart";
 import SliderComponent from "../utils/slider/SliderComponent";
 import styles from "./MainSlider.module.css";
@@ -38,7 +38,7 @@ export default function MainSlider() {
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState<any>("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
-  const [mobileSize, setMobileSize] = useState<boolean>(true);
+  const [mobileSize, setMobileSize] = useState<boolean>(false);
 
   const handleChange = (value: any) => {
     if (editMode) {
@@ -162,7 +162,7 @@ export default function MainSlider() {
       }
     }
   };
-  console.log(editChanges);
+
   const handleSelectedChoiceNumber = (value: number | any) => {
     if (editMode) {
       setEditChanges(true);
@@ -328,6 +328,9 @@ export default function MainSlider() {
       if (predict.countAnswer === predict.questionNumber) {
         await CallApi.post("/predict", predictData)
           .then(async (respo) => {
+            if (!respo.data.next_variable) {
+              return dispatch(setToFinished());
+            }
             dispatch(setChanceData({ chance: respo.data.result }));
             dispatch(setNextPredictData({ nextVariable: respo.data.next_variable }));
             dispatch(setNextPredictBackup({ nextVariable: respo.data.next_variable }));
@@ -433,7 +436,7 @@ export default function MainSlider() {
   };
 
   // useEffect(() => {
-  //   if (window.innerWidth < 768) {
+  //   if () {
   //     setMobileSize(true);
   //   }
   // }, []);
@@ -457,7 +460,7 @@ export default function MainSlider() {
 
   return (
     <div className={styles.mainSlider}>
-      {mobileSize ? (
+      {window.innerWidth < 768 ? (
         <>
           <div
             className={styles.mainSliderLeft}
@@ -472,17 +475,23 @@ export default function MainSlider() {
             }}
           >
             <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
-            <div className={styles.infoIconFirst}>
-              <Modal />
-            </div>
-            <div className={styles.infoIconSecond}>
-              <Modal />
-            </div>
-            <div className={styles.infoIconThird}>
-              <Modal />
-            </div>
-            <div className={styles.infoIconFour}>
-              <Modal />
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>شغلی</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>عاطفی</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>هدف</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>اقتصادی</p>
+              </div>
             </div>
             <div className={styles.footerChart}>
               <div>
@@ -515,13 +524,26 @@ export default function MainSlider() {
                       </p>
                       {questions[predict.questionIndex].type === "number" ? (
                         <div>
-                          <InputNumber
+                          {/* <InputNumber
                             onChange={handleSelectedChoiceNumber}
                             value={testValue}
                             className={styles.numberInput}
                             min={questions[predict.questionIndex].answer.value_fa[0]}
                             max={questions[predict.questionIndex].answer.value_fa[1]}
                             controls={true}
+                          /> */}
+                          <Slider
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            onChange={handleSelectedChoiceNumber}
+                            value={typeof testValue === "number" ? testValue : 0}
+                          />
+                          <InputNumber
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            style={{ margin: "0 16px" }}
+                            value={testValue}
+                            onChange={handleSelectedChoiceNumber}
                           />
                         </div>
                       ) : questions[predict.questionIndex].type === "dropdown" ? (
@@ -574,7 +596,7 @@ export default function MainSlider() {
                   </div>
                   <div className={styles.questionBoxButtonGroups}>
                     <button onClick={() => handleBack()} className={styles.backButton} disabled={predict.questionIndex === 0}>
-                      <AiOutlineArrowRight />
+                      <AiOutlineArrowRight style={{ fontSize: "14px" }} />
                     </button>
                     <button
                       disabled={
@@ -584,7 +606,7 @@ export default function MainSlider() {
                       className={styles.submitButton}
                     >
                       ثبت پاسخ
-                      <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+                      <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
                     </button>
                   </div>
                 </div>
@@ -703,14 +725,28 @@ export default function MainSlider() {
                           : questions.find((item: any) => item.question_value === predict.nextPredict)?.question}
                       </p>
                       {questions[predict.questionIndex].type === "number" ? (
-                        <div>
-                          <InputNumber
+                        <div style={{ display: "flex", alignItems: "center", width: "100%", gap: "20px" }}>
+                          {/* <InputNumber
                             onChange={handleSelectedChoiceNumber}
                             value={testValue}
                             className={styles.numberInput}
                             min={questions[predict.questionIndex].answer.value_fa[0]}
                             max={questions[predict.questionIndex].answer.value_fa[1]}
                             controls={true}
+                          /> */}
+                          <InputNumber
+                            style={{ width: "" }}
+                            value={testValue}
+                            onChange={handleSelectedChoiceNumber}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                          />
+                          <Slider
+                            style={{ width: "100%" }}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            onChange={handleSelectedChoiceNumber}
+                            value={typeof testValue === "number" ? testValue : 0}
                           />
                         </div>
                       ) : questions[predict.questionIndex].type === "dropdown" ? (
@@ -763,7 +799,7 @@ export default function MainSlider() {
                   </div>
                   <div className={styles.questionBoxButtonGroups}>
                     <button onClick={() => handleBack()} className={styles.backButton} disabled={predict.questionIndex === 0}>
-                      <AiOutlineArrowRight />
+                      <AiOutlineArrowRight style={{ fontSize: "14px" }} />
                     </button>
                     <button
                       disabled={
@@ -773,7 +809,7 @@ export default function MainSlider() {
                       className={styles.submitButton}
                     >
                       ثبت پاسخ
-                      <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+                      <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
                     </button>
                   </div>
                 </div>
@@ -883,17 +919,23 @@ export default function MainSlider() {
             }}
           >
             <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
-            <div style={{ position: "absolute", top: "26px", left: "44%" }}>
-              <Modal />
-            </div>
-            <div style={{ position: "absolute", top: "45%", left: "90%" }}>
-              <Modal />
-            </div>
-            <div style={{ position: "absolute", top: "86%", left: "43%" }}>
-              <Modal />
-            </div>
-            <div style={{ position: "absolute", top: "45%", left: "0" }}>
-              <Modal />
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>شغلی</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>عاطفی</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>هدف</p>
+              </div>
+              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
+                <Modal />
+                <p>اقتصادی</p>
+              </div>
             </div>
             <div className={styles.footerChart}>
               <div>

@@ -1,0 +1,41 @@
+.finishSlider{
+  width: 100%;
+  height: 100%;
+}
+
+.finishSliderContainer{
+  background-color: #fff;
+  padding: 20px 40px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.finishSliderContainer > div{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.startButton{
+  width: 120px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #00554e;
+  color: #fff;
+  border: 1px solid #00554e;
+  cursor: pointer;
+  margin: 50px auto 0;
+}
+
+@media (max-width: 768px) {
+  .finishSliderContainer > div{
+    flex-direction: column;
+  }
+}

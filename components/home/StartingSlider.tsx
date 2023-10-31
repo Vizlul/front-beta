@@ -34,14 +34,7 @@ export default function StartingSlider() {
               ویزا شدن، تحلیل علل و فاکتورهای اثر گذار رو نیز در اختیارتون قرار میده.
             </p>
           </div>
-          <ButtonComponent
-            title="شروع"
-            size="large"
-            background="#00554e"
-            color="#fff"
-            onClickFunc={handleClick}
-            icon={<AiOutlineArrowLeft />}
-          />
+          <button className={styles.startButton} onClick={handleClick}>شروع <AiOutlineArrowLeft /></button>
         </div>
         <div className={styles.startingSliderLeft}>
           <img src="/vizardsec.png" />
