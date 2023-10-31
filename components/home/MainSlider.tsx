@@ -39,6 +39,7 @@ export default function MainSlider() {
   const [activeButton, setActiveButton] = useState<any>("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [mobileSize, setMobileSize] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (value: any) => {
     if (editMode) {
@@ -477,20 +478,16 @@ export default function MainSlider() {
             <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
               <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>شغلی</p>
+                <Modal title="شغلی" />
               </div>
               <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>عاطفی</p>
+                <Modal title="عاطفی" />
               </div>
               <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>هدف</p>
+                <Modal title="هدف" />
               </div>
               <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>اقتصادی</p>
+                <Modal title="اقتصادی" />
               </div>
             </div>
             <div className={styles.footerChart}>
@@ -600,13 +597,17 @@ export default function MainSlider() {
                     </button>
                     <button
                       disabled={
-                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0)
+                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0 || loading)
                       }
                       onClick={() => handleSubmit()}
                       className={styles.submitButton}
-                    >
-                      ثبت پاسخ
+                    >{loading ? <>
+                      صبر کنید ... 
+                    </> : <>
+                    ثبت پاسخ
                       <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                    </>} 
+                      
                     </button>
                   </div>
                 </div>
@@ -803,13 +804,17 @@ export default function MainSlider() {
                     </button>
                     <button
                       disabled={
-                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0)
+                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0 || loading)
                       }
                       onClick={() => handleSubmit()}
                       className={styles.submitButton}
                     >
-                      ثبت پاسخ
+                     {loading ? <>
+                      صبر کنید ... 
+                    </> : <>
+                    ثبت پاسخ
                       <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                    </>}
                     </button>
                   </div>
                 </div>

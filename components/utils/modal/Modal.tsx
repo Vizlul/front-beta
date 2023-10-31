@@ -1,9 +1,11 @@
 import "./Modal.css";
 
-export default function Modal() {
+export default function Modal({ title }) {
   return (
     <div>
-      <label className="add-counter" for="modal-2">
+      <label style={{ display: "flex", alignItems: "center", gap: "4px" }} className="add-counter" for="modal-2">
+        <p>{title}</p>
+
         <img src="info.svg" />
       </label>
 
@@ -13,9 +15,13 @@ export default function Modal() {
         <div className="modal__inner">
           <div className="modal_header">
             <div className="modal_header_icon_text">
-              <img src="/ExclamationCircle.svg" alt="info-icon" /> <h2>پارامتر شغلی </h2>
+              <img src="/ExclamationCircle.svg" alt="info-icon" />{" "}
+              <h2>پارامتر شغلی </h2>
             </div>
-            <p>در جدول زیر درصد هر یک از پارامترهای دسته بندی شغلی را مشاهده می‌کنید.</p>
+            <p>
+              در جدول زیر درصد هر یک از پارامترهای دسته بندی شغلی را مشاهده
+              می‌کنید.
+            </p>
           </div>
           <div className="table">
             <div className="tableBox">
@@ -39,7 +45,9 @@ export default function Modal() {
               </div>
             </div>
           </div>
-          <label className="modalButton modal__close" for="modal-2">متوجه شدم</label>
+          <label className="modalButton modal__close" for="modal-2">
+            متوجه شدم
+          </label>
         </div>
       </div>
     </div>
