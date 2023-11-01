@@ -10,7 +10,6 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 export default function MyChart({ prevCounterQuestion }) {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
   // console.log(prevCounterQuestion)
-  console.log(predict.questionNumber);
 
   const data = {
     labels: ["شغلی", "عاطفی", "اقتصادی", "هدف"],
@@ -63,6 +62,9 @@ export default function MyChart({ prevCounterQuestion }) {
             size: 16,
             family: "'FarhangFanum', sans-serif",
           },
+        },
+        ticks: {
+          display: false, // Hides the labels in the middel (numbers)
         },
       },
     },

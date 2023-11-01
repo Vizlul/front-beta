@@ -1,13 +1,11 @@
 @font-face {
   font-family: "FarhangFanum";
-  src: local("FarhangFanum"),
-    url(/fonts/farhangfanum-regular.woff2) format("truetype");
+  src: local("FarhangFanum"), url(/fonts/farhangfanum-regular.woff2) format("truetype");
 }
 
 @font-face {
   font-family: "FarhangFanumBold";
-  src: local("FarhangFanumBold"),
-    url(/fonts/farhangfanum-bold.woff2) format("truetype");
+  src: local("FarhangFanumBold"), url(/fonts/farhangfanum-bold.woff2) format("truetype");
 }
 
 * {
@@ -79,11 +77,57 @@ body
   opacity: 1;
 }
 
-:where(.css-dev-only-do-not-override-1cp2ovx).ant-select:not(
-    .ant-select-disabled
-  ):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+    .ant-pagination-size-changer
+  ):hover
   .ant-select-selector {
   border-color: #d9d9d9;
+}
+
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-slider .ant-slider-track {
+  background-color: #00554e !important;
+}
+
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-slider .ant-slider-handle:hover::after,
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-slider .ant-slider-handle:active::after,
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-slider .ant-slider-handle:focus::after {
+  box-shadow: 0 0 0 4px #00554e !important;
+}
+
+:where(.css-dev-only-do-not-override-1cp2ovx).ant-slider .ant-slider-handle::after {
+  box-shadow: 0 0 0 2px #00554e !important;
+}
+
+body
+  > main
+  > div
+  > div
+  > div.MainSlider_mainSliderRight__9qLKh
+  > div:nth-child(2)
+  > div
+  > div
+  > div.MainSlider_questionBox__SdCjy
+  > div.MainSlider_questionBoxRight__IesWe
+  > div
+  > div.ant-input-number.ant-input-number-rtl.css-dev-only-do-not-override-1cp2ovx {
+  border-radius: 0;
+  border-color: #d9d9d9 !important;
+}
+
+body
+  > main
+  > div
+  > div
+  > div.MainSlider_mainSliderRight__9qLKh
+  > div:nth-child(2)
+  > div
+  > div
+  > div.MainSlider_questionBox__SdCjy
+  > div.MainSlider_questionBoxRight__IesWe
+  > div
+  > div.ant-input-number.ant-input-number-rtl.css-dev-only-do-not-override-1cp2ovx
+  svg {
+  color: #999999;
 }
 
 @media (max-height: 900px) {

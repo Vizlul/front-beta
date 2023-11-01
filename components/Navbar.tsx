@@ -3,16 +3,16 @@ import styles from "./Navbar.module.css";
 import ButtonComponent from "./utils/button/ButtonComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import AboutModal from "./utils/modal/AboutModal";
 
 interface SliderInterface {
-  name: number
+  name: number;
 }
 
 export default function Navbar() {
-
   const handleReload = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <header className={styles.header}>
@@ -28,13 +28,14 @@ export default function Navbar() {
         </div>
 
         <div className={styles.headerContentButton}>
-          <button>درباره ویزارد</button>
+          <AboutModal />
 
-          <button>
-          وبسایت ویزالند
-          <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
-
-          </button>
+          <a href="https://visaland.org">
+            <button style={{ fontSize: "16px" }}>
+              وبسایت ویزالند
+              <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
+            </button>
+          </a>
         </div>
       </div>
     </header>

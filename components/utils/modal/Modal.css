@@ -34,7 +34,7 @@
   text-align: left;
   background: rgba(0, 0, 0, 0.8);
   transition: opacity 0.25s ease;
-  z-index: 9;
+  z-index: 10;
 }
 
 .modal__bg {
@@ -138,10 +138,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
   max-width: 350px;
   margin: 0 auto 30px;
-  
 }
 
 .tableBox {
@@ -184,13 +184,22 @@
 .modalButton {
   background-color: #00554e;
   color: #fff;
-  width: 115px;
+  width: 125px;
   height: 40px;
   border: 1px solid #00554e;
   outline: none;
   cursor: pointer;
   padding: 10px 20px;
   margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableValueText {
+  font-family: sans-serif !important;
+  /* text-align: left; */
+  direction: ltr !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -238,4 +247,17 @@
 
 .btn--blue:active {
   background: #2980b9;
+}
+
+.textMargin {
+  margin: 0 !important;
+  padding: 10px;
+}
+
+.tableBoxCont{
+  border-bottom: 1px solid #999999;
+}
+
+.tableBoxCont:last-of-type{
+  border: none;
 }

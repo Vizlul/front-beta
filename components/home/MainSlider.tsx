@@ -14,6 +14,7 @@ import {
   setCountAnswer,
   setCountQuestion,
   setGroupedXai,
+  setGroupedXaiExpanded,
   setNextPredictBackup,
   setNextPredictData,
   setPotentialData,
@@ -24,6 +25,7 @@ import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Modal from "../utils/modal/Modal";
+import Typewriter from "../utils/TypeWriter";
 
 export default function MainSlider() {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
@@ -39,7 +41,7 @@ export default function MainSlider() {
   const [activeButton, setActiveButton] = useState<any>("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [mobileSize, setMobileSize] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (value: any) => {
     if (editMode) {
@@ -99,12 +101,10 @@ export default function MainSlider() {
     setActiveButton(index);
     const lastKey = predict.nextPredict;
     setEditkeyChanges(lastKey);
-    console.log("test");
 
     if (lastKey === predict.nextPredict) {
       if (predict.questionIndex === 0) {
         const valueEn = questions[predict.questionIndex]?.answer?.value_en;
-        console.log(valueEn);
         setTestValue(valueEn[index]);
         if (valueEn) {
           setPredictData({
@@ -144,7 +144,6 @@ export default function MainSlider() {
     } else {
       const questionValue = questions[predict.questionIndex]?.question_value;
       const valueEn = questions[predict.questionIndex]?.answer?.value_en;
-      console.log(valueEn);
       if (questionValue && valueEn) {
         setPredictData({
           ...predictData,
@@ -165,6 +164,10 @@ export default function MainSlider() {
   };
 
   const handleSelectedChoiceNumber = (value: number | any) => {
+    if (value.default === 0 || value.default) {
+      setTestValue(value.default);
+    }
+
     if (editMode) {
       setEditChanges(true);
     }
@@ -205,15 +208,9 @@ export default function MainSlider() {
     }
   };
 
-  console.log(predict.questionNumber);
-  console.log(predict.countAnswer);
-  console.log(questionCounter);
-
   const handleSubmit = async () => {
-    // console.log(questionCounter);
     if (editMode && editChanges) {
       setQuestionCounter((prev) => prev + 1);
-      console.log("edit true");
       const newState: any = [];
       let keep = false;
 
@@ -229,8 +226,6 @@ export default function MainSlider() {
         }
       }
 
-      console.log(newState);
-
       const filteredData: any = {};
       const filteredDataTest: any = [];
 
@@ -239,12 +234,9 @@ export default function MainSlider() {
           filteredData[key] = predictData[key];
         }
       }
-      console.log(filteredData);
       setPredictData("");
       setPredictData(filteredData);
-      console.log(predictData);
 
-      console.log(newState);
       for (const key of newState) {
         const matchingObject = prevCounterQuestion.find((obj) => obj.type === key);
         if (matchingObject) {
@@ -253,8 +245,6 @@ export default function MainSlider() {
       }
 
       setPrevCounterQuestion(filteredDataTest);
-
-      console.log(filteredDataTest);
 
       await CallApi.post("/predict", filteredData)
         .then(async (resp) => {
@@ -325,7 +315,6 @@ export default function MainSlider() {
     } else {
       setQuestionCounter((prev) => prev + 1);
 
-      console.log("edit false");
       if (predict.countAnswer === predict.questionNumber) {
         await CallApi.post("/predict", predictData)
           .then(async (respo) => {
@@ -339,13 +328,10 @@ export default function MainSlider() {
             await CallApi.post("/grouped_xai", predictData).then(async (resp) => {
               dispatch(setGroupedXai({ data: resp.data }));
               await CallApi.post("/potential", predictData)
-                .then((response) => {
-                  console.log(response);
+                .then(async (response) => {
                   dispatch(setPotentialData(response.data.result));
-
                   if (predict.countAnswer === 1) {
                     dispatch(addCounterQuestionIndex({ payload: "" }));
-                    console.log(predict.chance);
                     setPrevCounterQuestion([
                       {
                         type: "sex",
@@ -374,6 +360,9 @@ export default function MainSlider() {
                       },
                     ]);
                   }
+                  await CallApi.post("/grouped_xai_expanded", predictData).then((respon) => {
+                    dispatch(setGroupedXaiExpanded(respon.data.grouped_xai_expanded));
+                  });
                 })
                 .catch((error) => {
                   console.log(error);
@@ -411,7 +400,6 @@ export default function MainSlider() {
   };
 
   function isNumberIncreasing(previousNumber: any, currentNumber: any) {
-    console.log(currentNumber, previousNumber);
     return currentNumber > previousNumber
       ? "more"
       : currentNumber < previousNumber
@@ -455,9 +443,11 @@ export default function MainSlider() {
   useEffect(() => {
     setQuestionCounter(predict.countAnswer);
     dispatch(setCountQuestion());
-  }, [predict.countAnswer]);
 
-  console.log(prevCounterQuestion);
+    // if (questions[predict.questionIndex].type === "number") {
+    //   handleSelectedChoiceNumber({ default: questions[predict.questionIndex].answer.value_fa[0] })
+    // }
+  }, [predict.countAnswer]);
 
   return (
     <div className={styles.mainSlider}>
@@ -477,17 +467,17 @@ export default function MainSlider() {
           >
             <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal title="شغلی" />
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="شغلی" title_en="career" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal title="عاطفی" />
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="عاطفی" title_en="emotional" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal title="هدف" />
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="هدف" title_en="purpose" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal title="اقتصادی" />
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="اقتصادی" title_en="financial" />
               </div>
             </div>
             <div className={styles.footerChart}>
@@ -520,7 +510,7 @@ export default function MainSlider() {
                           : questions.find((item: any) => item.question_value === predict.nextPredict)?.question}
                       </p>
                       {questions[predict.questionIndex].type === "number" ? (
-                        <div>
+                        <div style={{ display: "flex", alignItems: "center", width: "100%", gap: "20px" }}>
                           {/* <InputNumber
                             onChange={handleSelectedChoiceNumber}
                             value={testValue}
@@ -530,15 +520,24 @@ export default function MainSlider() {
                             controls={true}
                           /> */}
                           <Slider
+                            style={{ width: "75%", color: "red" }}
                             min={questions[predict.questionIndex].answer.value_fa[0]}
                             max={questions[predict.questionIndex].answer.value_fa[1]}
                             onChange={handleSelectedChoiceNumber}
                             value={typeof testValue === "number" ? testValue : 0}
+                            styles={{
+                              track: {
+                                background: "transparent",
+                              },
+                              tracks: {
+                                background: "red",
+                              },
+                            }}
                           />
                           <InputNumber
                             min={questions[predict.questionIndex].answer.value_fa[0]}
                             max={questions[predict.questionIndex].answer.value_fa[1]}
-                            style={{ margin: "0 16px" }}
+                            style={{ width: "25%", borderRadius: "0", borderColor: "#d9d9d9 !important" }}
                             value={testValue}
                             onChange={handleSelectedChoiceNumber}
                           />
@@ -597,17 +596,21 @@ export default function MainSlider() {
                     </button>
                     <button
                       disabled={
-                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0 || loading)
+                        Object.keys(predictData).length === 0 ||
+                        (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0) ||
+                        loading
                       }
                       onClick={() => handleSubmit()}
                       className={styles.submitButton}
-                    >{loading ? <>
-                      صبر کنید ... 
-                    </> : <>
-                    ثبت پاسخ
-                      <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
-                    </>} 
-                      
+                    >
+                      {loading ? (
+                        <>صبر کنید ...</>
+                      ) : (
+                        <>
+                          ثبت پاسخ
+                          <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -628,7 +631,7 @@ export default function MainSlider() {
                       <img src="/info.svg" alt="info" />
                     </div>
 
-                    <Progress percent={predict.chance} status="active" />
+                    <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
                     <div className="potansielChanceBoxFooter">
                       <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         {isNumberIncreasing(
@@ -668,7 +671,7 @@ export default function MainSlider() {
                       </div>
                       <img src="/info.svg" alt="info" />
                     </div>
-                    <Progress percent={predict.potential} status="active" />
+                    <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
                     <div className="potansielChanceBoxFooter">
                       <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         {isNumberIncreasing(
@@ -804,17 +807,21 @@ export default function MainSlider() {
                     </button>
                     <button
                       disabled={
-                        Object.keys(predictData).length === 0 || (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0 || loading)
+                        Object.keys(predictData).length === 0 ||
+                        (predict.countAnswer > 1 && predictData[predict.nextPredict]?.length === 0) ||
+                        loading
                       }
                       onClick={() => handleSubmit()}
                       className={styles.submitButton}
                     >
-                     {loading ? <>
-                      صبر کنید ... 
-                    </> : <>
-                    ثبت پاسخ
-                      <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
-                    </>}
+                      {loading ? (
+                        <>صبر کنید ...</>
+                      ) : (
+                        <>
+                          ثبت پاسخ
+                          <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -835,7 +842,7 @@ export default function MainSlider() {
                       <img src="/info.svg" alt="info" />
                     </div>
 
-                    <Progress percent={predict.chance} status="active" />
+                    <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
                     <div className="potansielChanceBoxFooter">
                       <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         {isNumberIncreasing(
@@ -851,12 +858,22 @@ export default function MainSlider() {
                         ) : (
                           <img src="/CaretEqual.svg" alt="icon" />
                         )}
-                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3] &&
+                        Math.abs(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance - prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) !== 0
+                          ? "%"
+                          : ""}
                         {prevCounterQuestion[predict.questionNumber - 3]
                           ? Math.abs(
                               prevCounterQuestion[predict.questionNumber - 3]?.chance -
                                 prevCounterQuestion[predict.questionNumber - 2]?.chance
-                            )
+                            ) !== 0
+                            ? Math.abs(
+                                prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                  prevCounterQuestion[predict.questionNumber - 2]?.chance
+                              )
+                            : ""
                           : ""}{" "}
                         {isNumberIncreasing(
                           prevCounterQuestion[predict.questionNumber - 3]?.chance,
@@ -875,7 +892,7 @@ export default function MainSlider() {
                       </div>
                       <img src="/info.svg" alt="info" />
                     </div>
-                    <Progress percent={predict.potential} status="active" />
+                    <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
                     <div className="potansielChanceBoxFooter">
                       <p style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         {isNumberIncreasing(
@@ -925,21 +942,17 @@ export default function MainSlider() {
           >
             <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>شغلی</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="شغلی" title_en="career" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>عاطفی</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="عاطفی" title_en="emotional" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>هدف</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="هدف" title_en="purpose" />
               </div>
-              <div style={{ display: "flex", alignItems: 'center', gap: "6px", textDecoration: "underline" }}>
-                <Modal />
-                <p>اقتصادی</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "underline" }}>
+                <Modal title="اقتصادی" title_en="financial" />
               </div>
             </div>
             <div className={styles.footerChart}>

@@ -1,8 +1,9 @@
-.footer{
+.footer {
   border-top: 1px solid #356e68;
   background-color: #fff;
   padding: 18px 0;
   height: 100px;
+  position: relative;
 }
 
 .footerContainer {
@@ -52,17 +53,25 @@
   height: 24px;
 }
 
+.textVersion {
+  color: #999999;
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  font-family: sans-serif !important;
+}
+
 @media (max-width: 768px) {
   .footerContainer {
     width: calc(100% - 24px);
     margin: 0 auto;
   }
 
-  .footerSocial{
+  .footerSocial {
     display: none;
   }
 
-  .footerContentText p{
+  .footerContentText p {
     font-size: 14px;
   }
 }

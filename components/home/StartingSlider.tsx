@@ -30,11 +30,14 @@ export default function StartingSlider() {
           </div>
           <div className={styles.startingSliderRightContent}>
             <p>
-              ویزارد، یک سیستم مشاوره هوشمند مبتنی بر هوش مصنوعیه که به شما در ویزا گرفتن کمک میکنه. این مدل هوش مصنوعی، علاوه بر احتمال
-              ویزا شدن، تحلیل علل و فاکتورهای اثر گذار رو نیز در اختیارتون قرار میده.
+              می دانید چقدر برای اخذ ویزا شانس دارید؟ ویزارد هوش مصنوعی ویزالند است که تحت آموزش با تجربه ترین کارشناسان و بررسی صد ها
+              پرونده موفق و ناموفق ویزا، تبدیل به یک مشاور قدرتمند ویزا شده است.
             </p>
+            <p style={{ textDecoration: "underline" }}>همین حالا می توانید با ویزارد گفتگو و شرایط پرونده خود را موشکافانه بررسی کنید.</p>
           </div>
-          <button className={styles.startButton} onClick={handleClick}>شروع <AiOutlineArrowLeft /></button>
+          <button className={styles.startButton} onClick={handleClick}>
+            شروع <AiOutlineArrowLeft />
+          </button>
         </div>
         <div className={styles.startingSliderLeft}>
           <img src="/vizardsec.png" />

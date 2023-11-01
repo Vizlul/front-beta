@@ -57,6 +57,7 @@ export interface PredictInterface {
   countSlider: number;
   questionIndex: number;
   chartData: any;
+  groupedXaiExpanded: object;
   xaiChartData: object;
   chartDataKeys: any;
   chartDataValues: any;
@@ -85,6 +86,7 @@ const initialState = {
     sample_five: "",
     sample_six: "",
   },
+  groupedXaiExpanded: {},
   chartDataKeys: [],
   chartDataValues: [-1, -1, -1, -1],
   statusDataValues: false,
@@ -145,7 +147,6 @@ const predictSlice = createSlice({
       }
     },
     setPotentialData: (state, { payload }) => {
-      console.log(payload)
       if (payload !== Math.floor(payload)) {
         state.potential = Math.round(Number(payload) * 100);
       } else {
@@ -163,13 +164,12 @@ const predictSlice = createSlice({
       state.xaiChartData.sample_six = payload.data;
     },
     setGroupedXai: (state, { payload }) => {
-      
       state.chartDataKeys = Object.keys(payload.data.aggregated_shap_values);
       state.chartDataValues = Object.values(payload.data.aggregated_shap_values);
       state.statusDataValues = !state.statusDataValues;
     },
-    setSubmitLastData: (state, { payload }) => {
-      
+    setGroupedXaiExpanded: (state, { payload }) => {
+      state.groupedXaiExpanded = payload
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -194,7 +194,7 @@ export const {
   minusCountQuestion,
   addCountQuestion,
   addCounterQuestionIndex,
-  setSubmitLastData,
+  setGroupedXaiExpanded,
   setPotentialData,
   setLoading,
   setError,
