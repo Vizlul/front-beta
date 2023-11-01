@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import "./Modal.css";
 import { XaiGroupedExpandedJson } from "@/utils/XaiGroupedExpandedJson";
+import { PredictInterface } from "@/store/features/predictSlice";
 
 export default function Modal({ title, title_en }) {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict.groupedXaiExpanded);
