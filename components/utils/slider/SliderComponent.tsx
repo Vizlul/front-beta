@@ -7,9 +7,9 @@ import { questions } from "@/utils/QuestionJson";
 import { getQuestionText } from "@/utils/QuestionText";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/autoplay';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper/core";
@@ -18,7 +18,6 @@ import { useSelector } from "react-redux";
 import { PredictInterface } from "@/store/features/predictSlice";
 
 export default function SliderComponent({ swiper, setSwiper }) {
-  
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
   const [updateSlider, setUpdateSlider] = useState(0);
 
@@ -51,8 +50,8 @@ export default function SliderComponent({ swiper, setSwiper }) {
         spaceBetween={10}
         slidesPerView={3}
         autoplay={{
-          "delay": 2500,
-          "disableOnInteraction": false
+          delay: 2500,
+          disableOnInteraction: false,
         }}
         className={styles.mySwiper}
         breakpoints={{
@@ -138,7 +137,11 @@ export default function SliderComponent({ swiper, setSwiper }) {
         >
           <AiOutlineArrowLeft />
         </button>
-        <button disabled={updateSlider === 1} onClick={() => handleBackSlider()} className={styles.sliderPrev}>
+        <button
+          // disabled={updateSlider === 1}
+          onClick={() => handleBackSlider()}
+          className={styles.sliderPrev}
+        >
           <AiOutlineArrowRight />{" "}
         </button>
       </div>
