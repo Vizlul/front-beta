@@ -1,7 +1,7 @@
 export const questions: any = [
   {
-    question: "جنسیت شما چیست؟ ",
-    answer: { value_fa: ["مرد", "زن"], value_en: ["Male", "Female"] },
+    question: "خانمی یا آقا؟ با اینکه اصلاا مهم نیس 🧒🧑",
+    answer: { value_fa: ["آقا", "خانم"], value_en: ["Male", "Female"] },
     question_value: "sex",
     type: "radio",
     options: [
@@ -11,7 +11,10 @@ export const questions: any = [
   },
   {
     question: "کدام کشور را برای انگشت‌نگاری انتخاب می‌کنید؟",
-    answer: { value_fa: ["ترکیه", "ارمنستان", "گرجستان", "امارات", "سایر"], value_en: ["TURKEY", "ARMENIA", "GEORGIA", "UAE", "OTHER"] },
+    answer: {
+      value_fa: ["ترکیه", "ارمنستان", "گرجستان", "امارات", "سایر"],
+      value_en: ["TURKEY", "ARMENIA", "GEORGIA", "UAE", "OTHER"],
+    },
     question_value: "country_where_applying_country",
     type: "dropdown",
     options: [
@@ -24,7 +27,10 @@ export const questions: any = [
   },
   {
     question: "وضعیت اقامت شما در کشور مدنظرتان برای انگشت‌ نگاری چگونه است؟",
-    answer: { value_fa: ["ملاقات کننده", "شهروند/اقامت دائم", "سایر"], value_en: ["visitor", "citizen", "OTHER"] },
+    answer: {
+      value_fa: ["ملاقات کننده", "شهروند/اقامت دائم", "سایر"],
+      value_en: ["visitor", "citizen", "OTHER"],
+    },
     question_value: "country_where_applying_status",
     type: "dropdown",
     options: [
@@ -63,6 +69,7 @@ export const questions: any = [
     answer: { value_fa: [1000, 10000] },
     question_value: "funds",
     type: "number",
+    step: 1000,
     options: [
       { value: 1000, label: 1000 },
       { value: 10000, label: 10000 },
@@ -70,7 +77,10 @@ export const questions: any = [
   },
   {
     question: "نوع ارتباط شما با شخص یا سازمانی که بابت آن به سفر می‌روید؟ ",
-    answer: { value_fa: ["اقوام درجه یک", "اقوام درجه دو", "دوستان", "هتل", "سایر"], value_en: ["f1", "f2", "friend", "hotel", "ukn"] },
+    answer: {
+      value_fa: ["اقوام درجه یک", "اقوام درجه دو", "دوستان", "هتل", "سایر"],
+      value_en: ["f1", "f2", "friend", "hotel", "ukn"],
+    },
     question_value: "contact_relation_to_me",
     type: "dropdown",
     options: [
@@ -95,7 +105,7 @@ export const questions: any = [
   //   ]
   // },
   {
-    question: "سطح تحصیلات شما چه‌قدر است؟ ",
+    question: "از مدرک تحصیلیت برام بگو؟ 🔭",
     answer: {
       value_fa: ["بدون تحصیلات", "کارورزی", "دیپلم", "کارشناسی", "ارشد", "دکترا"],
       value_en: ["unedu", "apprentice", "diploma", "bachelor", "master", "phd"],
@@ -112,7 +122,7 @@ export const questions: any = [
     ],
   },
   {
-    question: "شغل شما چیست؟ ",
+    question: "کارت چیه ؟ 👷‍♀️",
     answer: {
       value_fa: ["سایر/بدون شغل", "دانش اموز/دانشجو", "بازنشسته", "کارمند", "متخصص", "مدیر"],
       value_en: ["OTHER", "student", "retired", "employee", "specialist", "manager"],
@@ -139,7 +149,7 @@ export const questions: any = [
     ],
   },
   {
-    question: "آیا تا به حال از ورود به کشوری منع یا از کشوری دیپورت شده‌اید؟",
+    question: "تا حالا از جایی دیپورت شدی؟ 💀",
     answer: { value_fa: ["بله", "خیر"], value_en: ["true", "false"] },
     question_value: "refused_entry_or_deport",
     type: "radio",
@@ -159,13 +169,14 @@ export const questions: any = [
     ],
   },
   {
-    question: "چند سال‌تان است؟",
-    answer: { value_fa: [18, 100] },
+    question: "چند سالته؟ واقعی بگیاا 🔞",
+    answer: { value_fa: [18, 50] },
     question_value: "date_of_birth",
     type: "number",
+    // step: "",
     options: [
       { value: 18, label: 18 },
-      { value: 100, label: 100 },
+      { value: 50, label: 50 },
     ],
   },
   {
@@ -173,14 +184,18 @@ export const questions: any = [
     answer: { value_fa: [0, 30] },
     question_value: "country_where_applying_period",
     type: "number",
+    step: 5,
     options: [
       { value: 0, label: 0 },
       { value: 30, label: 30 },
     ],
   },
   {
-    question: " وضعیت تاهل خود را مشخص کنید؟",
-    answer: { value_fa: ["مجرد", "مزدوج", "مطلقه", "بیوه", "سایر"], value_en: ["single", "married", "divorced", "widowed", "unknown"] },
+    question: " وضعیت تاهل ؟ 💍/🦅",
+    answer: {
+      value_fa: ["مجرد", "مزدوج", "مطلقه", "بیوه", "سایر"],
+      value_en: ["single", "married", "divorced", "widowed", "unknown"],
+    },
     question_value: "applicant_marital_status",
     type: "dropdown",
     options: [
@@ -192,10 +207,11 @@ export const questions: any = [
     ],
   },
   {
-    question: "درحال‌حاضر چه مدت زمانی را متاهل هستید؟ (اگر مجرد هستید, پاسخ ندهید)",
+    question: "چند وقته متاهلی؟ ⌛💍",
     answer: { value_fa: [0, 50] },
     question_value: "marriage_period",
     type: "number",
+    step: 5,
     options: [
       { value: 0, label: 0 },
       { value: 50, label: 50 },
@@ -206,6 +222,7 @@ export const questions: any = [
     answer: { value_fa: [0, 50] },
     question_value: "previous_marriage_period",
     type: "number",
+    step:5,
     options: [
       { value: 0, label: 0 },
       { value: 50, label: 50 },
@@ -216,6 +233,7 @@ export const questions: any = [
     answer: { value_fa: [1, 5] },
     question_value: "passport_expiry_date_remaining",
     type: "number",
+    step: 1,
     options: [
       { value: 1, label: 1 },
       { value: 5, label: 5 },
@@ -226,6 +244,7 @@ export const questions: any = [
     answer: { value_fa: [1, 30] },
     question_value: "how_long_stay_period",
     type: "number",
+    step: 5,
     options: [
       { value: 1, label: 1 },
       { value: 30, label: 30 },
@@ -236,16 +255,18 @@ export const questions: any = [
     answer: { value_fa: [0, 10] },
     question_value: "education_period",
     type: "number",
+    step: 2,
     options: [
       { value: 0, label: 0 },
       { value: 10, label: 10 },
     ],
   },
   {
-    question: "چند سال در آخرین شغل‌تان، مشغول  به کار بوده‌اید؟",
-    answer: { value_fa: [0, 70] },
+    question: "چند سال تو آخرین شغلت، مشغول  به کار بودی؟ 🤔",
+    answer: { value_fa: [0, 35] },
     question_value: "occupation_period",
     type: "number",
+    step: 5,
     options: [
       { value: 0, label: 0 },
       { value: 70, label: 70 },
@@ -253,12 +274,13 @@ export const questions: any = [
   },
   {
     question: "قبلا در چند کشور سکونت داشته‌اید؟ ",
-    answer: { value_fa: [0, 90] },
+    answer: { value_fa: [0, 50] },
     question_value: "previous_country_of_residence_count",
     type: "number",
+    step: 5,
     options: [
       { value: 0, label: 0 },
-      { value: 90, label: 90 },
+      { value: 50, label: 50 },
     ],
   },
   {
@@ -266,6 +288,7 @@ export const questions: any = [
     answer: { value_fa: [0, 7] },
     question_value: "sibling_foreigner_count",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 7, label: 7 },
@@ -276,24 +299,29 @@ export const questions: any = [
     answer: { value_fa: [0, 7] },
     question_value: "child_mother_father_spouse_foreigner_count",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 7, label: 7 },
     ],
   },
   {
-    question: "چند نفر از فرزندان‌تان با شما سفر می‌کنند؟",
+    question: " چند نفر از فرزندات تو رو همراهی میکنن؟👶",
     answer: { value_fa: [0, 4] },
     question_value: "child_accompany",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 4, label: 4 },
     ],
   },
   {
-    question: "آیا پدر و مادرتان با شما سفر می‌کنند؟ ",
-    answer: { value_fa: ["هیچ‌کدام", "پدر و مادر با یکدیگر", "فقط پدر / مادر"], value_en: ["0", "1", "2"] },
+    question: "پدر مادر هم میان؟ 👪",
+    answer: {
+      value_fa: ["هیچ‌کدام", "پدر و مادر با یکدیگر", "فقط پدر / مادر"],
+      value_en: ["0", "1", "2"],
+    },
     question_value: "parent_accompany",
     type: "dropdown",
     options: [
@@ -303,7 +331,7 @@ export const questions: any = [
     ],
   },
   {
-    question: "آیا همسرتان با شما سفر می‌کند؟ ",
+    question: "همسرتم میبری دیگه؟👀🔪 ",
     answer: { value_fa: ["بله", "خیر"], value_en: [1, 0] },
     question_value: "spouse_accompany",
     type: "radio",
@@ -313,10 +341,11 @@ export const questions: any = [
     ],
   },
   {
-    question: "چند نفر از برادران و خواهران‌تان با شما سفر می‌کنند؟ ",
+    question: "چند نفر از خواهر ، برادرات میان؟👨‍👨‍👦‍👦 ",
     answer: { value_fa: [0, 7] },
     question_value: "sibling_accompany",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 7, label: 7 },
@@ -327,16 +356,18 @@ export const questions: any = [
     answer: { value_fa: [1, 30] },
     question_value: "child_average_age",
     type: "number",
+    step: 5,
     options: [
       { value: 1, label: 1 },
       { value: 30, label: 30 },
     ],
   },
   {
-    question: "چند فرزند دارید؟ ",
+    question: "صاحب چند تا فرزندی؟🍼 ",
     answer: { value_fa: [0, 4] },
     question_value: "child_count",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 11, label: 11 },
@@ -347,18 +378,21 @@ export const questions: any = [
     answer: { value_fa: [0, 50] },
     question_value: "sibling_average_age",
     type: "number",
+    step: 10,
   },
   {
     question: "چند خواهر یا برادر دارید؟ ",
     answer: { value_fa: [0, 7] },
     question_value: "sibling_count",
     type: "number",
+    step: 1,
   },
   {
     question: "چه تعداد از اقوام درجه یک شما در خارج از شهر محل اقامت‌تان زندگی می‌کنند؟ ",
     answer: { value_fa: [0, 11] },
     question_value: "long_distance_child_sibling_count",
     type: "number",
+    step: 1,
     options: [
       { value: 0, label: 0 },
       { value: 11, label: 11 },
@@ -369,5 +403,89 @@ export const questions: any = [
     answer: { value_fa: [0, 11] },
     question_value: "foreign_living_child_sibling_count",
     type: "number",
+    step: 1,
+  },
+
+  //new
+  {
+    question: "آیا دعوتنامه داری؟",
+    answer: {
+      value_en: [
+        "child",
+        "sibling",
+        "parent",
+        "f2",
+        "f3",
+        "friend",
+        "spouse",
+        "pro_unrelated",
+        "pro_related",
+        "none",
+      ],
+      value_fa: [
+        "فرزندان",
+        "خواهر و برادر",
+        "پدر و مادر",
+        "اقوام درجه دو",
+        "اقوام درجه سه",
+        "دوست",
+        "همسر",
+        "حرفه ای غیر مرتبط",
+        "حرفه ای مرتبط",
+        "هیچی 😶",
+      ],
+    },
+    question_value: "invitation_letter",
+    type: "dropdown",
+    options: [
+      { value: "child", label: "فرزندان" },
+      { value: "sibling", label: "خواهر و برادر" },
+      { value: "parent", label: "پدر و مادر" },
+      { value: "f2", label: "اقوام درجه دو" },
+      { value: "f3", label: "اقوام درجه سه" },
+      { value: "friend", label: "دوست" },
+      { value: "spouse", label: "همسر" },
+      { value: "pro_unrelated", label: "حرفه ای غیر مرتبط" },
+      { value: "pro_related", label: "حرفه ای مرتبط" },
+      { value: "none", label: "هیچی 😶" },
+    ],
+  },
+  {
+    question: "امیدوارم سابقه دار باشی. البته از نوع سفری!",
+    answer: {
+      value_en: [
+        "schengen_once",
+        "schengen_twice",
+        "us_uk_au",
+        "jp_kr_af",
+        "br_sg_th_my_ru",
+        "ae_om_qa",
+        "am_ge_tr_az",
+        "none",
+      ],
+      value_fa: [
+        "یکبار شنگن",
+        "دوبار و بیشتر شنگن",
+        "آمریکا ، انگلیس ، استرالیا",
+        "ژاپن ، کره ، آفریقا",
+        "برزیل ، سنگاپور ، تایلند ، مالزی ، روسیه",
+        "امارات ، عمان ، قطر",
+        "ارمنستان ، گرجستان ، ترکیه ، آذربایجان",
+        "هیچی 😶",
+      ],
+    },
+
+    question_value: "travel_history",
+    type: "dropdown",
+    options: [
+      { value: "schengen_once", label: "یکبار شنگن" },
+      { value: "schengen_twice", label: "دوبار و بیشتر شنگن" },
+      { value: "us_uk_au", label: "آمریکا ، انگلیس ، استرالیا" },
+      { value: "jp_kr_af", label: "ژاپن ، کره ، آفریقا" },
+      { value: "br_sg_th_my_ru", label: "برزیل ، سنگاپور ، تایلند ، مالزی ، روسیه" },
+      { value: "ae_om_qa", label: "امارات ، عمان ، قطر" },
+      { value: "am_ge_tr_az", label: "ارمنستان ، گرجستان ، ترکیه ، آذربایجان" },
+      { value: "none", label: "هیچی 😶" },
+    ],
   },
 ];
