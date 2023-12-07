@@ -17,8 +17,8 @@ export default function Home() {
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
         <StartingSlider />
-      ) : slider.name === SliderState.MAIN ? (
-        <MainSlider />
+        ) : slider.name === SliderState.MAIN ? (
+          <MainSlider />
       ) : slider.name === SliderState.FINISHED ? (
         <FinishSlider />
       ) : (

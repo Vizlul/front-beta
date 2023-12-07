@@ -141,9 +141,10 @@ const predictSlice = createSlice({
     setChanceData: (state, { payload }) => {
       
       if (payload.chance !== Math.floor(payload.chance)) {
-        state.chance = Math.round(Number(payload.chance) * 100);
+        console.log(payload.chance)
+        state.chance = payload.chance === 1 ? 100 : Math.round(Number(payload.chance) * 100);
       } else {
-        state.chance = payload.chance;
+        state.chance = payload.chance === 1 ? 100 : payload.chance;
       }
     },
     setPotentialData: (state, { payload }) => {

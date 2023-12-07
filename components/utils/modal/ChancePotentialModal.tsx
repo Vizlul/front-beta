@@ -9,7 +9,7 @@ export default function ChancePotentialModal({ title, description }) {
         className="add-counter"
         htmlFor={`modal-${title}`}
       >
-        {title === "more_answer" ? <img src="MoreAnswer.svg" /> : <img src="info.svg" />}
+        {title === "more_answer" ? <img src="info.svg" /> : <img src="info.svg" />}
       </label>
 
       <input className="modal-state" id={`modal-${title}`} type="checkbox" />

@@ -12,7 +12,7 @@ export default function MyChart({ prevCounterQuestion }) {
   // console.log(prevCounterQuestion)
 
   const data = {
-    labels: ["هدف", "عاطفی", "اقتصادی", "شغلی"],
+    labels: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
     datasets: [
       {
         label: "temp1",
