@@ -1,0 +1,14 @@
+.infoAlertBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #bbd7f2;
+  background: #e5effa;
+  width: 100%;
+}
+
+.infoAlertBox p {
+  margin: 0;
+}

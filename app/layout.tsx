@@ -28,9 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <link rel="icon" href="/vizard.png" />
           </head>
           <body>
-            <Navbar />
+            {/* <Navbar /> */}
             <main className="mainLayout">{children}</main>
-            <Footer />
+            {/* <Footer /> */}
           </body>
         </html>
       </Provider>

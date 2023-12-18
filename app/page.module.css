@@ -11,3 +11,10 @@
     margin: 0 auto;
   }
 }
+
+@media (max-width: 768px) {
+  .mainLayout{
+    width: 100% !important;
+    margin: 0;
+  }
+}
