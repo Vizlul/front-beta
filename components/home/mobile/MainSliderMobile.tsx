@@ -4,7 +4,7 @@ import styles from "./MainSliderMobile.module.css";
 import ApexChart from "@/utils/ApexChart";
 import { useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
-import ChancePopup from "@/components/utils/popups/ChancePopup";
+import PotentialPopup from "@/components/utils/popups/PotentialPopup";
 
 export default function MainSliderMobile() {
   let data = {
@@ -89,7 +89,7 @@ export default function MainSliderMobile() {
       </div>
 
       <AnswerPopup answerPopup={answerPopup} setAnswerPopup={setAnswerPopup} />
-      <ChancePopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
+      <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
   );
 }

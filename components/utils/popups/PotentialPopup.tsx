@@ -1,6 +1,6 @@
 import styles from "./ChancePopup.module.css";
 
-export default function ChancePopup({ chancePopup, setChancePopup }) {
+export default function PotentialPopup({ chancePopup, setChancePopup }) {
   return (
     <>
       {chancePopup && (
