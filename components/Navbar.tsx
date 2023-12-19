@@ -11,7 +11,7 @@ interface SliderInterface {
 
 export default function Navbar() {
   const handleReload = () => {
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

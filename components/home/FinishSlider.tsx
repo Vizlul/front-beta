@@ -6,7 +6,7 @@ export default function FinishSlider() {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
 
   const handleReload = () => {
-    window.location.reload()
+    // window.location.reload()
   }
 
   return (

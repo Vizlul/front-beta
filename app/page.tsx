@@ -16,22 +16,22 @@ interface SliderInterface {
 export default function Home() {
   const dispatch = useDispatch();
   const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
-  useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.innerWidth < 768) {
+  //     setIsMobile(true);
+  //   } else {
+  //     setIsMobile(false);
+  //   }
+  // }, []);
 
   return isMobile ? (
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
-        <StartingSliderMobile />
-      ) : slider.name === SliderState.MAIN ? (
         <MainSliderMobile />
+        ) : slider.name === SliderState.MAIN ? (
+        <StartingSliderMobile />
       ) : slider.name === SliderState.FINISHED ? (
         <FinishSlider />
       ) : (
