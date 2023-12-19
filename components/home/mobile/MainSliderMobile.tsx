@@ -4,6 +4,7 @@ import styles from "./MainSliderMobile.module.css";
 import ApexChart from "@/utils/ApexChart";
 import { useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
+import ChancePopup from "@/components/utils/popups/ChancePopup";
 
 export default function MainSliderMobile() {
   let data = {
@@ -39,6 +40,7 @@ export default function MainSliderMobile() {
     },
   };
   const [answerPopup, setAnswerPopup] = useState(false);
+  const [chancePopup, setChancePopup] = useState(false);
 
   return (
     <>
@@ -66,7 +68,7 @@ export default function MainSliderMobile() {
         </div>
         <div className={styles.footer}>
           <div className={styles.footerTop}>
-            <div className={styles.footerTopChance}>
+            <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
               <p>شناخت ویزارد از شما</p>
               <p>0%</p>
             </div>
@@ -87,6 +89,7 @@ export default function MainSliderMobile() {
       </div>
 
       <AnswerPopup answerPopup={answerPopup} setAnswerPopup={setAnswerPopup} />
+      <ChancePopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
   );
 }
