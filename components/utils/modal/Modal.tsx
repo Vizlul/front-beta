@@ -43,6 +43,7 @@ export default function Modal({ title, title_en }) {
                     ([param, value], idx) =>
                       idx < 4 && (
                         <div
+                          key={idx}
                           className="tableBoxCont"
                           style={{
                             display: "flex",

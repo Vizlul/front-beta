@@ -553,809 +553,811 @@ export default function MainSlider() {
   console.log("questionCounter", questionCounter);
   console.log("countAnswer", predict.countAnswer);
   console.log("questionNumber", predict.questionNumber);
+  const [isMobile, setIsMobile] = useState(false);
+
+  
 
   return (
-    // <div className={styles.mainSlider}>
-    //   {window.innerWidth < 768 ? (
-    //     <>
-    //       <div
-    //         className={styles.mainSliderLeft}
-    //         style={{
-    //           background: "#fff",
-    //           height: "100%",
-    //           display: "flex",
-    //           alignItems: "center",
-    //           justifyContent: "center",
-    //           position: "relative",
-    //           padding: "10px",
-    //         }}
-    //       >
-    //         <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
-    //         <div
-    //           style={{
-    //             display: "flex",
-    //             alignItems: "center",
-    //             justifyContent: "center",
-    //             gap: "10px",
-    //           }}
-    //         >
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="شغلی" title_en="career" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="عاطفی" title_en="emotional" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="هدف" title_en="purpose" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="اقتصادی" title_en="financial" />
-    //           </div>
-    //         </div>
-    //         <div className={styles.footerChart}>
-    //           <div>
-    //             <div className={styles.povNowAnswer}></div>
-    //             <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
-    //           </div>
-    //           <div>
-    //             <div className={styles.povOldAnswer}></div>
-    //             <p>موقعیت نسبت به پاسخ مرحله قبل</p>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className={styles.mainSliderRight}>
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div
-    //             style={{
-    //               background: "#fff",
-    //               width: "100%",
-    //               position: "relative",
-    //             }}
-    //           >
-    //             <SliderComponent swiper={swiper} setSwiper={setSwiper} />
-    //           </div>
-    //         </div>
+    <div className={styles.mainSlider}>
+      {isMobile ? (
+        <>
+          <div
+            className={styles.mainSliderLeft}
+            style={{
+              background: "#fff",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              padding: "10px",
+            }}
+          >
+            <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="شغلی" title_en="career" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="عاطفی" title_en="emotional" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="هدف" title_en="purpose" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="اقتصادی" title_en="financial" />
+              </div>
+            </div>
+            <div className={styles.footerChart}>
+              <div>
+                <div className={styles.povNowAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
+              </div>
+              <div>
+                <div className={styles.povOldAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله قبل</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.mainSliderRight}>
+            <div className={styles.mainSliderRightBox}>
+              <div
+                style={{
+                  background: "#fff",
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <SliderComponent swiper={swiper} setSwiper={setSwiper} />
+              </div>
+            </div>
 
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div style={{ background: "#fff", width: "100%", height: "100%" }}>
-    //             <div className={styles.questionContainer}>
-    //               <div className={styles.questionBox}>
-    //                 <div className={styles.questionBoxRight}>
-    //                   <span>سوال فعلی</span>
-    //                   <p>
-    //                     {predict.questionIndex === 0
-    //                       ? questions[predict.questionIndex].question
-    //                       : questions.find(
-    //                           (item: any) => item.question_value === predict.nextPredict
-    //                         )?.question}
-    //                   </p>
-    //                   {questions[predict.questionIndex].type === "number" ? (
-    //                     <div
-    //                       style={{
-    //                         display: "flex",
-    //                         alignItems: "center",
-    //                         width: "100%",
-    //                         gap: "20px",
-    //                       }}
-    //                     >
-    //                       {/* <InputNumber
-    //                         onChange={handleSelectedChoiceNumber}
-    //                         value={testValue}
-    //                         className={styles.numberInput}
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                         controls={true}
-    //                       /> */}
-    //                       <Slider
-    //                         style={{ width: "75%", color: "red" }}
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                         onChange={handleSelectedChoiceNumber}
-    //                         value={typeof testValue === "number" ? testValue : 0}
-    //                         marks={handleMarks({
-    //                           min: questions[predict.questionIndex].answer.value_fa[0],
-    //                           max: questions[predict.questionIndex].answer.value_fa[1],
-    //                           hardCode:
-    //                             questions[predict.questionIndex].question_value === "date_of_birth"
-    //                               ? "age"
-    //                               : "",
-    //                         })}
-    //                         styles={{
-    //                           track: {
-    //                             background: "transparent",
-    //                           },
-    //                           tracks: {
-    //                             background: "red",
-    //                           },
-    //                         }}
-    //                       />
-    //                       <InputNumber
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                         style={{
-    //                           width: "25%",
-    //                           borderRadius: "0",
-    //                           borderColor: "#d9d9d9 !important",
-    //                         }}
-    //                         value={testValue}
-    //                         onChange={handleSelectedChoiceNumber}
-    //                       />
-    //                     </div>
-    //                   ) : questions[predict.questionIndex].type === "dropdown" ? (
-    //                     <div className={styles.questionsAnswers}>
-    //                       {/* <select
-    //                     value={testValue}
-    //                     className={styles.selectAnswerMobile}
-    //                     style={{ width: "100%", borderRadius: "0 !important" }}
-    //                     onChange={handleChange}
-    //                   >
-    //                     {questions
-    //                       .find((item: any) => item.question_value === predict.nextPredict)
-    //                       ?.answer.value_en.map((item, index) => (
-    //                         <option key={index}>{item}</option>
-    //                       ))}
-    //                   </select> */}
-    //                       <Select
-    //                         className={styles.selectAnswer}
-    //                         size="large"
-    //                         labelInValue
-    //                         value={testValue}
-    //                         style={{
-    //                           width: "100%",
-    //                           borderRadius: "0 !important",
-    //                         }}
-    //                         onChange={handleChange}
-    //                         options={
-    //                           questions.find(
-    //                             (item: any) => item.question_value === predict.nextPredict
-    //                           )?.options
-    //                         }
-    //                       />
-    //                     </div>
-    //                   ) : questions[predict.questionIndex].type === "radio" ? (
-    //                     <div className={styles.questionsAnswers}>
-    //                       {questions[predict.questionIndex].answer.value_fa.map(
-    //                         (item: any, index: number) => (
-    //                           <div className={styles.buttonChoices} key={index}>
-    //                             <button
-    //                               onClick={() => handleSelectedChoice(index)}
-    //                               className={`${styles.sampleButton} ${
-    //                                 (activeButton === index && styles.activeButton) ||
-    //                                 (predict.lastData[predict.questionIndex]?.answer === item &&
-    //                                   styles.activeButton)
-    //                               }`}
-    //                             >
-    //                               {item}
-    //                             </button>
-    //                           </div>
-    //                         )
-    //                       )}
-    //                     </div>
-    //                   ) : (
-    //                     ""
-    //                   )}
-    //                 </div>
-    //                 <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
-    //                   <p>{predict.questionNumber}</p>
-    //                 </div>
-    //               </div>
-    //               <div className={styles.questionBoxButtonGroups}>
-    //                 <button
-    //                   onClick={() => handleBack()}
-    //                   className={styles.backButton}
-    //                   disabled={predict.questionIndex === 0 || finished}
-    //                 >
-    //                   <AiOutlineArrowRight style={{ fontSize: "14px" }} />
-    //                 </button>
-    //                 <button
-    //                   disabled={
-    //                     Object.keys(predictData).length === 0 ||
-    //                     (predict.countAnswer > 1 &&
-    //                       predictData[predict.nextPredict]?.length === 0) ||
-    //                     loading
-    //                   }
-    //                   onClick={() => handleSubmit()}
-    //                   className={styles.submitButton}
-    //                 >
-    //                   {loading ? (
-    //                     <>صبر کنید ...</>
-    //                   ) : finished ? (
-    //                     <p onClick={() => dispatch(setToFinished())}>پایان</p>
-    //                   ) : (
-    //                     <>
-    //                       ثبت پاسخ
-    //                       <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
-    //                     </>
-    //                   )}
-    //                 </button>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", height: "100%" }}>
+                <div className={styles.questionContainer}>
+                  <div className={styles.questionBox}>
+                    <div className={styles.questionBoxRight}>
+                      <span>سوال فعلی</span>
+                      <p>
+                        {predict.questionIndex === 0
+                          ? questions[predict.questionIndex].question
+                          : questions.find(
+                              (item: any) => item.question_value === predict.nextPredict
+                            )?.question}
+                      </p>
+                      {questions[predict.questionIndex].type === "number" ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "20px",
+                          }}
+                        >
+                          {/* <InputNumber
+                            onChange={handleSelectedChoiceNumber}
+                            value={testValue}
+                            className={styles.numberInput}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            controls={true}
+                          /> */}
+                          <Slider
+                            style={{ width: "75%", color: "red" }}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            onChange={handleSelectedChoiceNumber}
+                            value={typeof testValue === "number" ? testValue : 0}
+                            marks={handleMarks({
+                              min: questions[predict.questionIndex].answer.value_fa[0],
+                              max: questions[predict.questionIndex].answer.value_fa[1],
+                              hardCode:
+                                questions[predict.questionIndex].question_value === "date_of_birth"
+                                  ? "age"
+                                  : "",
+                            })}
+                            styles={{
+                              track: {
+                                background: "transparent",
+                              },
+                              tracks: {
+                                background: "red",
+                              },
+                            }}
+                          />
+                          <InputNumber
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            style={{
+                              width: "25%",
+                              borderRadius: "0",
+                              borderColor: "#d9d9d9 !important",
+                            }}
+                            value={testValue}
+                            onChange={handleSelectedChoiceNumber}
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "dropdown" ? (
+                        <div className={styles.questionsAnswers}>
+                          {/* <select
+                        value={testValue}
+                        className={styles.selectAnswerMobile}
+                        style={{ width: "100%", borderRadius: "0 !important" }}
+                        onChange={handleChange}
+                      >
+                        {questions
+                          .find((item: any) => item.question_value === predict.nextPredict)
+                          ?.answer.value_en.map((item, index) => (
+                            <option key={index}>{item}</option>
+                          ))}
+                      </select> */}
+                          <Select
+                            className={styles.selectAnswer}
+                            size="large"
+                            labelInValue
+                            value={testValue}
+                            style={{
+                              width: "100%",
+                              borderRadius: "0 !important",
+                            }}
+                            onChange={handleChange}
+                            options={
+                              questions.find(
+                                (item: any) => item.question_value === predict.nextPredict
+                              )?.options
+                            }
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "radio" ? (
+                        <div className={styles.questionsAnswers}>
+                          {questions[predict.questionIndex].answer.value_fa.map(
+                            (item: any, index: number) => (
+                              <div className={styles.buttonChoices} key={index}>
+                                <button
+                                  onClick={() => handleSelectedChoice(index)}
+                                  className={`${styles.sampleButton} ${
+                                    (activeButton === index && styles.activeButton) ||
+                                    (predict.lastData[predict.questionIndex]?.answer === item &&
+                                      styles.activeButton)
+                                  }`}
+                                >
+                                  {item}
+                                </button>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
+                      <p>{predict.questionNumber}</p>
+                    </div>
+                  </div>
+                  <div className={styles.questionBoxButtonGroups}>
+                    <button
+                      onClick={() => handleBack()}
+                      className={styles.backButton}
+                      disabled={predict.questionIndex === 0 || finished}
+                    >
+                      <AiOutlineArrowRight style={{ fontSize: "14px" }} />
+                    </button>
+                    <button
+                      disabled={
+                        Object.keys(predictData).length === 0 ||
+                        (predict.countAnswer > 1 &&
+                          predictData[predict.nextPredict]?.length === 0) ||
+                        loading
+                      }
+                      onClick={() => handleSubmit()}
+                      className={styles.submitButton}
+                    >
+                      {loading ? (
+                        <>صبر کنید ...</>
+                      ) : finished ? (
+                        <p onClick={() => dispatch(setToFinished())}>پایان</p>
+                      ) : (
+                        <>
+                          ثبت پاسخ
+                          <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div style={{ width: "100%", height: "100%" }}>
-    //             <div className={styles.potansielChanceContainer}>
-    //               <div className={styles.potansielChanceBox}>
-    //                 <div className={styles.potansielChanceBoxHeader}>
-    //                   <div>
-    //                     <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
-    //                     {predict.countAnswer > 0 ? (
-    //                       <>
-    //                         %<CountUp end={predict.chance} />
-    //                       </>
-    //                     ) : (
-    //                       <div
-    //                         style={{
-    //                           display: "flex",
-    //                           flexDirection: "column",
-    //                           gap: "6px",
-    //                         }}
-    //                       >
-    //                         <span
-    //                           style={{
-    //                             WebkitFilter: "4px",
-    //                             filter: "blur(4px)",
-    //                           }}
-    //                         >
-    //                           %<CountUp end={predict.chance} />
-    //                         </span>
-    //                         <span
-    //                           style={{
-    //                             display: "flex",
-    //                             alignItems: "center",
-    //                             gap: "4px",
-    //                             color: "rgba(0, 0, 0, 0.45)",
-    //                           }}
-    //                         >
-    //                           نیاز به پاسخ‌های بیشتر{" "}
-    //                           <ChancePotentialModal
-    //                             title="more_answer"
-    //                             description="تعداد پاسخ‌های شما برای تخمین شانس ویزا کافی نیست، پیشنهاد می‌کنیم به سوالات بیشتری پاسخ دهید."
-    //                           />
-    //                         </span>
-    //                       </div>
-    //                     )}
-    //                   </div>
-    //                   <ChancePotentialModal
-    //                     title="chance"
-    //                     description="در طول فرآیند پاسخگویی به سوالات، شانس ویزا شدن پرونده شما در هر
-    //         مرحله، توسط ویزارد و با توجه به اطلاعاتی که تا همان مرحله در اختیارش
-    //         قرار داده‌اید مشخص خواهد شد"
-    //                   />
-    //                 </div>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ width: "100%", height: "100%" }}>
+                <div className={styles.potansielChanceContainer}>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
+                        {predict.countAnswer > 0 ? (
+                          <>
+                            %<CountUp end={predict.chance} />
+                          </>
+                        ) : (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "6px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                WebkitFilter: "4px",
+                                filter: "blur(4px)",
+                              }}
+                            >
+                              %<CountUp end={predict.chance} />
+                            </span>
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                color: "rgba(0, 0, 0, 0.45)",
+                              }}
+                            >
+                              نیاز به پاسخ‌های بیشتر{" "}
+                              <ChancePotentialModal
+                                title="more_answer"
+                                description="تعداد پاسخ‌های شما برای تخمین شانس ویزا کافی نیست، پیشنهاد می‌کنیم به سوالات بیشتری پاسخ دهید."
+                              />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <ChancePotentialModal
+                        title="chance"
+                        description="در طول فرآیند پاسخگویی به سوالات، شانس ویزا شدن پرونده شما در هر
+            مرحله، توسط ویزارد و با توجه به اطلاعاتی که تا همان مرحله در اختیارش
+            قرار داده‌اید مشخص خواهد شد"
+                      />
+                    </div>
 
-    //                 <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
-    //                 <div className="potansielChanceBoxFooter">
-    //                   <p
-    //                     style={{
-    //                       display: "flex",
-    //                       alignItems: "center",
-    //                       gap: "10px",
-    //                     }}
-    //                   >
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.chance,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                     ) === "more" ? (
-    //                       <img src="/CaretUp.svg" alt="icon" />
-    //                     ) : isNumberIncreasing(
-    //                         prevCounterQuestion[predict.questionNumber - 3]?.chance,
-    //                         prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                       ) === "low" ? (
-    //                       <img
-    //                         src="/CaretDown.svg"
-    //                         style={{
-    //                           color: "red",
-    //                           transform: "translate(rotate(-180deg))",
-    //                         }}
-    //                         alt="icon"
-    //                       />
-    //                     ) : (
-    //                       <img src="/CaretEqual.svg" alt="icon" />
-    //                     )}
-    //                     {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
-    //                     {prevCounterQuestion[predict.questionNumber - 3]
-    //                       ? Math.abs(
-    //                           prevCounterQuestion[predict.questionNumber - 3]?.chance -
-    //                             prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                         )
-    //                       : ""}{" "}
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.chance,
-    //                       prevCounterQuestion[predict.questionNumber - 1]?.chance
-    //                     ) === "equal"
-    //                       ? "بدون تغییر"
-    //                       : "تغییر به نسبت سوال قبل"}
-    //                   </p>
-    //                 </div>
-    //               </div>
-    //               <div className={styles.potansielChanceBox}>
-    //                 <div className={styles.potansielChanceBoxHeader}>
-    //                   <div>
-    //                     <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
-    //                     %<CountUp end={predict.potential} />
-    //                   </div>
-    //                   <ChancePotentialModal
-    //                     title="potential"
-    //                     description="هرچه شناخت ویزارد از شما بیشتر باشد، پاسخی که می‌دهد به واقعیت نزدیک
-    //         خواهد بود. پس لطفا به تا پایان گفتگو، همراهش بمانید و با دقت به
-    //         سوالاتش پاسخ دهید."
-    //                   />
-    //                 </div>
-    //                 <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
-    //                 <div className="potansielChanceBoxFooter">
-    //                   <p
-    //                     style={{
-    //                       display: "flex",
-    //                       alignItems: "center",
-    //                       gap: "10px",
-    //                     }}
-    //                   >
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                     ) === "more" ? (
-    //                       <img src="/CaretUp.svg" alt="icon" />
-    //                     ) : isNumberIncreasing(
-    //                         prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                         prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                       ) === "low" ? (
-    //                       <img
-    //                         src="/CaretDown.svg"
-    //                         style={{
-    //                           color: "red",
-    //                           transform: "translate(rotate(-180deg))",
-    //                         }}
-    //                         alt="icon"
-    //                       />
-    //                     ) : (
-    //                       <img src="/CaretEqual.svg" alt="icon" />
-    //                     )}
-    //                     {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
-    //                     {prevCounterQuestion[predict.questionNumber - 3]
-    //                       ? Math.abs(
-    //                           prevCounterQuestion[predict.questionNumber - 3]?.potential -
-    //                             prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                         )
-    //                       : ""}{" "}
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                     ) === "equal"
-    //                       ? "بدون تغییر"
-    //                       : "تغییر به نسبت سوال قبل"}
-    //                   </p>
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </>
-    //   ) : (
-    //     <>
-    //       <div className={styles.mainSliderRight}>
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div
-    //             style={{
-    //               background: "#fff",
-    //               width: "100%",
-    //               position: "relative",
-    //             }}
-    //           >
-    //             <SliderComponent swiper={swiper} setSwiper={setSwiper} />
-    //           </div>
-    //         </div>
+                    <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
+                    <div className="potansielChanceBoxFooter">
+                      <p
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                            prevCounterQuestion[predict.questionNumber - 2]?.chance
+                          ) === "low" ? (
+                          <img
+                            src="/CaretDown.svg"
+                            style={{
+                              color: "red",
+                              transform: "translate(rotate(-180deg))",
+                            }}
+                            alt="icon"
+                          />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                prevCounterQuestion[predict.questionNumber - 2]?.chance
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 1]?.chance
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
+                        %<CountUp end={predict.potential} />
+                      </div>
+                      <ChancePotentialModal
+                        title="potential"
+                        description="هرچه شناخت ویزارد از شما بیشتر باشد، پاسخی که می‌دهد به واقعیت نزدیک
+            خواهد بود. پس لطفا به تا پایان گفتگو، همراهش بمانید و با دقت به
+            سوالاتش پاسخ دهید."
+                      />
+                    </div>
+                    <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
+                    <div className="potansielChanceBoxFooter">
+                      <p
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                            prevCounterQuestion[predict.questionNumber - 2]?.potential
+                          ) === "low" ? (
+                          <img
+                            src="/CaretDown.svg"
+                            style={{
+                              color: "red",
+                              transform: "translate(rotate(-180deg))",
+                            }}
+                            alt="icon"
+                          />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.potential -
+                                prevCounterQuestion[predict.questionNumber - 2]?.potential
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={styles.mainSliderRight}>
+            <div className={styles.mainSliderRightBox}>
+              <div
+                style={{
+                  background: "#fff",
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <SliderComponent swiper={swiper} setSwiper={setSwiper} />
+              </div>
+            </div>
 
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div style={{ background: "#fff", width: "100%", height: "100%" }}>
-    //             <div className={styles.questionContainer}>
-    //               <div className={styles.questionBox}>
-    //                 <div className={styles.questionBoxRight}>
-    //                   <span>سوال فعلی</span>
-    //                   <p>
-    //                     {predict.questionIndex === 0
-    //                       ? questions[predict.questionIndex].question
-    //                       : questions.find(
-    //                           (item: any) => item.question_value === predict.nextPredict
-    //                         )?.question}
-    //                   </p>
-    //                   {questions[predict.questionIndex]?.type === "number" ? (
-    //                     <div
-    //                       style={{
-    //                         display: "flex",
-    //                         alignItems: "center",
-    //                         width: "100%",
-    //                         gap: "20px",
-    //                       }}
-    //                     >
-    //                       {/* <InputNumber
-    //                         onChange={handleSelectedChoiceNumber}
-    //                         value={testValue}
-    //                         className={styles.numberInput}
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                         controls={true}
-    //                       /> */}
-    //                       <InputNumber
-    //                         style={{ width: "" }}
-    //                         value={testValue}
-    //                         onChange={handleSelectedChoiceNumber}
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                       />
-    //                       <Slider
-    //                         style={{ width: "100%" }}
-    //                         min={questions[predict.questionIndex].answer.value_fa[0]}
-    //                         max={questions[predict.questionIndex].answer.value_fa[1]}
-    //                         onChange={handleSelectedChoiceNumber}
-    //                         value={typeof testValue === "number" ? testValue : 0}
-    //                         marks={handleMarks({
-    //                           min: questions[predict.questionIndex].answer.value_fa[0],
-    //                           max: questions[predict.questionIndex].answer.value_fa[1],
-    //                           stepNumber: questions[predict.questionIndex].step,
-    //                           hardCode:
-    //                             questions[predict.questionIndex].question_value === "date_of_birth"
-    //                               ? "age"
-    //                               : "",
-    //                         })}
-    //                       />
-    //                     </div>
-    //                   ) : questions[predict.questionIndex].type === "dropdown" ? (
-    //                     <div className={styles.questionsAnswers}>
-    //                       <Select
-    //                         className={styles.selectAnswer}
-    //                         size="large"
-    //                         labelInValue
-    //                         value={testValue}
-    //                         style={{
-    //                           width: "100%",
-    //                           borderRadius: "0 !important",
-    //                         }}
-    //                         onChange={handleChange}
-    //                         options={
-    //                           questions.find(
-    //                             (item: any) => item.question_value === predict.nextPredict
-    //                           )?.options
-    //                         }
-    //                       />
-    //                     </div>
-    //                   ) : questions[predict.questionIndex].type === "radio" ? (
-    //                     <div className={styles.questionsAnswers}>
-    //                       {questions[predict.questionIndex].answer.value_fa.map(
-    //                         (item: any, index: number) => (
-    //                           <div className={styles.buttonChoices} key={index}>
-    //                             <button
-    //                               onClick={() => handleSelectedChoice(index)}
-    //                               className={`${styles.sampleButton} ${
-    //                                 (activeButton === index && styles.activeButton) ||
-    //                                 (predict.lastData[predict.questionIndex]?.answer === item &&
-    //                                   styles.activeButton)
-    //                               }`}
-    //                             >
-    //                               {item}
-    //                             </button>
-    //                           </div>
-    //                         )
-    //                       )}
-    //                     </div>
-    //                   ) : (
-    //                     ""
-    //                   )}
-    //                 </div>
-    //                 <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
-    //                   <p>{predict.questionNumber}</p>
-    //                 </div>
-    //               </div>
-    //               <div className={styles.questionBoxButtonGroups}>
-    //                 <button
-    //                   onClick={() => handleBack()}
-    //                   className={styles.backButton}
-    //                   disabled={predict.questionIndex === 0 || finished}
-    //                 >
-    //                   <AiOutlineArrowRight style={{ fontSize: "14px" }} />
-    //                 </button>
-    //                 <button
-    //                   disabled={
-    //                     Object.keys(predictData).length === 0 ||
-    //                     (predict.countAnswer > 1 &&
-    //                       predictData[predict.nextPredict]?.length === 0) ||
-    //                     loading
-    //                   }
-    //                   onClick={() => handleSubmit()}
-    //                   className={styles.submitButton}
-    //                 >
-    //                   {loading ? (
-    //                     <>صبر کنید ...</>
-    //                   ) : finished ? (
-    //                     <p onClick={() => dispatch(setToFinished())}>پایان</p>
-    //                   ) : (
-    //                     <>
-    //                       ثبت پاسخ
-    //                       <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
-    //                     </>
-    //                   )}
-    //                 </button>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ background: "#fff", width: "100%", height: "100%" }}>
+                <div className={styles.questionContainer}>
+                  <div className={styles.questionBox}>
+                    <div className={styles.questionBoxRight}>
+                      <span>سوال فعلی</span>
+                      <p>
+                        {predict.questionIndex === 0
+                          ? questions[predict.questionIndex].question
+                          : questions.find(
+                              (item: any) => item.question_value === predict.nextPredict
+                            )?.question}
+                      </p>
+                      {questions[predict.questionIndex]?.type === "number" ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "20px",
+                          }}
+                        >
+                          {/* <InputNumber
+                            onChange={handleSelectedChoiceNumber}
+                            value={testValue}
+                            className={styles.numberInput}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            controls={true}
+                          /> */}
+                          <InputNumber
+                            style={{ width: "" }}
+                            value={testValue}
+                            onChange={handleSelectedChoiceNumber}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                          />
+                          <Slider
+                            style={{ width: "100%" }}
+                            min={questions[predict.questionIndex].answer.value_fa[0]}
+                            max={questions[predict.questionIndex].answer.value_fa[1]}
+                            onChange={handleSelectedChoiceNumber}
+                            value={typeof testValue === "number" ? testValue : 0}
+                            marks={handleMarks({
+                              min: questions[predict.questionIndex].answer.value_fa[0],
+                              max: questions[predict.questionIndex].answer.value_fa[1],
+                              stepNumber: questions[predict.questionIndex].step,
+                              hardCode:
+                                questions[predict.questionIndex].question_value === "date_of_birth"
+                                  ? "age"
+                                  : "",
+                            })}
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "dropdown" ? (
+                        <div className={styles.questionsAnswers}>
+                          <Select
+                            className={styles.selectAnswer}
+                            size="large"
+                            labelInValue
+                            value={testValue}
+                            style={{
+                              width: "100%",
+                              borderRadius: "0 !important",
+                            }}
+                            onChange={handleChange}
+                            options={
+                              questions.find(
+                                (item: any) => item.question_value === predict.nextPredict
+                              )?.options
+                            }
+                          />
+                        </div>
+                      ) : questions[predict.questionIndex].type === "radio" ? (
+                        <div className={styles.questionsAnswers}>
+                          {questions[predict.questionIndex].answer.value_fa.map(
+                            (item: any, index: number) => (
+                              <div className={styles.buttonChoices} key={index}>
+                                <button
+                                  onClick={() => handleSelectedChoice(index)}
+                                  className={`${styles.sampleButton} ${
+                                    (activeButton === index && styles.activeButton) ||
+                                    (predict.lastData[predict.questionIndex]?.answer === item &&
+                                      styles.activeButton)
+                                  }`}
+                                >
+                                  {item}
+                                </button>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className={styles.questionBoxLeft} style={{ marginTop: "-90px" }}>
+                      <p>{predict.questionNumber}</p>
+                    </div>
+                  </div>
+                  <div className={styles.questionBoxButtonGroups}>
+                    <button
+                      onClick={() => handleBack()}
+                      className={styles.backButton}
+                      disabled={predict.questionIndex === 0 || finished}
+                    >
+                      <AiOutlineArrowRight style={{ fontSize: "14px" }} />
+                    </button>
+                    <button
+                      disabled={
+                        Object.keys(predictData).length === 0 ||
+                        (predict.countAnswer > 1 &&
+                          predictData[predict.nextPredict]?.length === 0) ||
+                        loading
+                      }
+                      onClick={() => handleSubmit()}
+                      className={styles.submitButton}
+                    >
+                      {loading ? (
+                        <>صبر کنید ...</>
+                      ) : finished ? (
+                        <p onClick={() => dispatch(setToFinished())}>پایان</p>
+                      ) : (
+                        <>
+                          ثبت پاسخ
+                          <AiOutlineArrowLeft style={{ fontSize: "14px" }} />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    //         <div className={styles.mainSliderRightBox}>
-    //           <div style={{ width: "100%", height: "100%" }}>
-    //             <div className={styles.potansielChanceContainer}>
-    //               <div className={styles.potansielChanceBox}>
-    //                 <div className={styles.potansielChanceBoxHeader}>
-    //                   <div>
-    //                     <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
-    //                     {predict.countAnswer > 0 ? (
-    //                       <>
-    //                         %<CountUp end={predict.chance} />
-    //                       </>
-    //                     ) : (
-    //                       <div
-    //                         style={{
-    //                           display: "flex",
-    //                           flexDirection: "column",
-    //                           gap: "6px",
-    //                         }}
-    //                       >
-    //                         {/* <span
-    //                           style={{
-    //                             WebkitFilter: "4px",
-    //                             filter: "blur(4px)",
-    //                           }}
-    //                         >
-    //                           %<CountUp end={predict.chance} />
-    //                         </span> */}
-    //                         <span
-    //                           style={{
-    //                             display: "flex",
-    //                             alignItems: "center",
-    //                             gap: "4px",
-    //                             color: "rgba(0, 0, 0, 0.45)",
-    //                           }}
-    //                         >
-    //                           نیاز به پاسخ‌های بیشتر{" "}
-    //                           <ChancePotentialModal
-    //                             title="more_answer"
-    //                             description="تعداد پاسخ‌های شما برای تخمین شانس ویزا کافی نیست، پیشنهاد می‌کنیم به سوالات بیشتری پاسخ دهید."
-    //                           />
-    //                         </span>
-    //                       </div>
-    //                     )}
-    //                   </div>
-    //                   <ChancePotentialModal
-    //                     title="chance"
-    //                     description="در طول فرآیند پاسخگویی به سوالات، شانس ویزا شدن پرونده شما در هر
-    //         مرحله، توسط ویزارد و با توجه به اطلاعاتی که تا همان مرحله در اختیارش
-    //         قرار داده‌اید مشخص خواهد شد"
-    //                   />
-    //                 </div>
+            <div className={styles.mainSliderRightBox}>
+              <div style={{ width: "100%", height: "100%" }}>
+                <div className={styles.potansielChanceContainer}>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شانس ویزا</p>
+                        {predict.countAnswer > 0 ? (
+                          <>
+                            %<CountUp end={predict.chance} />
+                          </>
+                        ) : (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "6px",
+                            }}
+                          >
+                            {/* <span
+                              style={{
+                                WebkitFilter: "4px",
+                                filter: "blur(4px)",
+                              }}
+                            >
+                              %<CountUp end={predict.chance} />
+                            </span> */}
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                color: "rgba(0, 0, 0, 0.45)",
+                              }}
+                            >
+                              نیاز به پاسخ‌های بیشتر{" "}
+                              <ChancePotentialModal
+                                title="more_answer"
+                                description="تعداد پاسخ‌های شما برای تخمین شانس ویزا کافی نیست، پیشنهاد می‌کنیم به سوالات بیشتری پاسخ دهید."
+                              />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <ChancePotentialModal
+                        title="chance"
+                        description="در طول فرآیند پاسخگویی به سوالات، شانس ویزا شدن پرونده شما در هر
+            مرحله، توسط ویزارد و با توجه به اطلاعاتی که تا همان مرحله در اختیارش
+            قرار داده‌اید مشخص خواهد شد"
+                      />
+                    </div>
 
-    //                 <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
-    //                 <div className="potansielChanceBoxFooter">
-    //                   <p
-    //                     style={{
-    //                       display: "flex",
-    //                       alignItems: "center",
-    //                       gap: "10px",
-    //                     }}
-    //                   >
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.chance,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                     ) === "more" ? (
-    //                       <img src="/CaretUp.svg" alt="icon" />
-    //                     ) : isNumberIncreasing(
-    //                         prevCounterQuestion[predict.questionNumber - 3]?.chance,
-    //                         prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                       ) === "low" ? (
-    //                       <img
-    //                         src="/CaretDown.svg"
-    //                         style={{
-    //                           color: "red",
-    //                           transform: "translate(rotate(-180deg))",
-    //                         }}
-    //                         alt="icon"
-    //                       />
-    //                     ) : (
-    //                       <img src="/CaretEqual.svg" alt="icon" />
-    //                     )}
-    //                     {prevCounterQuestion[predict.questionNumber - 3] &&
-    //                     Math.abs(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.chance -
-    //                         prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                     ) !== 0
-    //                       ? "%"
-    //                       : ""}
-    //                     {prevCounterQuestion[predict.questionNumber - 3]
-    //                       ? Math.abs(
-    //                           prevCounterQuestion[predict.questionNumber - 3]?.chance -
-    //                             prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                         ) !== 0
-    //                         ? Math.abs(
-    //                             prevCounterQuestion[predict.questionNumber - 3]?.chance -
-    //                               prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                           )
-    //                         : ""
-    //                       : ""}{" "}
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.chance,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.chance
-    //                     ) === "equal"
-    //                       ? "بدون تغییر"
-    //                       : "تغییر به نسبت سوال قبل"}
-    //                   </p>
-    //                 </div>
-    //               </div>
-    //               <div className={styles.potansielChanceBox}>
-    //                 <div className={styles.potansielChanceBoxHeader}>
-    //                   <div>
-    //                     <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
-    //                     %<CountUp end={predict.potential} />
-    //                   </div>
-    //                   <ChancePotentialModal
-    //                     title="potential"
-    //                     description="هرچه شناخت ویزارد از شما بیشتر باشد، پاسخی که می‌دهد به واقعیت نزدیک
-    //         خواهد بود. پس لطفا به تا پایان گفتگو، همراهش بمانید و با دقت به
-    //         سوالاتش پاسخ دهید."
-    //                   />
-    //                 </div>
-    //                 <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
-    //                 <div className="potansielChanceBoxFooter">
-    //                   <p
-    //                     style={{
-    //                       display: "flex",
-    //                       alignItems: "center",
-    //                       gap: "10px",
-    //                     }}
-    //                   >
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                     ) === "more" ? (
-    //                       <img src="/CaretUp.svg" alt="icon" />
-    //                     ) : isNumberIncreasing(
-    //                         prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                         prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                       ) === "low" ? (
-    //                       <img
-    //                         src="/CaretDown.svg"
-    //                         style={{
-    //                           color: "red",
-    //                           transform: "translate(rotate(-180deg))",
-    //                         }}
-    //                         alt="icon"
-    //                       />
-    //                     ) : (
-    //                       <img src="/CaretEqual.svg" alt="icon" />
-    //                     )}
-    //                     {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
-    //                     {prevCounterQuestion[predict.questionNumber - 3]
-    //                       ? Math.abs(
-    //                           prevCounterQuestion[predict.questionNumber - 3]?.potential -
-    //                             prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                         )
-    //                       : ""}{" "}
-    //                     {isNumberIncreasing(
-    //                       prevCounterQuestion[predict.questionNumber - 3]?.potential,
-    //                       prevCounterQuestion[predict.questionNumber - 2]?.potential
-    //                     ) === "equal"
-    //                       ? "بدون تغییر"
-    //                       : "تغییر به نسبت سوال قبل"}
-    //                   </p>
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div
-    //         className={styles.mainSliderLeft}
-    //         style={{
-    //           background: "#fff",
-    //           height: "100%",
-    //           display: "flex",
-    //           alignItems: "center",
-    //           justifyContent: "center",
-    //           position: "relative",
-    //           padding: "10px",
-    //         }}
-    //       >
-    //         <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
-    //         <div
-    //           style={{
-    //             display: "flex",
-    //             alignItems: "center",
-    //             justifyContent: "center",
-    //             gap: "10px",
-    //           }}
-    //         >
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="شغلی" title_en="career" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="عاطفی" title_en="emotional" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="هدف" title_en="purpose" />
-    //           </div>
-    //           <div
-    //             style={{
-    //               display: "flex",
-    //               alignItems: "center",
-    //               gap: "6px",
-    //               textDecoration: "underline",
-    //             }}
-    //           >
-    //             <Modal title="اقتصادی" title_en="financial" />
-    //           </div>
-    //         </div>
-    //         <div className={styles.footerChart}>
-    //           <div>
-    //             <div className={styles.povNowAnswer}></div>
-    //             <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
-    //           </div>
-    //           <div>
-    //             <div className={styles.povOldAnswer}></div>
-    //             <p>موقعیت نسبت به پاسخ مرحله قبل</p>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </>
-    //   )}
-    // </div>
-    <></>
+                    <Progress percent={predict.chance} status="active" strokeColor="#00554e" />
+                    <div className="potansielChanceBoxFooter">
+                      <p
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                            prevCounterQuestion[predict.questionNumber - 2]?.chance
+                          ) === "low" ? (
+                          <img
+                            src="/CaretDown.svg"
+                            style={{
+                              color: "red",
+                              transform: "translate(rotate(-180deg))",
+                            }}
+                            alt="icon"
+                          />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] &&
+                        Math.abs(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                            prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) !== 0
+                          ? "%"
+                          : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                prevCounterQuestion[predict.questionNumber - 2]?.chance
+                            ) !== 0
+                            ? Math.abs(
+                                prevCounterQuestion[predict.questionNumber - 3]?.chance -
+                                  prevCounterQuestion[predict.questionNumber - 2]?.chance
+                              )
+                            : ""
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.chance,
+                          prevCounterQuestion[predict.questionNumber - 2]?.chance
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.potansielChanceBox}>
+                    <div className={styles.potansielChanceBoxHeader}>
+                      <div>
+                        <p style={{ marginBottom: "20px" }}>شناخت ویزارد شما</p>
+                        %<CountUp end={predict.potential} />
+                      </div>
+                      <ChancePotentialModal
+                        title="potential"
+                        description="هرچه شناخت ویزارد از شما بیشتر باشد، پاسخی که می‌دهد به واقعیت نزدیک
+            خواهد بود. پس لطفا به تا پایان گفتگو، همراهش بمانید و با دقت به
+            سوالاتش پاسخ دهید."
+                      />
+                    </div>
+                    <Progress percent={predict.potential} status="active" strokeColor="#00ac87" />
+                    <div className="potansielChanceBoxFooter">
+                      <p
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "more" ? (
+                          <img src="/CaretUp.svg" alt="icon" />
+                        ) : isNumberIncreasing(
+                            prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                            prevCounterQuestion[predict.questionNumber - 2]?.potential
+                          ) === "low" ? (
+                          <img
+                            src="/CaretDown.svg"
+                            style={{
+                              color: "red",
+                              transform: "translate(rotate(-180deg))",
+                            }}
+                            alt="icon"
+                          />
+                        ) : (
+                          <img src="/CaretEqual.svg" alt="icon" />
+                        )}
+                        {prevCounterQuestion[predict.questionNumber - 3] ? "%" : ""}
+                        {prevCounterQuestion[predict.questionNumber - 3]
+                          ? Math.abs(
+                              prevCounterQuestion[predict.questionNumber - 3]?.potential -
+                                prevCounterQuestion[predict.questionNumber - 2]?.potential
+                            )
+                          : ""}{" "}
+                        {isNumberIncreasing(
+                          prevCounterQuestion[predict.questionNumber - 3]?.potential,
+                          prevCounterQuestion[predict.questionNumber - 2]?.potential
+                        ) === "equal"
+                          ? "بدون تغییر"
+                          : "تغییر به نسبت سوال قبل"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className={styles.mainSliderLeft}
+            style={{
+              background: "#fff",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              padding: "10px",
+            }}
+          >
+            <MyChart questionCounter={questionCounter} prevCounterQuestion={prevCounterQuestion} />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="شغلی" title_en="career" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="عاطفی" title_en="emotional" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="هدف" title_en="purpose" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "underline",
+                }}
+              >
+                <Modal title="اقتصادی" title_en="financial" />
+              </div>
+            </div>
+            <div className={styles.footerChart}>
+              <div>
+                <div className={styles.povNowAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله فعلی</p>
+              </div>
+              <div>
+                <div className={styles.povOldAnswer}></div>
+                <p>موقعیت نسبت به پاسخ مرحله قبل</p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

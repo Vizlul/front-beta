@@ -18,13 +18,7 @@ export default function Home() {
   const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
   const [isMobile, setIsMobile] = useState(true);
 
-  // useEffect(() => {
-  //   if (window.innerWidth < 768) {
-  //     setIsMobile(true);
-  //   } else {
-  //     setIsMobile(false);
-  //   }
-  // }, []);
+
 
   return isMobile ? (
     <div className={styles.mainLayout}>

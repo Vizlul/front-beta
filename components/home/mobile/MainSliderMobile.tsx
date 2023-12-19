@@ -1,6 +1,7 @@
+"use client";
 import InfoAlert from "@/components/utils/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
-import ReactApexChart from "react-apexcharts";
+import ApexChart from "@/utils/ApexChart";
 import { useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
 
@@ -59,12 +60,7 @@ export default function MainSliderMobile() {
                 <p className={styles.noBlur}>نامشخص</p>
                 <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
               </div>
-              <ReactApexChart
-                options={data.options}
-                series={data.series}
-                type="area"
-                height={250}
-              />
+              <ApexChart options={data.options} series={data.series} type="area" height={250} />
             </div>
           </div>
         </div>
