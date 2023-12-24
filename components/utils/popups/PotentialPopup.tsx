@@ -1,4 +1,4 @@
-import styles from "./ChancePopup.module.css";
+import styles from "./PotentialPopup.module.css";
 
 export default function PotentialPopup({ chancePopup, setChancePopup }) {
   return (

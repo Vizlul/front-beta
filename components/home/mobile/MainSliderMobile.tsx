@@ -5,6 +5,7 @@ import ApexChart from "@/utils/ApexChart";
 import { useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
 import PotentialPopup from "@/components/utils/popups/PotentialPopup";
+import { questions } from "@/utils/QuestionJson";
 
 export default function MainSliderMobile() {
   let data = {
@@ -41,6 +42,7 @@ export default function MainSliderMobile() {
   };
   const [answerPopup, setAnswerPopup] = useState(false);
   const [chancePopup, setChancePopup] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   return (
     <>
@@ -76,19 +78,32 @@ export default function MainSliderMobile() {
               <img src="vizard-head.svg" alt="vizard-head" />
             </div>
           </div>
+
           <div className={styles.footerDown}>
             <div className={styles.footerDownQuestion}>
-              <p>01</p>
-              <p>چند سال تو آخرین شغلت، مشغول به کار بودی؟ 🤔</p>
+              <p>{currentQuestionIndex + 1}</p>
+              <p>{questions[currentQuestionIndex].question}</p>
             </div>
-            <button className={styles.submitButton} onClick={() => setAnswerPopup(true)}>
+
+            <button
+              className={styles.submitButton}
+              onClick={() => {
+                setAnswerPopup(true);
+                // setCurrentQuestionIndex(currentQuestionIndex + 1);
+              }}
+            >
               <img src="forward-arrow.svg" alt="forward-arrow" />
             </button>
           </div>
         </div>
       </div>
 
-      <AnswerPopup answerPopup={answerPopup} setAnswerPopup={setAnswerPopup} />
+      <AnswerPopup
+        answerPopup={answerPopup}
+        setAnswerPopup={setAnswerPopup}
+        currentQuestionIndex={currentQuestionIndex}
+        setCurrentQuestionIndex={setCurrentQuestionIndex}
+      />
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
   );

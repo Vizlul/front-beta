@@ -18,13 +18,11 @@ export default function Home() {
   const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
   const [isMobile, setIsMobile] = useState(true);
 
-
-
   return isMobile ? (
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
         <MainSliderMobile />
-        ) : slider.name === SliderState.MAIN ? (
+      ) : slider.name === SliderState.MAIN ? (
         <StartingSliderMobile />
       ) : slider.name === SliderState.FINISHED ? (
         <FinishSlider />

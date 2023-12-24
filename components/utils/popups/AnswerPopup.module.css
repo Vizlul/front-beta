@@ -90,7 +90,7 @@
 .answerPopupChioces {
   display: flex;
   gap: 10px;
-  margin-top: 16px;
+  /* margin-top: 16px; */
   flex-wrap: wrap;
   padding: 10px 14px;
 }
