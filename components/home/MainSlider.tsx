@@ -362,7 +362,6 @@ export default function MainSlider() {
       dispatch(setPotentialData(prevCounterQuestion[questionCounter - 1].potential));
       setQuestionCounter((prev) => prev + 1);
     } else {
-      console.log("haa");
       setQuestionCounter((prev) => prev + 1);
       setEditMode(false);
       if (predict.countAnswer === predict.questionNumber) {

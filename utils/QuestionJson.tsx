@@ -16,7 +16,7 @@ export const questions: any = [
       value_en: ["TURKEY", "ARMENIA", "GEORGIA", "UAE", "OTHER"],
     },
     question_value: "country_where_applying_country",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "TURKEY", label: "ترکیه" },
       { value: "ARMENIA", label: "ارمنستان" },
@@ -32,7 +32,7 @@ export const questions: any = [
       value_en: ["visitor", "citizen", "OTHER"],
     },
     question_value: "country_where_applying_status",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "visitor", label: "ملاقات کننده" },
       { value: "citizen", label: "شهروند/اقامت دائم" },
@@ -56,7 +56,7 @@ export const questions: any = [
       value_en: ["family visit", "visit", "tourism", "other"],
     },
     question_value: "purpose_of_visit",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "family visit", label: "ملاقات خانواده درجه یک" },
       { value: "visit", label: "ملاقات با سایر اقوام و دوستان" },
@@ -82,7 +82,7 @@ export const questions: any = [
       value_en: ["f1", "f2", "friend", "hotel", "ukn"],
     },
     question_value: "contact_relation_to_me",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "f1", label: "اقوام درجه یک" },
       { value: "f2", label: "اقوام درجه دو" },
@@ -95,7 +95,7 @@ export const questions: any = [
   //   question: "نوع ارتباط شما با شخص یا سازمانی که بابت آن به سفر می‌روید. (اگر دو هدف هستند) (اگر دو هدف هست)؟",
   //   answer: { value_fa: ["اقوام درجه یک", "اقوام درجه دو", "دوستان", "هتل", "سایر"], value_en: ["f1", "f2", "friend", "hotel", "ukn"] },
   //   question_value: "contact_relation_to_me2",
-  //   type: "dropdown",
+  //   type: "radio",
   //   options: [
   //     { "value": "f1", "label": "اقوام درجه یک" },
   //     { "value": "f2", "label": "اقوام درجه دو" },
@@ -111,7 +111,7 @@ export const questions: any = [
       value_en: ["unedu", "apprentice", "diploma", "bachelor", "master", "phd"],
     },
     question_value: "education_field_of_study",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "unedu", label: "بدون تحصیلات" },
       { value: "apprentice", label: "کارورزی" },
@@ -128,7 +128,7 @@ export const questions: any = [
       value_en: ["OTHER", "student", "retired", "employee", "specialist", "manager"],
     },
     question_value: "occupation_title1",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "OTHER", label: "سایر/بدون شغل" },
       { value: "student", label: "دانش اموز/دانشجو" },
@@ -197,7 +197,7 @@ export const questions: any = [
       value_en: ["single", "married", "divorced", "widowed", "unknown"],
     },
     question_value: "applicant_marital_status",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "single", label: "مجرد" },
       { value: "married", label: "مزدوج" },
@@ -323,7 +323,7 @@ export const questions: any = [
       value_en: ["0", "1", "2"],
     },
     question_value: "parent_accompany",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "0", label: "هیچ‌کدام" },
       { value: "1", label: "پدر و مادر با یکدیگر" },
@@ -436,7 +436,7 @@ export const questions: any = [
       ],
     },
     question_value: "invitation_letter",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "child", label: "فرزندان" },
       { value: "sibling", label: "خواهر و برادر" },
@@ -476,7 +476,7 @@ export const questions: any = [
     },
 
     question_value: "travel_history",
-    type: "dropdown",
+    type: "radio",
     options: [
       { value: "schengen_once", label: "یکبار شنگن" },
       { value: "schengen_twice", label: "دوبار و بیشتر شنگن" },

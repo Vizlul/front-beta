@@ -20,25 +20,29 @@ export default function AnswerPopup({
   setAnswerPopup,
   currentQuestionIndex,
   setCurrentQuestionIndex,
+  setChanceHistory,
+  chanceHistory
 }) {
   const predict = useSelector((state) => state.predict);
   const [predictData, setPredictData] = useState<any>({});
   const [answer, setAnswer] = useState("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [testValue, setTestValue] = useState("");
-  const [questionCounter, setQuestionCounter] = useState<any>(0);
-  const [activeButton, setActiveButton] = useState<any>(0);
+  const [questionCounter, setQuestionCounter] = useState<any>(1);
+  const [activeButton, setActiveButton] = useState<any>("");
 
   const dispatch = useDispatch();
 
-  const handleChange = (value) => {
-    console.log(value);
-    setAnswer(value);
+  const handleChange = (value, type) => {
+    if (type === "number") {
+      setAnswer(Number(value));
+    } else {
+      setAnswer(value);
+    }
   };
 
   const handleSubmit = async () => {
     console.log(answer);
-    console.log(questions[currentQuestionIndex].answer.value_en[answer]);
 
     const newState: any = [];
     let keep = false;
@@ -46,7 +50,9 @@ export default function AnswerPopup({
     const filteredData = {
       ...predictData,
       [questions[currentQuestionIndex].question_value]:
-        questions[currentQuestionIndex].answer.value_en[answer],
+        questions[currentQuestionIndex].type === "number"
+          ? Number(answer)
+          : questions[currentQuestionIndex].answer.value_en[answer],
     };
     const filteredDataTest: any = [];
 
@@ -70,6 +76,15 @@ export default function AnswerPopup({
         dispatch(setNextPredictBackup({ nextVariable: resp.data.next_variable }));
         setNextPredictData({ ...predictData, [resp.data.next_variable]: "" });
         setPredictData(filteredData);
+
+        setChanceHistory((prev) => [
+          ...prev,
+          {
+            question: questions[currentQuestionIndex].question_value,
+            answer: answer,
+            chance: Math.round(Number(resp.data.result) * 100),
+          },
+        ]);
 
         await CallApi.post("/grouped_xai", filteredData)
           .then(async (resp) => {
@@ -108,6 +123,8 @@ export default function AnswerPopup({
                     },
                   ]);
                 }
+                setQuestionCounter((prev) => prev + 1);
+                setActiveButton("");
               })
               .catch((error) => {
                 console.log(error);
@@ -125,24 +142,29 @@ export default function AnswerPopup({
       });
   };
 
+  console.log(chanceHistory);
+
   return (
     <>
       {answerPopup && (
         <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>
       )}
       <div className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
-        <div className={`${styles.footerTopChance} ${answerPopup ? styles.stickyOnTop : ""} `}>
-          <p>شناخت ویزارد از شما</p>
-          <p>0%</p>
-        </div>
         <div className={styles.answerPopupQuestion}>
-          <p>{currentQuestionIndex + 1}</p>
+          <p>{questionCounter}</p>
           <p>{questions[currentQuestionIndex].question}</p>
         </div>
         <div className={styles.answerPopupChioces}>
           {questions[currentQuestionIndex].type === "radio" ? (
             questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
-              <button key={index} onClick={() => handleChange(index)}>
+              <button
+                className={activeButton == index && styles.activeButton}
+                key={index}
+                onClick={() => {
+                  handleChange(index);
+                  setActiveButton(index);
+                }}
+              >
                 {item}
               </button>
             ))
@@ -154,6 +176,19 @@ export default function AnswerPopup({
                 </option>
               ))}
             </select>
+          ) : questions[currentQuestionIndex].type === "number" ? (
+            <div className={styles.questionNumber}>
+              <button onClick={() => setAnswer((prevValue) => Number(prevValue + 1))}>+</button>
+              <input
+                type="number"
+                min={questions[currentQuestionIndex].answer.value_fa[0]}
+                max={questions[currentQuestionIndex].answer.value_fa[1]}
+                value={answer}
+                defaultValue={questions[currentQuestionIndex].answer.value_fa[0]}
+                onChange={(event) => handleChange(event.target.value, "number")}
+              />
+              <button onClick={() => setAnswer((prevValue) => Number(prevValue - 1))}>-</button>
+            </div>
           ) : (
             ""
           )}

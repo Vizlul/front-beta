@@ -22,12 +22,6 @@
   margin: 0;
 }
 
-.header > div > div p:last-of-type {
-  background-color: #424242;
-  color: #fff;
-  padding: 10px;
-}
-
 .main {
   padding: 18px 0;
   width: 96%;
@@ -77,22 +71,25 @@
   position: sticky;
   bottom: 0;
   left: 0;
+  z-index: 10;
 }
 
 .footerTop {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding-left: 18px;
+  width: 100%;
 }
 
 .footerTopChance {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  flex: 1;
   gap: 6px;
-  padding: 2px 18px;
-  width: 150px;
+  /* padding: 2px 18px; */
+  width: 100%;
+  max-width: 130px;
   background-color: #00554e;
   font-size: 12px;
   color: #fff;
@@ -111,6 +108,8 @@
   position: relative;
   z-index: 2;
   margin-bottom: -10px;
+  margin-left: 16px;
+  margin-right: -10px;
 }
 
 .footerDown {
@@ -160,4 +159,38 @@
   align-items: center;
   justify-content: center;
   height: 70px;
+}
+
+.chanceBoxUnknown {
+  background-color: #424242;
+  color: #fff;
+  padding: 10px;
+}
+
+.chanceBoxRed {
+  background-color: red;
+  color: #fff;
+  padding: 10px;
+}
+
+.chanceBoxGreen {
+  background-color: green;
+  color: #fff;
+  padding: 10px;
+}
+
+.progressBarBox {
+  flex: 1;
+  height: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.7s linear;
+}
+
+.progressBar {
+  background-color: #424242;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.7s linear;
+  height: 100%;
 }

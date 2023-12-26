@@ -36,8 +36,8 @@
 
 .closePopupLayout {
   width: 100%;
-  height: 100%;
-  position: absolute;
+  height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -115,4 +115,35 @@
 
 .stickyOnTop {
   margin-top: -30px;
+}
+
+.activeButton {
+  background-color: #00554e !important;
+  color: #fff !important;
+  border: 1px solid #00554e !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.questionNumber {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.questionNumber input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #a7a7a7;
+  border-left: none;
+  border-right: none;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.questionNumber button {
+  font-size: 20px;
+  font-weight: bold;
 }
