@@ -21,14 +21,15 @@ export default function AnswerPopup({
   currentQuestionIndex,
   setCurrentQuestionIndex,
   setChanceHistory,
-  chanceHistory
+  chanceHistory,
+  questionCounter,
+  setQuestionCounter,
 }) {
   const predict = useSelector((state) => state.predict);
   const [predictData, setPredictData] = useState<any>({});
   const [answer, setAnswer] = useState("");
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [testValue, setTestValue] = useState("");
-  const [questionCounter, setQuestionCounter] = useState<any>(1);
   const [activeButton, setActiveButton] = useState<any>("");
 
   const dispatch = useDispatch();
@@ -61,13 +62,14 @@ export default function AnswerPopup({
     await CallApi.post("/predict", filteredData)
       .then(async (resp) => {
         // if answer all questions goes finish slider
+        setAnswerPopup(false);
         if (!resp.data.next_variable) {
           // dispatch(setToFinished());
         }
-        console.log(resp.data.next_variable);
-        console.log(
-          questions.findIndex((question) => question.question_value === resp.data.next_variable)
-        );
+        // console.log(resp.data.next_variable);
+        // console.log(
+        //   questions.findIndex((question) => question.question_value === resp.data.next_variable)
+        // );
         setCurrentQuestionIndex(
           questions.findIndex((question) => question.question_value === resp.data.next_variable)
         );

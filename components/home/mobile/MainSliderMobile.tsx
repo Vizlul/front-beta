@@ -148,9 +148,10 @@ export default function MainSliderMobile() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const predict = useSelector((state) => state.predict);
   const [chanceHistory, setChanceHistory] = useState<any[]>([]);
+  const [questionCounter, setQuestionCounter] = useState<any>(1);
 
   function isNumberIncreasing(previousNumber: any, currentNumber: any) {
-    console.log(previousNumber, currentNumber);
+    // console.log(previousNumber, currentNumber);
     return currentNumber > previousNumber
       ? "more"
       : currentNumber < previousNumber
@@ -231,14 +232,14 @@ export default function MainSliderMobile() {
             <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
               <p>شناخت ویزارد از شما</p>
               <p>
-                <CountUp end={predict.chance} />%
+                <CountUp end={predict.potential} />%
               </p>
             </div>
 
             <div className={styles.progressBarBox}>
               <div
                 style={{
-                  width: "90%",
+                  width: predict.potential + "%",
                 }}
                 className={styles.progressBar}
               ></div>
@@ -251,7 +252,7 @@ export default function MainSliderMobile() {
 
           <div className={styles.footerDown}>
             <div className={styles.footerDownQuestion}>
-              <p>{currentQuestionIndex + 1}</p>
+              <p>{questionCounter}</p>
               <p>{questions[currentQuestionIndex].question}</p>
             </div>
 
@@ -275,6 +276,8 @@ export default function MainSliderMobile() {
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         setChanceHistory={setChanceHistory}
         chanceHistory={chanceHistory}
+        questionCounter={questionCounter}
+        setQuestionCounter={setQuestionCounter}
       />
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
