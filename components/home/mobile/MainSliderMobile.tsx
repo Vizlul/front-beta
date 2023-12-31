@@ -8,6 +8,7 @@ import PotentialPopup from "@/components/utils/popups/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
 import { useSelector } from "react-redux";
 import CountUp from "react-countup";
+import ProgressAnimate from "@/components/utils/ProgressAnimate";
 
 export default function MainSliderMobile() {
   let data = {
@@ -203,20 +204,26 @@ export default function MainSliderMobile() {
         </div>
         <div className={styles.main}>
           <InfoAlert />
+
           <div className={styles.mainCharts}>
             <div className={styles.mainChartsArea}>
-              <div className={styles.blurChart}>
-                <p className={styles.noBlur}>نامشخص</p>
-                <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-              </div>
+              {questionCounter === 0 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
               <ApexChart options={data.options} series={data.series} type="area" height={250} />
             </div>
 
             <div className={styles.mainChartsArea}>
-              <div className={styles.blurChart}>
-                <p className={styles.noBlur}>نامشخص</p>
-                <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-              </div>
+              {questionCounter === 0 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
+
               <ApexChart
                 stacked={true}
                 options={barData.options}

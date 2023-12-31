@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AnswerPopup.module.css";
 import { questions } from "@/utils/QuestionJson";
 import CallApi from "@/utils/CallApi";
@@ -14,6 +14,7 @@ import {
   setPotentialData,
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
+import Loading from "../Loading";
 
 export default function AnswerPopup({
   answerPopup,
@@ -31,6 +32,7 @@ export default function AnswerPopup({
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState<any>("");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -44,6 +46,7 @@ export default function AnswerPopup({
 
   const handleSubmit = async () => {
     console.log(answer);
+    setLoading(true);
 
     const newState: any = [];
     let keep = false;
@@ -87,6 +90,7 @@ export default function AnswerPopup({
             chance: Math.round(Number(resp.data.result) * 100),
           },
         ]);
+        setLoading(false);
 
         await CallApi.post("/grouped_xai", filteredData)
           .then(async (resp) => {
@@ -144,6 +148,10 @@ export default function AnswerPopup({
       });
   };
 
+  useEffect(() => {
+    setAnswer(questions[currentQuestionIndex].answer.value_fa[0]);
+  }, [questionCounter]);
+
   console.log(chanceHistory);
 
   return (
@@ -196,7 +204,13 @@ export default function AnswerPopup({
           )}
         </div>
         <button onClick={handleSubmit} className={styles.answerPopupSubmitButton}>
-          ثبت پاسخ <img src="forward-arrow.svg" alt="arrow-forward" />
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              ثبت پاسخ <img src="forward-arrow.svg" alt="arrow-forward" />
+            </>
+          )}
         </button>
       </div>
     </>
