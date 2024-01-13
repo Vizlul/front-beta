@@ -21,9 +21,9 @@ export default function Home() {
   return isMobile ? (
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
-        <MainSliderMobile />
-      ) : slider.name === SliderState.MAIN ? (
         <StartingSliderMobile />
+      ) : slider.name === SliderState.MAIN ? (
+        <MainSliderMobile />
       ) : slider.name === SliderState.FINISHED ? (
         <FinishSlider />
       ) : (

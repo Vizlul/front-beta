@@ -1,10 +1,15 @@
 import { useDispatch } from "react-redux";
 import styles from "./StartingSliderMobile.module.css";
 import { setToMain } from "@/store/features/sliderSlice";
+import { useEffect, useState } from "react";
+import NamePopup from "@/components/utils/popups/NamePopup";
 
 export default function StartingSliderMobile() {
+  const [namePopup, setNamePopup] = useState(false);
   const dispatch = useDispatch();
+
   const handleClick = () => {
+    setNamePopup(false);
     dispatch(setToMain());
   };
 
@@ -13,24 +18,48 @@ export default function StartingSliderMobile() {
       <div className={styles.header}>
         <div>
           <img src="visaland-logo.svg" alt="logo" />
-          <p>هوش مصنوعی ویزارد</p>
         </div>
       </div>
       <div className={styles.main}>
-        <img src="visard-character.svg" alt="visard-character" />
+        <div className={styles.imageBox}>
+          <img src="visard-character.svg" alt="visard-character" />
+          <div className={styles.absoluteBox}>
+            <p className={styles.absoluteText}>ویزارد</p>
+          </div>
+        </div>
         <p>اولین هوش مصنوعی ویزا</p>
         <p>
-          متن درباره ویزارد در این قسمت قرار می‌گیرد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم
-          از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون
-          و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف
-          بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده.
+          ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.
         </p>
       </div>
+      <section className={styles.slideOption}>
+        <div className={`${styles.highwaySlider} ${styles.infinite}`}>
+          {Array.from({ length: 2 }, (_, index) => (
+            <div key={index} className={`${styles.highwayBarrier} ${styles.infinite}`}>
+              <ul className={styles.highwayLane}>
+                {Array.from({ length: 25 }, (_, index) => (
+                  <li
+                    className={styles.highwayCar}
+                    style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                  >
+                    <span>مریم رادمنش</span>
+                    <span className={styles.progressUsers}>
+                      40<span>%</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
       <div className={styles.footer}>
-        <button onClick={handleClick}>
+        <button onClick={() => setNamePopup(true)}>
           شروع بررسی <img src="forward-arrow.svg" alt="forward-arrow" />
         </button>
       </div>
+
+      <NamePopup handleClick={handleClick} namePopup={namePopup} setNamePopup={setNamePopup} />
     </div>
   );
 }

@@ -168,7 +168,7 @@ export default function AnswerPopup({
           {questions[currentQuestionIndex].type === "radio" ? (
             questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
               <button
-                className={activeButton == index && styles.activeButton}
+                className={activeButton === index && styles.activeButton}
                 key={index}
                 onClick={() => {
                   handleChange(index);

@@ -207,7 +207,7 @@ export default function MainSliderMobile() {
 
           <div className={styles.mainCharts}>
             <div className={styles.mainChartsArea}>
-              {questionCounter === 0 && (
+              {questionCounter > 0 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
@@ -217,7 +217,7 @@ export default function MainSliderMobile() {
             </div>
 
             <div className={styles.mainChartsArea}>
-              {questionCounter === 0 && (
+              {questionCounter > 0 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
