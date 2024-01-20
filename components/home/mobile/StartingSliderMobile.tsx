@@ -34,15 +34,15 @@ export default function StartingSliderMobile() {
       </div>
       <section className={styles.slideOption}>
         <div className={`${styles.highwaySlider} ${styles.infinite}`}>
-          {Array.from({ length: 2 }, (_, index) => (
-            <div key={index} className={`${styles.highwayBarrier} ${styles.infinite}`}>
+          {Array.from({ length: 2 }, (_, ind) => (
+            <div key={ind} className={`${styles.highwayBarrier} ${styles.infinite}`}>
               <ul className={styles.highwayLane}>
                 {Array.from({ length: 25 }, (_, index) => (
                   <li
-                    className={styles.highwayCar}
+                    className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
                     style={{ display: "flex", alignItems: "center", gap: "10px" }}
                   >
-                    <span>مریم رادمنش</span>
+                    <span className={styles.progressUserName}>مریم رادمنش</span>
                     <span className={styles.progressUsers}>
                       40<span>%</span>
                     </span>

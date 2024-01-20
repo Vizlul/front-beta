@@ -26,6 +26,9 @@ export default function MainSliderMobile() {
       chart: {
         height: 350,
         type: "area",
+        toolbar: {
+          show: false,
+        },
       },
       dataLabels: {
         enabled: false,
@@ -49,15 +52,12 @@ export default function MainSliderMobile() {
       {
         name: "Males",
         data: [
-          0.4, 0.65, 0.76, 0.88, 1.5, 2.1, 2.9, 3.8, 3.9, 4.2, 4, 4.3, 4.1, 4.2, 4.5, 3.9, 3.5, 3,
+          -1, -5, -10, -20, -30, -40, 0, 1, 5, 10, 20, 30, 40, 45, 50, 54, 58, 59, 68, 69, 70, 90,
         ],
       },
       {
         name: "Females",
-        data: [
-          -0.8, -1.05, -1.06, -1.18, -1.4, -2.2, -2.85, -3.7, -3.96, -4.22, -4.3, -4.4, -4.1, -4,
-          -4.1, -3.4, -3.1, -2.8,
-        ],
+        data: [-80, -74, -52, -42, -32, -22, -10, 0, 12, 24, 34, 65, 70, 89],
       },
     ],
     options: {
@@ -65,6 +65,9 @@ export default function MainSliderMobile() {
         type: "bar",
         height: 440,
         stacked: true,
+        toolbar: {
+          show: false,
+        },
       },
       colors: ["#008FFB", "#FF4560"],
       plotOptions: {
@@ -112,26 +115,6 @@ export default function MainSliderMobile() {
         text: "Mauritius population pyramid 2011",
       },
       xaxis: {
-        categories: [
-          "85+",
-          "80-84",
-          "75-79",
-          "70-74",
-          "65-69",
-          "60-64",
-          "55-59",
-          "50-54",
-          "45-49",
-          "40-44",
-          "35-39",
-          "30-34",
-          "25-29",
-          "20-24",
-          "15-19",
-          "10-14",
-          "5-9",
-          "0-4",
-        ],
         title: {
           text: "Percent",
         },
@@ -161,6 +144,8 @@ export default function MainSliderMobile() {
       ? "equal"
       : "";
   }
+
+  console.log(questionCounter);
 
   return (
     <>
@@ -203,11 +188,11 @@ export default function MainSliderMobile() {
           </div>
         </div>
         <div className={styles.main}>
-          <InfoAlert />
+          {questionCounter === 1 && <InfoAlert />}
 
           <div className={styles.mainCharts}>
             <div className={styles.mainChartsArea}>
-              {questionCounter > 0 && (
+              {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
@@ -217,7 +202,7 @@ export default function MainSliderMobile() {
             </div>
 
             <div className={styles.mainChartsArea}>
-              {questionCounter > 0 && (
+              {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>

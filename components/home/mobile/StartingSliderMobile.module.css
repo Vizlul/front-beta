@@ -53,6 +53,8 @@
 .footer {
   display: flex;
   width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer > button {
@@ -130,12 +132,7 @@
   justify-content: center;
   gap: 12px;
   align-items: center;
-  background: #fff;
-  color: #343434;
-  padding: 10px;
-  box-shadow: 0px 2px 20px 0px rgba(48, 48, 48, 0.1);
-  font-weight: bold;
-  width: 140px !important;
+  width: 160px !important;
 }
 @-webkit-keyframes translatestf {
   0% {
@@ -155,24 +152,39 @@
 }
 @-webkit-keyframes translateinfinite {
   100% {
-    transform: translateX(calc(140px * 12));
+    transform: translateX(calc(160px * 12));
   }
 }
 @keyframes translateinfinite {
   100% {
-    transform: translateX(calc(140px * 12));
+    transform: translateX(calc(160px * 12));
   }
 }
-.infinite .highwayBarrier {
-  /* background: #fff; */
-  /* box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3); */
+@-webkit-keyframes translateinfiniteSecond {
+  100% {
+    transform: translateX(calc(160px * 12));
+  }
 }
+@keyframes translateinfiniteSecond {
+  100% {
+    transform: translateX(calc(160px * 12));
+  }
+}
+.slideOption {
+  margin-top: 10px;
+  overflow: hidden;
+}
+.infinite:last-of-type {
+  transform: translateX(-20px);
+  overflow: hidden;
+}
+
 .infinite .highwayBarrier::before,
 .infinite .highwayBarrier::after {
   content: " ";
   position: absolute;
   z-index: 9;
-  width: 140px;
+  width: 160px;
   height: 100%;
 }
 .infinite .highwayBarrier::before {
@@ -188,12 +200,28 @@
   background: linear-gradient(270deg, #f0f2f5 0%, rgba(240, 242, 245, 0) 100%);
 }
 .infinite .highwayBarrier .highwayLane {
-  width: calc(140px * 10);
+  width: calc(160px * 10);
 }
 .infinite .highwayBarrier .highwayLane .highwayCar {
-  width: 140px;
+  width: 160px;
   -webkit-animation: translateinfinite 25s linear infinite;
   animation: translateinfinite 25s linear infinite;
+  background: #fff;
+  padding: 10px;
+  color: #343434;
+  box-shadow: 0px 2px 20px 0px rgba(48, 48, 48, 0.1);
+  font-weight: bold;
+}
+
+.infinite .highwayBarrier .highwayLane .highwayCarSecond {
+  width: 160px;
+  -webkit-animation: translateinfiniteSecond 25s linear infinite;
+  animation: translateinfiniteSecond 25s linear infinite;
+  background: #fff;
+  padding: 10px;
+  color: #343434;
+  box-shadow: 0px 2px 20px 0px rgba(48, 48, 48, 0.1);
+  font-weight: bold;
 }
 .infinite .highwayBarrier .highwayLane .highwayCar .fab {
   font-size: 65px;
@@ -201,7 +229,9 @@
 
 .progressUsers {
   padding: 12px 9px;
-  border: 1px solid red;
+  border: 1px solid #ff5c00;
+  color: #ff5c00;
+  background: rgba(255, 92, 0, 0.2);
   font-size: 14px;
   font-weight: normal;
 }
@@ -209,4 +239,10 @@
 .progressUsers span {
   font-size: 10px;
   font-weight: normal;
+}
+
+.progressUserName {
+  flex: 1;
+  width: 160px;
+  font-size: 16px;
 }
