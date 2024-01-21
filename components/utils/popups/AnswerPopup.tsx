@@ -15,6 +15,7 @@ import {
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Loading from "../Loading";
+import { SliderState } from "@/constants";
 
 export default function AnswerPopup({
   answerPopup,
@@ -27,22 +28,36 @@ export default function AnswerPopup({
   setQuestionCounter,
 }) {
   const predict = useSelector((state) => state.predict);
+  const slider = useSelector((state) => state.slider);
   const [predictData, setPredictData] = useState<any>({});
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState(null);
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState<any>("");
   const [loading, setLoading] = useState(false);
 
+  console.log(prevCounterQuestion);
+
   const dispatch = useDispatch();
 
   const handleChange = (value, type) => {
+    console.log(type);
     if (type === "number") {
       setAnswer(Number(value));
+    } else if (type === "radio_multi") {
+      if (answer === null) {
+        setAnswer((prev) => [...(prev || []), value]);
+      } else if (answer.includes(value)) {
+        setAnswer((prev) => prev.filter((item) => item !== value));
+      } else {
+        setAnswer((prev) => [...(prev || []), value]);
+      }
     } else {
       setAnswer(value);
     }
   };
+
+  console.log(answer);
 
   const handleSubmit = async () => {
     console.log(answer);
@@ -56,6 +71,8 @@ export default function AnswerPopup({
       [questions[currentQuestionIndex].question_value]:
         questions[currentQuestionIndex].type === "number"
           ? Number(answer)
+          : questions[currentQuestionIndex].type === "radio_multi"
+          ? answer
           : questions[currentQuestionIndex].answer.value_en[answer],
     };
     const filteredDataTest: any = [];
@@ -63,82 +80,83 @@ export default function AnswerPopup({
     console.log(filteredData);
 
     await CallApi.post("/predict", filteredData)
-      .then(async (resp) => {
+      .then(async (respon) => {
         // if answer all questions goes finish slider
-        setAnswerPopup(false);
-        if (!resp.data.next_variable) {
-          // dispatch(setToFinished());
+        if (!respon.data.next_variable) {
+          return dispatch(setToFinished());
+        } else {
+          await CallApi.post("/grouped_xai", filteredData)
+            .then(async (resp) => {
+              dispatch(setGroupedXai({ data: resp.data }));
+              setChanceHistory((prev) => [
+                ...prev,
+                {
+                  question: questions[currentQuestionIndex].question_value,
+                  answer: answer,
+                  chance: Math.round(Number(respon.data.result) * 100),
+                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
+                    (value * 100).toFixed(2)
+                  ),
+                },
+              ]);
+
+              await CallApi.post("/potential", filteredData)
+                .then(async (response) => {
+                  dispatch(setPotentialData(response.data.result));
+                  if (predict.countAnswer === 1) {
+                    dispatch(addCounterQuestionIndex({ payload: "" }));
+                    setPrevCounterQuestion([
+                      {
+                        type: "sex",
+                        questionIndex: 0,
+                        chance: Math.round(Number(resp.data.result) * 100),
+                        chartValues: predict.chartDataValues,
+                        countAnswer: predict.countAnswer,
+                        answer: testValue,
+                        activeButton: activeButton,
+                        potential: Math.round(Number(response.data.result) * 100),
+                      },
+                    ]);
+                  } else {
+                    dispatch(addCounterQuestionIndex({ change: true }));
+                    setPrevCounterQuestion([
+                      ...prevCounterQuestion,
+                      {
+                        type: predict.nextPredict,
+                        questionIndex: predict.questionIndex,
+                        chance: Math.round(Number(resp.data.result) * 100),
+                        chartValues: predict.chartDataValues,
+                        countAnswer: predict.countAnswer,
+                        answer: testValue,
+                        activeButton: activeButton,
+                        potential: Math.round(Number(response.data.result) * 100),
+                      },
+                    ]);
+                  }
+                  setActiveButton("");
+                  setAnswer(null);
+                  setLoading(false);
+                  setAnswerPopup(false);
+                  setQuestionCounter((prev) => prev + 1);
+                  setCurrentQuestionIndex(
+                    questions.findIndex(
+                      (question) => question.question_value === respon.data.next_variable
+                    )
+                  );
+                  dispatch(setChanceData({ chance: respon.data.result }));
+                  dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
+                  dispatch(setNextPredictBackup({ nextVariable: respon.data.next_variable }));
+                  setNextPredictData({ ...predictData, [respon.data.next_variable]: "" });
+                  setPredictData(filteredData);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
-        // console.log(resp.data.next_variable);
-        // console.log(
-        //   questions.findIndex((question) => question.question_value === resp.data.next_variable)
-        // );
-        setCurrentQuestionIndex(
-          questions.findIndex((question) => question.question_value === resp.data.next_variable)
-        );
-        dispatch(setChanceData({ chance: resp.data.result }));
-        dispatch(setNextPredictData({ nextVariable: resp.data.next_variable }));
-        dispatch(setNextPredictBackup({ nextVariable: resp.data.next_variable }));
-        setNextPredictData({ ...predictData, [resp.data.next_variable]: "" });
-        setPredictData(filteredData);
-
-        setChanceHistory((prev) => [
-          ...prev,
-          {
-            question: questions[currentQuestionIndex].question_value,
-            answer: answer,
-            chance: Math.round(Number(resp.data.result) * 100),
-          },
-        ]);
-        setLoading(false);
-
-        await CallApi.post("/grouped_xai", filteredData)
-          .then(async (resp) => {
-            dispatch(setGroupedXai({ data: resp.data }));
-
-            await CallApi.post("/potential", filteredData)
-              .then(async (response) => {
-                dispatch(setPotentialData(response.data.result));
-                if (predict.countAnswer === 1) {
-                  dispatch(addCounterQuestionIndex({ payload: "" }));
-                  setPrevCounterQuestion([
-                    {
-                      type: "sex",
-                      questionIndex: 0,
-                      chance: Math.round(Number(resp.data.result) * 100),
-                      chartValues: predict.chartDataValues,
-                      countAnswer: predict.countAnswer,
-                      answer: testValue,
-                      activeButton: activeButton,
-                      potential: Math.round(Number(response.data.result) * 100),
-                    },
-                  ]);
-                } else {
-                  dispatch(addCounterQuestionIndex({ change: true }));
-                  setPrevCounterQuestion([
-                    ...prevCounterQuestion,
-                    {
-                      type: predict.nextPredict,
-                      questionIndex: predict.questionIndex,
-                      chance: Math.round(Number(resp.data.result) * 100),
-                      chartValues: predict.chartDataValues,
-                      countAnswer: predict.countAnswer,
-                      answer: testValue,
-                      activeButton: activeButton,
-                      potential: Math.round(Number(response.data.result) * 100),
-                    },
-                  ]);
-                }
-                setQuestionCounter((prev) => prev + 1);
-                setActiveButton("");
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
       })
       .catch((error) => {
         // if (error.response.data.detail.includes("max")) {
@@ -149,7 +167,9 @@ export default function AnswerPopup({
   };
 
   useEffect(() => {
-    setAnswer(questions[currentQuestionIndex].answer.value_fa[0]);
+    if (questions[currentQuestionIndex].type === "number") {
+      setAnswer(questions[currentQuestionIndex].answer.value_fa[0]);
+    }
   }, [questionCounter]);
 
   console.log(chanceHistory);
@@ -199,11 +219,35 @@ export default function AnswerPopup({
               />
               <button onClick={() => setAnswer((prevValue) => Number(prevValue - 1))}>-</button>
             </div>
+          ) : questions[currentQuestionIndex].type === "radio_multi" ? (
+            questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
+              <button
+                className={
+                  answer !== null &&
+                  answer.includes(questions[currentQuestionIndex].answer.value_en[index]) &&
+                  styles.activeButton
+                }
+                key={index}
+                onClick={() => {
+                  handleChange(
+                    questions[currentQuestionIndex].answer.value_en[index],
+                    "radio_multi"
+                  );
+                  setActiveButton(index);
+                }}
+              >
+                {item}
+              </button>
+            ))
           ) : (
             ""
           )}
         </div>
-        <button onClick={handleSubmit} className={styles.answerPopupSubmitButton}>
+        <button
+          disabled={answer === null && true}
+          onClick={handleSubmit}
+          className={styles.answerPopupSubmitButton}
+        >
           {loading ? (
             <Loading />
           ) : (

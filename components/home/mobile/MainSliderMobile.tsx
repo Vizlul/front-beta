@@ -9,17 +9,32 @@ import { questions } from "@/utils/QuestionJson";
 import { useSelector } from "react-redux";
 import CountUp from "react-countup";
 import ProgressAnimate from "@/components/utils/ProgressAnimate";
+import { SliderState } from "@/constants";
 
 export default function MainSliderMobile() {
+  const predict = useSelector((state) => state.predict);
+  const slider = useSelector((state) => state.slider);
+  const [answerPopup, setAnswerPopup] = useState(false);
+  const [chancePopup, setChancePopup] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [chanceHistory, setChanceHistory] = useState<any[]>([]);
+  const [questionCounter, setQuestionCounter] = useState<any>(1);
+
   let data = {
     series: [
       {
-        name: "series1",
-        data: [31, 40, 28, 51, 42],
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
       },
       {
-        name: "series2",
-        data: [11, 32, 45, 32, 34, 52, 41],
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
       },
     ],
     options: {
@@ -37,7 +52,7 @@ export default function MainSliderMobile() {
         curve: "smooth",
       },
       xaxis: {
-        categories: ["test", "test2", "test3", "test4", "test5", "test6", "test7"],
+        categories: [],
       },
       tooltip: {
         x: {
@@ -50,14 +65,18 @@ export default function MainSliderMobile() {
   let barData = {
     series: [
       {
-        name: "Males",
-        data: [
-          -1, -5, -10, -20, -30, -40, 0, 1, 5, 10, 20, 30, 40, 45, 50, 54, 58, 59, 68, 69, 70, 90,
-        ],
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
       },
       {
-        name: "Females",
-        data: [-80, -74, -52, -42, -32, -22, -10, 0, 12, 24, 34, 65, 70, 89],
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
       },
     ],
     options: {
@@ -111,13 +130,7 @@ export default function MainSliderMobile() {
           },
         },
       },
-      title: {
-        text: "Mauritius population pyramid 2011",
-      },
       xaxis: {
-        title: {
-          text: "Percent",
-        },
         labels: {
           formatter: function (val) {
             return Math.abs(Math.round(val)) + "%";
@@ -127,12 +140,128 @@ export default function MainSliderMobile() {
     },
   };
 
-  const [answerPopup, setAnswerPopup] = useState(false);
-  const [chancePopup, setChancePopup] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const predict = useSelector((state) => state.predict);
-  const [chanceHistory, setChanceHistory] = useState<any[]>([]);
-  const [questionCounter, setQuestionCounter] = useState<any>(1);
+  let radarDara = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "radar",
+        toolbar: {
+          show: false,
+        },
+      },
+      xaxis: {
+        // categories: ["January", "February", "March", "April", "May", "June"],
+      },
+    },
+  };
+
+  let barChart = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "bar",
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: "top", // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#304758"],
+        },
+      },
+
+      xaxis: {
+        position: "top",
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
+    },
+  };
+
+  console.log(predict.chartDataKeys);
+  console.log(predict.chartDataValues);
+  console.log(predict.statusDataValues);
+  console.log(chanceHistory)
+  console.log(chanceHistory[chanceHistory.length - 2]?.chance)
 
   function isNumberIncreasing(previousNumber: any, currentNumber: any) {
     // console.log(previousNumber, currentNumber);
@@ -217,48 +346,110 @@ export default function MainSliderMobile() {
                 height={250}
               />
             </div>
-          </div>
-        </div>
-        <div className={styles.footer}>
-          <div className={styles.footerTop}>
-            <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
-              <p>شناخت ویزارد از شما</p>
-              <p>
-                <CountUp end={predict.potential} />%
-              </p>
+
+            <div className={styles.mainChartsArea}>
+              {questionCounter === 1 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
+
+              <ApexChart
+                stacked={true}
+                options={radarDara.options}
+                series={radarDara.series}
+                type="radar"
+                height={250}
+              />
             </div>
 
-            <div className={styles.progressBarBox}>
-              <div
-                style={{
-                  width: predict.potential + "%",
+            <div className={styles.mainChartsArea}>
+              {questionCounter === 1 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
+
+              <ApexChart
+                stacked={true}
+                options={barChart.options}
+                series={barChart.series}
+                type="bar"
+                height={250}
+              />
+            </div>
+          </div>
+        </div>
+        {slider.name === SliderState.FINISHED ? (
+          <div className={styles.footer}>
+            <div className={styles.footerTop}>
+              <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
+                <p>شناخت ویزارد از شما</p>
+                <p>
+                  <CountUp end={predict.potential} />%
+                </p>
+              </div>
+
+              <div className={styles.progressBarBox}>
+                <div
+                  style={{
+                    width: predict.potential + "%",
+                  }}
+                  className={styles.progressBar}
+                ></div>
+              </div>
+
+              <div className={styles.footerVisHead}>
+                <img src="vizard-head.svg" alt="vizard-head" />
+              </div>
+            </div>
+            <div className={styles.footerFinished}>
+              <button>مشاهده پرونده‌های مشابه شما</button>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.footer}>
+            <div className={styles.footerTop}>
+              <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
+                <p>شناخت ویزارد از شما</p>
+                <p>
+                  <CountUp end={predict.potential} />%
+                </p>
+              </div>
+
+              <div className={styles.progressBarBox}>
+                <div
+                  style={{
+                    width: predict.potential + "%",
+                  }}
+                  className={styles.progressBar}
+                ></div>
+              </div>
+
+              <div className={styles.footerVisHead}>
+                <img src="vizard-head.svg" alt="vizard-head" />
+              </div>
+            </div>
+            <div className={styles.footerDown}>
+              <div className={styles.footerDownQuestion}>
+                <p>{questionCounter}</p>
+                <p>{questions[currentQuestionIndex].question}</p> 
+              </div>
+
+              <button
+                className={styles.submitButton}
+                onClick={() => {
+                  setAnswerPopup(true);
+                  // setCurrentQuestionIndex(currentQuestionIndex + 1);
                 }}
-                className={styles.progressBar}
-              ></div>
-            </div>
-
-            <div className={styles.footerVisHead}>
-              <img src="vizard-head.svg" alt="vizard-head" />
+              >
+                <img src="forward-arrow.svg" alt="forward-arrow" />
+              </button>
             </div>
           </div>
-
-          <div className={styles.footerDown}>
-            <div className={styles.footerDownQuestion}>
-              <p>{questionCounter}</p>
-              <p>{questions[currentQuestionIndex].question}</p>
-            </div>
-
-            <button
-              className={styles.submitButton}
-              onClick={() => {
-                setAnswerPopup(true);
-                // setCurrentQuestionIndex(currentQuestionIndex + 1);
-              }}
-            >
-              <img src="forward-arrow.svg" alt="forward-arrow" />
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       <AnswerPopup

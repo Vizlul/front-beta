@@ -29,7 +29,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: 300px;
 }
 
 .mainCharts {
@@ -41,6 +40,7 @@
 .mainChartsArea {
   position: relative;
   border: 1px solid #ccc;
+  direction: ltr !important;
 }
 
 .blurChart {
@@ -198,5 +198,21 @@
   position: relative;
   overflow: hidden;
   transition: all 0.7s linear;
+  height: 100%;
+}
+
+.footerFinished{
+  height: 70px;
+  background-color: #fff;
+  padding: 10px 18px;
+}
+
+.footerFinished button{
+  background-color: #00554E;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  border: 1px solid #00554E;
+  width: 100%;
   height: 100%;
 }

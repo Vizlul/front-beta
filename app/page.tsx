@@ -22,10 +22,8 @@ export default function Home() {
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
         <StartingSliderMobile />
-      ) : slider.name === SliderState.MAIN ? (
+      ) : slider.name === SliderState.MAIN || slider.name === SliderState.FINISHED ? (
         <MainSliderMobile />
-      ) : slider.name === SliderState.FINISHED ? (
-        <FinishSlider />
       ) : (
         ""
       )}

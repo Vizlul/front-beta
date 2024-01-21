@@ -408,6 +408,13 @@ export const questions: any = [
 
   //new
   {
+    question: "چقدر میخوای برای هر نفر همراهت سر کیسه رو شل کنی؟ 💰",
+    answer: { value_fa: [100, 600] },
+    question_value: "bank_balance",
+    type: "number",
+    step: 10,
+  },
+  {
     question: "آیا دعوتنامه داری؟",
     answer: {
       value_en: [
@@ -476,7 +483,7 @@ export const questions: any = [
     },
 
     question_value: "travel_history",
-    type: "radio",
+    type: "radio_multi",
     options: [
       { value: "schengen_once", label: "یکبار شنگن" },
       { value: "schengen_twice", label: "دوبار و بیشتر شنگن" },

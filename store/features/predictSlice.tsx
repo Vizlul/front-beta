@@ -166,7 +166,7 @@ const predictSlice = createSlice({
     },
     setGroupedXai: (state, { payload }) => {
       state.chartDataKeys = Object.keys(payload.data.aggregated_shap_values);
-      state.chartDataValues = Object.values(payload.data.aggregated_shap_values);
+      state.chartDataValues = Object.values(payload.data.aggregated_shap_values).map(value => (value * 100).toFixed(2));
       state.statusDataValues = !state.statusDataValues;
     },
     setGroupedXaiExpanded: (state, { payload }) => {

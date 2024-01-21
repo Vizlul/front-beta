@@ -162,12 +162,12 @@
 }
 @-webkit-keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * 12));
+    transform: translateX(calc(160px * 6));
   }
 }
 @keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * 12));
+    transform: translateX(calc(160px * 6));
   }
 }
 .slideOption {
@@ -215,8 +215,8 @@
 
 .infinite .highwayBarrier .highwayLane .highwayCarSecond {
   width: 160px;
-  -webkit-animation: translateinfiniteSecond 25s linear infinite;
-  animation: translateinfiniteSecond 25s linear infinite;
+  -webkit-animation: translateinfiniteSecond 25s reverse infinite;
+  animation: translateinfiniteSecond 25s reverse infinite;
   background: #fff;
   padding: 10px;
   color: #343434;

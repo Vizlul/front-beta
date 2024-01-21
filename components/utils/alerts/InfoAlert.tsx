@@ -1,10 +1,14 @@
-import styles from "./InfoAlert.module.css"
+import styles from "./InfoAlert.module.css";
 
-export default function InfoAlert() {
+export default function InfoAlert({ questionCounter }) {
   return (
     <div className={styles.infoAlertBox}>
       <img src="InfoIcon.svg" alt="icon" />
-      <p>جهت محاسبه پارامترها به اولین سوال پاسخ دهید</p>
+      {questionCounter === 1 ? (
+        <p>جهت محاسبه پارامترها به اولین سوال پاسخ دهید </p>
+      ) : (
+        <p>جدول‌های زیر نمایانگر پارامترهای موثر بر شانس می‌باشند.</p>
+      )}
     </div>
   );
 }
