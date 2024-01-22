@@ -21,7 +21,7 @@ import {
 } from "@/store/features/predictSlice";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import CallApi from "@/utils/CallApi";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Modal from "../utils/modal/Modal";
@@ -30,6 +30,7 @@ import ChancePotentialModal from "../utils/modal/ChancePotentialModal";
 import InfoAlert from "../utils/alerts/InfoAlert";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
+import ApexChart from "@/utils/ApexChart";
 
 export default function MainSlider() {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
@@ -48,6 +49,49 @@ export default function MainSlider() {
   const [loading, setLoading] = useState(false);
   const [finished, setToFinished] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [chanceHistory, setChanceHistory] = useState([])
+
+  let data = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        height: 370,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      xaxis: {
+        categories: [],
+      },
+      tooltip: {
+        x: {
+          // format: "dd/MM/yy HH:mm",
+        },
+      },
+    },
+  };
 
   const handleChange = (value: any) => {
     if (editMode) {
@@ -471,10 +515,10 @@ export default function MainSlider() {
     return currentNumber > previousNumber
       ? "more"
       : currentNumber < previousNumber
-      ? "low"
-      : currentNumber === previousNumber
-      ? "equal"
-      : "";
+        ? "low"
+        : currentNumber === previousNumber
+          ? "equal"
+          : "";
   }
 
   const handleBack = () => {
@@ -558,8 +602,12 @@ export default function MainSlider() {
   console.log("questionNumber", predict.questionNumber);
   const [isMobile, setIsMobile] = useState(false);
 
+  console.log(800 - (800 * (50 / 100)))
+  document.documentElement.style.setProperty("--progress", String(800 - (800 * (50 / 100))));
+
   return (
     <div className={styles.mainSliderPage}>
+      <style>{`--progress: ${800 - (800 * (50 / 100))}`}</style>
       <Navbar />
 
       <div className={styles.mainSlider}>
@@ -640,20 +688,142 @@ export default function MainSlider() {
           <div className={styles.chancePotentialBox}>
             <div className={styles.chanceBox}>
               <p>شانس ویزا</p>
-              <div className={styles.progressContainer}>
-                <div className={styles.progressSquare}></div>
+              <div className={styles.progressBar}>
+                <svg
+                  fill="none"
+                  width="200"
+                  height="200"
+                  viewBox="0 0 200 200"
+                  className={styles.progressFull}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
+                </svg>
+                <svg
+                  fill="none"
+                  width="200"
+                  height="200"
+                  viewBox="0 0 200 200"
+                  className={styles.progress}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
+                </svg>
+                <div className={styles.chanceNumber}>
+                  <img src="/CaretUp.svg" alt="icon" />
+                  <p><span>%</span> 84</p>
+                  {/* {isNumberIncreasing(
+                    chanceHistory[chanceHistory.length - 2]?.chance,
+                    chanceHistory[chanceHistory.length - 1]?.chance
+                  ) === "more" ? (
+                    <img src="/CaretUp.svg" alt="icon" />
+                  ) : isNumberIncreasing(
+                    chanceHistory[chanceHistory.length - 2]?.chance,
+                    chanceHistory[chanceHistory.length - 1]?.chance
+                  ) === "low" ? (
+                    <img
+                      src="/CaretDown.svg"
+                      style={{
+                        color: "red",
+                        transform: "translate(rotate(-180deg))",
+                      }}
+                      alt="icon"
+                    />
+                  ) : (
+                    <img src="/CaretEqual.svg" alt="icon" />
+                  )} */}
+                </div>
               </div>
             </div>
             <div className={styles.potentialBox}>
               <p>شناخت ویزارد از شما</p>
-              <div className={styles.progressContainer}>
-                <div className={styles.progressBar}></div>
+              <div className={styles.progressBar}>
+                <svg
+                  fill="none"
+                  width="200"
+                  height="200"
+                  viewBox="0 0 200 200"
+                  className={styles.progressFull}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
+                </svg>
+                <svg
+                  fill="none"
+                  width="200"
+                  height="200"
+                  viewBox="0 0 200 200"
+                  className={styles.progress}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
+                </svg>
+                <div className={styles.potentialNumber}>
+                  <div className={styles.footerVisHead}>
+                    <img src="vizard-head.svg" alt="vizard-head" />
+                  </div>
+                  <div className={styles.potentialNumberIcon}>
+                    <img src="/CaretUp.svg" alt="icon" />
+                    <p><span>%</span> 84</p>
+                  </div>
+                  {/* {isNumberIncreasing(
+                    chanceHistory[chanceHistory.length - 2]?.chance,
+                    chanceHistory[chanceHistory.length - 1]?.chance
+                  ) === "more" ? (
+                    <img src="/CaretUp.svg" alt="icon" />
+                  ) : isNumberIncreasing(
+                    chanceHistory[chanceHistory.length - 2]?.chance,
+                    chanceHistory[chanceHistory.length - 1]?.chance
+                  ) === "low" ? (
+                    <img
+                      src="/CaretDown.svg"
+                      style={{
+                        color: "red",
+                        transform: "translate(rotate(-180deg))",
+                      }}
+                      alt="icon"
+                    />
+                  ) : (
+                    <img src="/CaretEqual.svg" alt="icon" />
+                  )} */}
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.mainSliderLeft}>
           <InfoAlert />
+
+          <div className={styles.mainCharts}>
+            <div className={styles.mainChartsArea}>
+              {questionCounter === 1 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
+              <ApexChart options={data.options} series={data.series} type="area" height={250} />
+            </div>
+          </div>
+
+          <div className={styles.chartsIconsBox}>
+            <div className={styles.chartIcon}>
+              <img src="chart/LineChartIcon.svg" alt="chart-icon" />
+              <p>نام جدول</p>
+            </div>
+            <div className={styles.chartIcon}>
+              <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
+              <p>نام جدول</p>
+            </div>
+            <div className={styles.chartIcon}>
+              <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
+              <p>نام جدول</p>
+            </div>
+            <div className={styles.chartIcon}>
+              <img src="chart/BarChartIcon.svg" alt="chart-icon" />
+              <p>نام جدول</p>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -8,6 +8,10 @@
   src: local("FarhangFanumBold"), url(/fonts/farhangfanum-bold.woff2) format("truetype");
 }
 
+:root {
+  --progress: 0%;
+}
+
 * {
   box-sizing: border-box !important;
   font-family: FarhangFanum, sans-serif !important;

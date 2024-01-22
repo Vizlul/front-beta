@@ -118,6 +118,12 @@
   margin-right: -10px;
 }
 
+.chanceNumberIcon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .footerDown {
   display: flex;
   align-items: center;
