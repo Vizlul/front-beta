@@ -1,81 +1,36 @@
 .header {
   width: 100%;
   background-color: #fff;
-  border-bottom: 1px solid #356e68;
-  position: relative;
-  height: 70px;
+  /* height: 70px; */
+  padding: 20px 60px;
 }
 
-.header .headerContent {
+.headerContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 430px);
-  margin: 0 auto;
-  height: 100%;
 }
 
-.headerContentBox .headerContentText {
+.headerContentBox {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 20px;
-  margin-right: 130px;
 }
 
-.headerContentText p {
-  margin: 0;
+.headerContentBox img:first-of-type {
+  width: 145px;
+  height: 45px;
 }
 
-.headerContentText p:first-of-type {
-  background-image: linear-gradient(235deg, #347571 124%, #102625 89%, #346d67 42%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 24px;
-  font-weight: bold;
-  font-family: FarhangFanumBold !important;
+.headerContentBox img:last-of-type {
+  width: 12px;
+  height: 20px;
 }
 
-.headerContentBox .headerContentBoxImage {
-  background-color: #fff;
-  position: absolute;
-  width: 90px;
-  height: 101px;
-  padding: 11px;
-  top: 0;
+.headerContentBox p{
+  font-size: 20px;
 }
 
-.headerContentBox .headerContentBoxImage::after {
-  content: "";
-  position: absolute;
-  bottom: 0px;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  border: 1px solid #356e68;
-}
-
-.headerContentBox .headerContentBoxImage::before {
-  content: "";
-  position: absolute;
-  bottom: 0px;
-  right: 0;
-  width: calc(100% + 2px);
-  background-color: #fff;
-  top: 0;
-  height: 71px;
-  z-index: 9;
-}
-
-.headerContentBoxImage img {
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  display: block;
-  position: relative;
-}
 
 .headerContentButton {
   display: flex;
@@ -87,10 +42,6 @@
   border-radius: 0 !important;
 }
 
-.headerContentButton > button {
-  
-}
-
 .headerContentButton > a {
   border: none;
   background-color: #00554e !important;
@@ -99,11 +50,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
 }
 
-.headerContentButton > a button{
+.headerContentButton > a button {
   background-color: #00554e;
   outline: none;
   color: #fff !important;
@@ -113,7 +64,6 @@
   gap: 10px;
   border: none;
   cursor: pointer;
-
 }
 
 .headerContentButton a:hover {
@@ -124,7 +74,7 @@
   text-decoration: none;
 }
 
-.headerContentButton a:hover button{
+.headerContentButton a:hover button {
   background-color: #317467 !important;
   color: #fff !important;
   border-color: #317467 !important;

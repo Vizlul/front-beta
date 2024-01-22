@@ -11,24 +11,13 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerContainer}>
-        <div className={styles.footerContent}>
-          <img src="/visaland.svg" />
-          <div className={styles.footerContentText}>
-            <p>قدرت گرفته از ویزالند</p>
-            <p>تمامی حقوق مادی و معنوی تکنولوژی ویزارد متعلق به ویزالند است..</p>
-          </div>
-        </div>
-
-        <div className={styles.footerSocial}>
-          <a href="">
-            <img src="/Linkedin.svg" />
-          </a>
-          <a href="">
-            <img src="/Instagram.svg" />
-          </a>
-        </div>
-        {slider.name === 0 && <p className={styles.textVersion}>vizard_v[0.1.0]_front_v[0.1.0]_09ff528</p>}
+      <div className={styles.footerRight}>
+        <p>قدرت گرفته از ویزالند</p>
+        <p>تمامی حقوق مادی و معنوی تکنولوژی ویزارد متعلق به ویزالند است.</p>
+      </div>
+      <div className={styles.footerLeft}>
+        <img src="instagram.svg" alt="social-icon" />
+        <img src="linkedin.svg" alt="social-icon" />
       </div>
     </footer>
   );

@@ -1,363 +1,150 @@
-.mainSlider {
+.mainSliderPage {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  gap: 40px;
-  height: 100%;
-  /* max-height: 460px; */
-  /* padding: 60px 0; */
-}
-
-.mainSliderLeft {
-  grid-column: span 6 / span 6;
-  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 24px;
+  background-color: #f0f2f5;
+}
+
+.mainSlider {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  width: calc(100% - 120px);
+  height: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 40px;
+  gap: 40px;
 }
 
 .mainSliderRight {
   grid-column: span 6 / span 6;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  height: 100%;
-}
-
-.mainSliderRightBox:first-of-type {
-  height: fit-content;
-}
-
-.mainSliderRightBox {
+  gap: 40px;
   width: 100%;
-  height: 100%;
 }
 
-.mainSliderRightBox:last-of-type {
-  height: fit-content;
-}
-
-.mainSliderRightBox > div {
-  padding: 40px 24px;
-}
-
-.mainSliderRightBox:nth-child(2) > div {
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.mainSliderRightBox:last-of-type > div {
-  padding: 0;
-}
-
-.potansielChanceContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  height: 100%;
-}
-
-.potansielChanceContainer .potansielChanceBox {
-  width: 100%;
-  background-color: #fff;
-  padding: 25px;
-  height: 100%;
-}
-
-.questionContainer {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  padding: 55px 20px;
-  height: 100%;
+.mainSliderLeft {
+  grid-column: span 6 / span 6;
+  border: 1px solid rgba(48, 48, 48, 0.3);
 }
 
 .questionBox {
-  grid-column: 7 span / 7 span;
+  border: 1px solid rgba(48, 48, 48, 0.3);
+  padding: 20px;
+}
+
+.questionText {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-left: 1px solid #d9d9d9;
-}
-
-.questionBoxButtonGroups {
-  grid-column: 5 span / 5 span;
-  width: 100%;
-  max-width: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 10px;
-}
-
-.questionBoxRight {
-  width: 90%;
-}
-
-.questionBoxRight p {
+  gap: 12px;
   font-size: 22px;
-  font-weight: bold;
-  margin-top: 10px;
+  font-weight: 700;
 }
-.questionBoxLeft {
-  width: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
+
+.questionText p:first-of-type {
   color: #00554e;
 }
 
-.questionBoxButtonGroups button:first-of-type {
-  width: 50px;
-  height: 50px;
+.answerChioces {
+  display: flex;
+  gap: 12px;
+  /* margin-top: 16px; */
+  flex-wrap: wrap;
 }
 
-.questionBoxButtonGroups button:last-of-type {
-  width: 100%;
-  max-width: 150px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.buttonChoices button {
-  width: 100%;
-  border: solid 1px #d9d9d9;
-  height: 40px !important;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 8px 16px;
+.answerChioces button {
+  height: 32px;
+  padding: 0 12px;
   background-color: #fff;
-}
-
-.questionBoxButtonGroups button {
-  background-color: #fff;
-  border: solid 1px #d9d9d9;
-  height: 50px !important;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.questionBoxButtonGroups button:hover {
+  border: 1px solid #a7a7a7;
+  color: #000;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
-}
-
-.questionsAnswers {
-  display: flex;
-  align-items: center;
-}
-
-.questionsAnswers .sampleButton {
-  border-radius: 0;
-  font-family: FarhangFanum, sans-serif !important;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .activeButton {
   background-color: #00554e !important;
-  color: #fff;
-  transition: all 0.3s ease;
+  color: #fff !important;
+  border: 1px solid #00554e !important;
+  transition: all 0.3s ease-in-out;
 }
 
-.footerChart {
+.buttonGroups {
+  margin-top: 50px;
   display: flex;
-  align-items: center;
-  gap: 50px;
-}
-
-.footerChart > div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.povNowAnswer {
-  width: 30px;
-  height: 10px;
-  background-color: rgba(0, 85, 78, 0.8);
-}
-
-.povOldAnswer {
-  width: 30px;
-  height: 10px;
-  background-color: rgba(0, 85, 78, 0.2);
-}
-
-.footerChart > div p {
-  font-size: 14px;
-}
-
-.potansielChanceBoxHeader {
-  display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: center;
 }
 
-.potansielChanceBoxHeader p {
-  margin: 0;
-}
-
-.selectAnswer > div {
-  border-radius: 0 !important;
-  border-color: #d9d9d9 !important;
-}
-
-.selectAnswerMobile {
-  border: 1px solid #d9d9d9;
-  width: 260px;
-  height: 40px;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearence: none;
-  background-image: url("/Down.svg");
-  background-position: 10px center; /*Positioning*/
-  background-repeat: no-repeat; /*Prevent showing multiple background images*/
-  padding: 10px;
+.buttonGroups button {
+  background-color: #002722;
+  border: 1px solid #002722;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 30px;
   cursor: pointer;
 }
 
-.selectAnswer option {
-  padding: 10px;
-}
-
-.numberInput {
-  width: 100% !important;
-  height: 40px !important;
-  border-radius: 0;
-  border: 1px solid #d9d9d9 !important;
+.chancePotentialBox {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-.infoIconFirst {
+.chanceBox {
+  border: 1px solid #a7a7a7;
+  width: 100%;
+  padding: 16px 20px;
+}
+.potentialBox {
+  border: 1px solid #a7a7a7;
+  width: 100%;
+  padding: 16px 20px;
+}
+
+.chanceBox p,
+.potentialBox p {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.progressContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressBar {
   position: absolute;
-  top: 26px;
-  left: 44%;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }
-.infoIconSecond {
+
+.progressBar::before,
+.progressBar::after {
+  content: "";
   position: absolute;
-  top: 45%;
-  left: 90%;
-}
-.infoIconThird {
-  position: absolute;
-  top: 86%;
-  left: 43%;
-}
-.infoIconFour {
-  position: absolute;
-  top: 45%;
-  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #4caf50;
+  border-radius: 10px;
 }
 
-@media (max-width: 1366px) {
-  .questionContainer {
-    padding: 55px 10px;
-  }
-
-  .questionBox {
-    grid-column: span 8 / span 8;
-  }
-
-  .questionBoxButtonGroups {
-    grid-column: span 4 / span 4;
-    padding: 0 10px;
-  }
-
-  .questionBoxButtonGroups button:first-of-type {
-    width: 30px;
-  }
-
-  .questionBoxButtonGroups button:last-of-type {
-    width: 130px;
-  }
+.progressBar::before {
+  clip-path: polygon(0 0, 100% 0, 100% 5%, 0 5%);
 }
 
-@media (max-width: 768px) {
-  .mainSlider {
-    gap: 0;
-    margin: 40px 0;
-  }
-  .mainSliderRight {
-    grid-column: span 12 / span 12;
-    margin-top: 20px;
-  }
-  .mainSliderLeft {
-    grid-column: span 12 / span 12;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .infoIconFirst {
-    position: absolute;
-    top: 10px;
-    left: 48%;
-  }
-  .infoIconSecond {
-    position: absolute;
-    top: 41%;
-    left: 96.5%;
-  }
-  .infoIconThird {
-    position: absolute;
-    top: 78%;
-    left: 48%;
-  }
-  .infoIconFour {
-    position: absolute;
-    top: 41%;
-    left: 0;
-  }
-
-  .footerChart {
-    gap: 10px;
-  }
-
-  .questionContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 16px 10px;
-  }
-
-  .questionBox{
-    width: 100%;
-    border-left: none;
-    border-bottom: 1px solid #d9d9d9;
-    padding-bottom: 24px;
-  }
-
-  .questionBoxButtonGroups{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-  }
-
-  .potansielChanceContainer{
-    display: flex;
-    flex-direction: column;
-  }
+.progressBar::after {
+  clip-path: polygon(100% 0, 100% 100%, 95% 100%, 95% 0);
 }

@@ -4,10 +4,8 @@ import { questions } from "@/utils/QuestionJson";
 import CallApi from "@/utils/CallApi";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addCountQuestion,
   addCounterQuestionIndex,
   setChanceData,
-  setCountAnswer,
   setGroupedXai,
   setNextPredictBackup,
   setNextPredictData,
@@ -15,7 +13,6 @@ import {
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Loading from "../Loading";
-import { SliderState } from "@/constants";
 
 export default function AnswerPopup({
   answerPopup,
@@ -83,6 +80,10 @@ export default function AnswerPopup({
       .then(async (respon) => {
         // if answer all questions goes finish slider
         if (!respon.data.next_variable) {
+          setActiveButton("");
+          setAnswer(null);
+          setLoading(false);
+          setAnswerPopup(false);
           return dispatch(setToFinished());
         } else {
           await CallApi.post("/grouped_xai", filteredData)

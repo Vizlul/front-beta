@@ -18,17 +18,13 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.headerContentBox}>
-          <div className={styles.headerContentBoxImage} onClick={() => handleReload()}>
-            <img src="/vizard.png" />
-          </div>
-          <div className={styles.headerContentText}>
-            <p>ویزارد</p>
-            <p>اولین هوش مصنوعی ویزا</p>
-          </div>
+          <img src="/visaland-logo.svg" alt="logo" />
+          <img src="/arrow-nav.svg" alt="arrow-nav" />
+          <p>اولین هوش مصنوعی ویزا</p>
         </div>
 
         <div className={styles.headerContentButton}>
-          <AboutModal />
+          {/* <AboutModal /> */}
 
           <a href="https://visaland.org">
             <button style={{ fontSize: "16px" }}>

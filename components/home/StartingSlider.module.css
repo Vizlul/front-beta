@@ -1,171 +1,265 @@
 .startingSlider {
   width: 100%;
-  height: 80vh;
-  display: flex;
-  /* margin: 20px auto; */
-  justify-content: center;
-  align-items: center;
-  /* padding: 80px 0; */
-}
-
-.startingSlider > div {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  width: 100%;
   height: 100%;
-  background-color: #fff;
-  padding: 0 76px;
-  max-height: 560px;
-}
-
-.startingSliderRight {
-  grid-column: span 8 / span 8;
+  background-color: #f0f2f5;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  gap: 24px;
 }
 
-.startingSliderLeft {
-  grid-column: span 4 / span 4;
+.mainHero {
+  width: calc(100% - 120px);
+  height: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  position: relative;
+}
+
+.mainHeroRight {
+  grid-column: span 6 / span 6;
+  padding: 65px 72px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.mainHeroHeader {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 24px;
 }
 
-.startingSliderLeft img {
-  width: 312px;
-  height: 351px;
+.mainHeroHeader p:first-of-type {
+  font-size: 30px;
+  color: #00554e;
+  font-weight: 700;
 }
 
-.startingSliderRightHeading {
+.mainHeroHeader p:last-of-type {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.mainHeroLeft {
+  grid-column: span 6 / span 6;
+  position: relative;
+}
+
+.mainHeroLeft img {
+  width: 100%;
+  height: 650px;
+  object-position: -120px 70px;
+}
+
+.mainHeroInfo {
+  font-size: 20px;
+  border-bottom: 1px solid rgba(48, 48, 48, 0.05);
+  padding-bottom: 20px;
+}
+
+.starterMainHero {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 20px;
 }
 
-.startingSliderRightHeading p:first-of-type {
-  font-size: 26px;
+.starterMainHero > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.starterMainHero > p {
+  font-size: 18px;
   font-weight: bold;
-  background-image: linear-gradient(237deg, #347571 124%, #102625 90%, #346d67 43%);
-  -webkit-background-clip: text;
+}
+
+.starterMainHero input {
+  padding: 0 12px;
+  background-color: #fff;
+  border: 1px solid rgba(48, 48, 48, 0.3);
+  height: 50px;
+  max-width: 380px;
+  width: 100%;
+  outline: none;
+}
+
+.starterMainHero button {
+  height: 50px;
+  border: 1px solid #002722;
+  background-color: #002722;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 30px;
+  cursor: pointer;
+}
+
+.starterMainHero button svg {
+  margin-top: -10px;
+}
+
+.absoluteBox {
+  position: absolute;
+  top: 46%;
+  left: 20%;
+  background-color: #fff !important;
+  box-shadow: 0px 0px 20px 0px rgba(0, 85, 78, 0.2);
+  padding: 16px 20px;
+}
+
+.absoluteText {
+  z-index: 2;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 91.667% */
+  background: linear-gradient(252deg, #347571 -24.05%, #102625 10.88%, #346d67 58.2%);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
 }
 
-.startingSliderRightHeading p:last-of-type {
-  margin: 0;
-  font-size: 18px;
-}
-
-.startingSliderRightContent {
-  margin-top: 24px;
-}
-
-.startingSliderRightContent p {
-  font-size: 18px;
-  line-height: 40px;
-  max-width: 680px;
-  width: 100%;
-}
-
-.startingSliderButton {
-  border-radius: 0 !important;
-  background-color: #00554e;
-  color: #fff;
-  font-size: 18px;
-  width: 140px;
-  height: 60px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.startingSliderButton:hover {
-  background-color: #317467 !important;
-  color: #fff !important;
-  border-color: #317467 !important;
-}
-
-.startButton{
-  width: 140px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: #00554e;
-  color: #fff;
-  border: 1px solid #00554e;
-  cursor: pointer;
-}
-
-.textVersion {
-  color: #999999;
+/* ========================= Animation Slider ================================ */
+.floatUsersBox {
   position: absolute;
-  bottom: -10px;
-  left: 10px;
-  font-family: sans-serif !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
 }
 
-@media (max-width: 768px) {
-  .startingSlider {
-    height: 100%;
-    margin: 75px auto;
-    padding: 0;
-  }
-
-  .startingSlider > div {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    width: 94%;
-    margin: 0 auto;
-  }
-
-  .startingSliderRight {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 16px;
-  }
-
-  .startingSliderLeft {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .startingSliderLeft img {
-    width: 136px;
-    height: 153px;
-    margin: 10px 108px;
-  }
-
-  .startingSliderRightHeading {
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-  }
-
-  .startingSliderRightContent {
-    margin: 0 24px;
-  }
-
-  .startingSliderRightContent p {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 24px;
-  }
-
-  .startingSliderButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 14px;
+.highwaySlider {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.highwaySlider .highwayBarrier {
+  overflow: hidden;
+  position: relative;
+}
+.highwaySlider .highwayLane {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  margin: 0;
+}
+.highwaySlider .highwayLane .highwayCar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  width: 160px !important;
+}
+@-webkit-keyframes translateinfinite {
+  100% {
+    transform: translateX(calc(160px * 12));
   }
 }
-  
+
+@keyframes translateinfinite {
+  100% {
+    transform: translateX(calc(160px * 12));
+  }
+}
+
+@-webkit-keyframes translateinfiniteSecond {
+  100% {
+    transform: translateX(calc(160px * -12)); /* Reverse direction with a negative value */
+  }
+}
+
+@keyframes translateinfiniteSecond {
+  100% {
+    transform: translateX(calc(160px * -12)); /* Reverse direction with a negative value */
+  }
+}
+.slideOption {
+  margin-top: 10px;
+  overflow: hidden;
+}
+.infinite:last-of-type {
+  /* transform: translateX(-20px); */
+  /* overflow: hidden; */
+}
+
+.infinite .highwayBarrier::before,
+.infinite .highwayBarrier::after {
+  content: " ";
+  position: absolute;
+  z-index: 9;
+  width: 160px;
+  height: 100%;
+}
+.infinite .highwayBarrier::before {
+  top: 0;
+  left: 0;
+  /* background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%); */
+  background: linear-gradient(112deg, #f0f2f5 0%, rgba(240, 242, 245, 0) 100%);
+}
+.infinite .highwayBarrier::after {
+  top: 0;
+  right: 0;
+  /* background: linear-gradient(to left, #ffffff 0%, rgba(255, 255, 255, 0) 100%); */
+  background: linear-gradient(270deg, #f0f2f5 0%, rgba(240, 242, 245, 0) 100%);
+}
+.infinite .highwayBarrier .highwayLane {
+  width: calc(160px * 10);
+}
+.infinite .highwayBarrier .highwayLane .highwayCar {
+  width: 160px;
+  -webkit-animation: translateinfinite 25s linear infinite;
+  animation: translateinfinite 25s linear infinite;
+  background: #fff;
+  padding: 10px;
+  color: #343434;
+  box-shadow: 0px 2px 20px 0px rgba(48, 48, 48, 0.1);
+  font-weight: bold;
+}
+
+.infinite .highwayBarrier .highwayLane .highwayCarSecond {
+  width: 160px;
+  -webkit-animation: translateinfiniteSecond 25s linear infinite;
+  animation: translateinfiniteSecond 25s linear infinite;
+  background: #fff;
+  padding: 10px;
+  color: #343434;
+  box-shadow: 0px 2px 20px 0px rgba(48, 48, 48, 0.1);
+  font-weight: bold;
+}
+.infinite .highwayBarrier .highwayLane .highwayCar .fab {
+  font-size: 65px;
+}
+
+.progressUsers {
+  padding: 12px 9px;
+  border: 1px solid #ff5c00;
+  color: #ff5c00;
+  background: rgba(255, 92, 0, 0.2);
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.progressUsers span {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.progressUserName {
+  flex: 1;
+  width: 160px;
+  font-size: 16px;
+}

@@ -201,18 +201,67 @@
   height: 100%;
 }
 
-.footerFinished{
+.footerFinished {
   height: 70px;
   background-color: #fff;
   padding: 10px 18px;
 }
 
-.footerFinished button{
-  background-color: #00554E;
+.footerFinished button {
+  background-color: #00554e;
   color: #fff;
   font-weight: 700;
   font-size: 16px;
-  border: 1px solid #00554E;
+  border: 1px solid #00554e;
   width: 100%;
   height: 100%;
+}
+
+.chartsIconBoxActive {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  position: fixed;
+  bottom: 18%;
+  right: 10px;
+  z-index: 99;
+  transition: all ease 0.3s;
+}
+
+.chartsIconBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  position: fixed;
+  bottom: 18%;
+  right: 10px;
+  z-index: 99;
+  transform: translateX(40px);
+  transition: all ease 0.3s;
+}
+
+.chartsIcon {
+  border: 1px solid #a7a7a7;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.closeIconBox {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  color: #a7a7a7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

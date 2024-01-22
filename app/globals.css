@@ -11,6 +11,7 @@
 * {
   box-sizing: border-box !important;
   font-family: FarhangFanum, sans-serif !important;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -22,10 +23,10 @@ body {
 }
 
 .mainLayout {
-  height: calc(100vh - 170px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
 .swiper {

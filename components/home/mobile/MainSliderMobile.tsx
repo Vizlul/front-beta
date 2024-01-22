@@ -2,7 +2,7 @@
 import InfoAlert from "@/components/utils/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
 import ApexChart from "@/utils/ApexChart";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
 import PotentialPopup from "@/components/utils/popups/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
@@ -19,6 +19,7 @@ export default function MainSliderMobile() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [chanceHistory, setChanceHistory] = useState<any[]>([]);
   const [questionCounter, setQuestionCounter] = useState<any>(1);
+  const [closeChart, setCloseChart] = useState(false);
 
   let data = {
     series: [
@@ -257,12 +258,6 @@ export default function MainSliderMobile() {
     },
   };
 
-  console.log(predict.chartDataKeys);
-  console.log(predict.chartDataValues);
-  console.log(predict.statusDataValues);
-  console.log(chanceHistory)
-  console.log(chanceHistory[chanceHistory.length - 2]?.chance)
-
   function isNumberIncreasing(previousNumber: any, currentNumber: any) {
     // console.log(previousNumber, currentNumber);
     return currentNumber > previousNumber
@@ -274,7 +269,15 @@ export default function MainSliderMobile() {
       : "";
   }
 
-  console.log(questionCounter);
+  const firstChartRef = useRef(null);
+  const secondChartRef = useRef(null);
+  const thirdChartRef = useRef(null);
+  const fourthChartRef = useRef(null);
+  const handleChartSidebar = () => {
+    if (closeChart === true) {
+      setCloseChart(false);
+    }
+  };
 
   return (
     <>
@@ -317,10 +320,10 @@ export default function MainSliderMobile() {
           </div>
         </div>
         <div className={styles.main}>
-          {questionCounter === 1 && <InfoAlert />}
+          {<InfoAlert questionCounter={questionCounter} />}
 
           <div className={styles.mainCharts}>
-            <div className={styles.mainChartsArea}>
+            <div ref={firstChartRef} className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -330,7 +333,7 @@ export default function MainSliderMobile() {
               <ApexChart options={data.options} series={data.series} type="area" height={250} />
             </div>
 
-            <div className={styles.mainChartsArea}>
+            <div ref={secondChartRef} className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -347,7 +350,7 @@ export default function MainSliderMobile() {
               />
             </div>
 
-            <div className={styles.mainChartsArea}>
+            <div ref={thirdChartRef} className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -364,7 +367,7 @@ export default function MainSliderMobile() {
               />
             </div>
 
-            <div className={styles.mainChartsArea}>
+            <div ref={fourthChartRef} className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -435,7 +438,7 @@ export default function MainSliderMobile() {
             <div className={styles.footerDown}>
               <div className={styles.footerDownQuestion}>
                 <p>{questionCounter}</p>
-                <p>{questions[currentQuestionIndex].question}</p> 
+                <p>{questions[currentQuestionIndex].question}</p>
               </div>
 
               <button
@@ -450,6 +453,33 @@ export default function MainSliderMobile() {
             </div>
           </div>
         )}
+
+        <div
+          onClick={() => handleChartSidebar()}
+          className={closeChart ? styles.chartsIconBox : styles.chartsIconBoxActive}
+        >
+          <div onClick={() => firstChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
+            <img src="chart/LineChartIcon.svg" alt="chart-icon" />
+          </div>
+          <div
+            onClick={() => secondChartRef.current.scrollIntoView()}
+            className={styles.chartsIcon}
+          >
+            <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
+          </div>
+          <div onClick={() => thirdChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
+            <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
+          </div>
+          <div
+            onClick={() => fourthChartRef.current.scrollIntoView()}
+            className={styles.chartsIcon}
+          >
+            <img src="chart/BarChartIcon.svg" alt="chart-icon" />
+          </div>
+          <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
+          <img src="chart/x.svg" alt="chart-icon" />
+          </div>
+        </div>
       </div>
 
       <AnswerPopup
