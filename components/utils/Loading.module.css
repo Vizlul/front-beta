@@ -3,7 +3,7 @@
   height: 48px;
   display: inline-block;
   position: relative;
-  transform: rotate(45deg) scale(0.7);
+  transform: rotate(45deg) scale(0.4);
 }
 .loader::before {
   content: "";

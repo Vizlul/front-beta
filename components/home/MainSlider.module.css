@@ -22,11 +22,13 @@
   grid-column: span 6 / span 6;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 40px;
   width: 100%;
 }
 
 .mainSliderLeft {
+  padding: 20px;
   grid-column: span 6 / span 6;
   border: 1px solid rgba(48, 48, 48, 0.3);
 }
@@ -34,6 +36,7 @@
 .questionBox {
   border: 1px solid rgba(48, 48, 48, 0.3);
   padding: 20px;
+  height: 100%;
 }
 
 .questionText {
@@ -86,8 +89,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 132px;
   gap: 10px;
-  padding: 15px 30px;
+  height: 50px;
+  padding: 0 30px;
   cursor: pointer;
 }
 
@@ -108,6 +113,7 @@
   border: 1px solid #a7a7a7;
   width: 100%;
   padding: 16px 20px;
+  height: 100%;
 }
 
 .chanceBox p,
@@ -125,31 +131,36 @@
   height: 200px;
 }
 
-.progressFull>path {
-  stroke: #E6F3E6;
+.progressFull > path {
+  stroke: #e6f3e6;
 }
 
 .progress {
   position: absolute;
   inset: 0;
-  stroke-dashoffset: 0;
+  stroke-dashoffset: var(--progress);
   stroke-dasharray: 800;
-  animation: fill 3s linear forwards;
+  transition: all 0.5s ease;
 }
 
-.progress>path {
+.potential {
+  position: absolute;
+  inset: 0;
+  stroke-dashoffset: var(--potential);
+  stroke-dasharray: 800;
+  transition: all 0.5s ease;
+}
+
+.progress > path {
   stroke: #008000;
 }
 
-@keyframes fill {
-  from {
-    stroke-dashoffset: 800;
-  }
+.potential > path {
+  stroke: #008000;
+}
 
-  to {
-    stroke-dashoffset: var(--progress);
-    /* 800 - (800 * 0.75) */
-  }
+.animate {
+  animation: fill 0.5s ease forwards;
 }
 
 .chanceNumber {
@@ -171,7 +182,7 @@
   font-size: 12px;
 }
 
-.potentialNumber{
+.potentialNumber {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -180,14 +191,14 @@
   gap: 8px;
 }
 
-.potentialNumberIcon{
+.potentialNumberIcon {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.potentialNumberIcon p{
+.potentialNumberIcon p {
   background-color: #008000;
   color: #fff;
   padding: 4px 8px;
@@ -212,22 +223,23 @@
   margin-bottom: -10px;
 }
 
-.chartsIconsBox{
+.chartsIconsBox {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding: 0 20px;
 }
 
-.chartIcon{
-  border: 1px solid rgba(48, 48, 48, 0.30);
+.chartIcon {
+  border: 1px solid rgba(48, 48, 48, 0.3);
   padding: 36px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: background-color ease 0.3s;
+  cursor: pointer;
 }
 
 .mainCharts {
@@ -235,7 +247,6 @@
   flex-direction: column;
   gap: 10px;
   margin: 86px 0 24px;
-  padding: 0 20px;
 }
 
 .mainChartsArea {
@@ -271,4 +282,40 @@
 
 .noBlur {
   filter: none; /* Removes the blur effect */
+}
+
+.activeChart {
+  background-color: #00554e;
+  color: #fff !important;
+  transition: background-color ease 0.3s;
+}
+
+.questionNumber {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.questionNumber input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #a7a7a7;
+  border-left: none;
+  border-right: none;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.questionNumber button {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+}
+
+.handleSubmit {
+  height: 50px;
+  max-height: 50px !important;
 }

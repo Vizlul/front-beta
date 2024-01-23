@@ -1,55 +1,41 @@
-import { Button, InputNumber, Progress, Select, Slider } from "antd";
-import MyChart from "../utils/chart/Chart";
-import SliderComponent from "../utils/slider/SliderComponent";
 import styles from "./MainSlider.module.css";
 import { questions } from "@/utils/QuestionJson";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  PredictInterface,
-  addCountAnswer,
-  addCountQuestion,
-  addCounterQuestionIndex,
-  minusCountQuestion,
-  setChanceData,
-  setCountAnswer,
-  setCountQuestion,
-  setGroupedXai,
-  setGroupedXaiExpanded,
-  setNextPredictBackup,
-  setNextPredictData,
-  setPotentialData,
-} from "@/store/features/predictSlice";
-import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
-import CallApi from "@/utils/CallApi";
-import { use, useEffect, useState } from "react";
-import CountUp from "react-countup";
-import { setToFinished } from "@/store/features/sliderSlice";
-import Modal from "../utils/modal/Modal";
-import Typewriter from "../utils/TypeWriter";
-import ChancePotentialModal from "../utils/modal/ChancePotentialModal";
+import { useEffect, useRef, useState } from "react";
 import InfoAlert from "../utils/alerts/InfoAlert";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import ApexChart from "@/utils/ApexChart";
+import Image from "next/image";
+import CallApi from "@/utils/CallApi";
+import {
+  addCounterQuestionIndex,
+  setChanceData,
+  setGroupedXai,
+  setNextPredictBackup,
+  setNextPredictData,
+  setPotentialData,
+} from "@/store/features/predictSlice";
+import { setToFinished } from "@/store/features/sliderSlice";
+import Loading from "../utils/Loading";
 
 export default function MainSlider() {
-  const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
-  const dispatch = useDispatch();
-  const [swiper, setSwiper] = useState(null);
-  const [questionCounter, setQuestionCounter] = useState<any>(0);
-  const [editMode, setEditMode] = useState(false);
-  const [editChanges, setEditChanges] = useState(false);
-  const [editKeyChanges, setEditkeyChanges] = useState("");
-  const [editData, setEditData] = useState<any[]>([]);
-  const [predictData, setPredictData] = useState<any>({});
+  const [questionCounter, setQuestionCounter] = useState<any>(1);
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState<any>("");
-  const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
-  const [mobileSize, setMobileSize] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
-  const [finished, setToFinished] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [chanceHistory, setChanceHistory] = useState([])
+  const [chanceHistory, setChanceHistory] = useState([]);
+  const predict = useSelector((state) => state.predict);
+  const slider = useSelector((state) => state.slider);
+  const [answerPopup, setAnswerPopup] = useState(false);
+  const [chancePopup, setChancePopup] = useState(false);
+  const [closeChart, setCloseChart] = useState(false);
+  const [chartSelected, setChartSelected] = useState("line");
+  const [answer, setAnswer] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [predictData, setPredictData] = useState<any>({});
+  const [prevCounterQuestion, setPrevCounterQuestion] = useState<any>([]);
+  const [animate, setAnimate] = useState(false);
 
   let data = {
     series: [
@@ -70,7 +56,7 @@ export default function MainSlider() {
     ],
     options: {
       chart: {
-        height: 370,
+        height: 770,
         type: "area",
         toolbar: {
           show: false,
@@ -93,339 +79,270 @@ export default function MainSlider() {
     },
   };
 
-  const handleChange = (value: any) => {
-    if (editMode) {
-      setEditChanges(true);
-    }
-    setTestValue(value.value);
-    const lastKey = questions[predict.questionIndex].question_value;
-    setEditkeyChanges(lastKey);
+  let barData = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        type: "bar",
+        height: 440,
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+      },
+      colors: ["#008FFB", "#FF4560"],
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          barHeight: "80%",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 1,
+        colors: ["#fff"],
+      },
 
-    if (lastKey === questions[predict.questionIndex].question_value) {
-      if (predict.questionIndex === 0) {
-        setPredictData({
-          ...predictData,
-          sex: value.value,
-        });
-        setPrevCounterQuestion((prev) => {
-          const index = prevCounterQuestion.findIndex((item) => item.type === lastKey);
-          if (index !== -1) {
-            prev[index] = { ...prev[index], answer: value.value };
-          }
-          return [...prev];
-        });
-        if (!editMode) {
-          setEditData((prev) => [...prev, "sex"]);
-        }
+      grid: {
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+      },
+      yaxis: {
+        min: -5,
+        max: 5,
+        title: {
+          // text: 'Age',
+        },
+      },
+      tooltip: {
+        shared: false,
+        x: {
+          formatter: function (val) {
+            return val;
+          },
+        },
+        y: {
+          formatter: function (val) {
+            return Math.abs(val) + "%";
+          },
+        },
+      },
+      xaxis: {
+        labels: {
+          formatter: function (val) {
+            return Math.abs(Math.round(val)) + "%";
+          },
+        },
+      },
+    },
+  };
+
+  let radarDara = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "radar",
+        toolbar: {
+          show: false,
+        },
+      },
+      xaxis: {
+        // categories: ["January", "February", "March", "April", "May", "June"],
+      },
+    },
+  };
+
+  let barChart = {
+    series: [
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
+      {
+        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0, 0],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "bar",
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: "top", // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#304758"],
+        },
+      },
+
+      xaxis: {
+        position: "top",
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
+    },
+  };
+
+  function isNumberIncreasing(previousNumber: any, currentNumber: any) {
+    // console.log(previousNumber, currentNumber);
+    return currentNumber > previousNumber
+      ? "more"
+      : currentNumber < previousNumber
+      ? "low"
+      : currentNumber === previousNumber
+      ? "equal"
+      : "";
+  }
+
+  const dispatch = useDispatch();
+
+  const handleChange = (value, type) => {
+    console.log(type);
+    if (type === "number") {
+      setAnswer(Number(value));
+    } else if (type === "radio_multi") {
+      if (answer === null) {
+        setAnswer((prev) => [...(prev || []), value]);
+      } else if (answer.includes(value)) {
+        setAnswer((prev) => prev.filter((item) => item !== value));
       } else {
-        setPredictData({
-          ...predictData,
-          [lastKey]: value.value,
-        });
-        setPrevCounterQuestion((prev) => {
-          const index = prevCounterQuestion.findIndex((item) => item.type === lastKey);
-          if (index !== -1) {
-            prev[index] = { ...prev[index], answer: value.value };
-          }
-          return [...prev];
-        });
-        if (!editMode) {
-          setEditData((prev) => [...prev, lastKey]);
-        }
+        setAnswer((prev) => [...(prev || []), value]);
       }
     } else {
-      setPredictData({
-        ...predictData,
-        [questions[predict.questionIndex].question_value]: value.value,
-      });
-      if (!editMode) {
-        setEditData((prev) => [...prev, [questions[predict.questionIndex].question_value]]);
-      }
+      setAnswer(value);
     }
   };
 
-  const handleSelectedChoice = (index: number | any) => {
-    if (editMode) {
-      setEditChanges(true);
-    }
-    setActiveButton(index);
-    const lastKey = predict.nextPredict;
-    setEditkeyChanges(lastKey);
-
-    if (lastKey === predict.nextPredict) {
-      if (predict.questionIndex === 0) {
-        const valueEn = questions[predict.questionIndex]?.answer?.value_en;
-        setTestValue(valueEn[index]);
-        if (valueEn) {
-          setPredictData({
-            ...predictData,
-            sex: valueEn[index],
-          });
-          setPrevCounterQuestion((prev) => {
-            const indexx = prevCounterQuestion?.findIndex((item) => item.type === lastKey);
-            if (indexx !== -1) {
-              prev[indexx] = {
-                ...prev[indexx],
-                answer: valueEn[index],
-                activeButton: index,
-              };
-            }
-            return [...prev];
-          });
-          if (!editMode) {
-            setEditData((prev) => [...prev, "sex"]);
-          }
-        }
-      } else {
-        const valueEn = questions[predict.questionIndex]?.answer?.value_en;
-        if (valueEn) {
-          setPredictData({
-            ...predictData,
-            [lastKey]: valueEn[index],
-          });
-          setPrevCounterQuestion((prev) => {
-            const indexx = prevCounterQuestion?.findIndex((item) => item.type === lastKey);
-            if (indexx !== -1) {
-              prev[indexx] = {
-                ...prev[indexx],
-                answer: valueEn[index],
-                activeButton: index,
-              };
-            }
-            return [...prev];
-          });
-          if (!editMode) {
-            setEditData((prev) => [...prev, lastKey]);
-          }
-        }
-      }
-    } else {
-      const questionValue = questions[predict.questionIndex]?.question_value;
-      const valueEn = questions[predict.questionIndex]?.answer?.value_en;
-      if (questionValue && valueEn) {
-        setPredictData({
-          ...predictData,
-          [questionValue]: valueEn[index],
-        });
-        setPrevCounterQuestion((prev) => {
-          const indexx = prevCounterQuestion?.findIndex((item) => item.type === lastKey);
-          if (indexx !== -1) {
-            prev[indexx] = {
-              ...prev[indexx],
-              answer: valueEn[index],
-              activeButton: index,
-            };
-          }
-          return [...prev];
-        });
-        if (!editMode) {
-          setEditData((prev) => [...prev, questionValue]);
-        }
-      }
-    }
-  };
-
-  const handleSelectedChoiceNumber = (value: number | any) => {
-    if (value.default === 0 || value.default) {
-      setTestValue(value.default);
-    }
-
-    if (editMode) {
-      setEditChanges(true);
-    }
-    setTestValue(value);
-    const lastKey = predict.nextPredict;
-    setEditkeyChanges(lastKey);
-
-    if (lastKey === predict.nextPredict) {
-      setPredictData({
-        ...predictData,
-        [lastKey]: value,
-      });
-      setPrevCounterQuestion((prev) => {
-        const index = prevCounterQuestion.findIndex((item) => item.type === lastKey);
-        if (index !== -1) {
-          prev[index] = { ...prev[index], answer: value };
-        }
-        return [...prev];
-      });
-      if (!editMode) {
-        setEditData((prev) => [...prev, lastKey]);
-      }
-    } else {
-      setPredictData({
-        ...predictData,
-        [predict.nextPredict]: value,
-      });
-      setPrevCounterQuestion((prev) => {
-        const index = prevCounterQuestion.findIndex((item) => item.type === lastKey);
-        if (index !== -1) {
-          prev[index] = { ...prev[index], answer: value };
-        }
-        return [...prev];
-      });
-      if (!editMode) {
-        setEditData((prev) => [...prev, predict.nextPredict]);
-      }
-    }
-  };
-  console.log(prevCounterQuestion);
   const handleSubmit = async () => {
-    console.log(editMode);
-    console.log(editChanges);
-    if (editMode && editChanges) {
-      setEditMode(false);
-      setEditChanges(false);
-      setQuestionCounter((prev) => prev + 1);
-      const newState: any = [];
-      let keep = false;
+    setLoading(true);
 
-      for (let i = editData.length - 1; i >= 0; i--) {
-        const key = editData[i];
-        if (key === editKeyChanges) {
-          keep = true;
-        }
-        if (keep) {
-          console.log(key);
-          if (!newState.includes(key)) {
-            newState.unshift(key);
-          }
-        }
-      }
+    const filteredData = {
+      ...predictData,
+      [questions[currentQuestionIndex].question_value]:
+        questions[currentQuestionIndex].type === "number"
+          ? Number(answer)
+          : questions[currentQuestionIndex].type === "radio_multi"
+          ? answer
+          : questions[currentQuestionIndex].answer.value_en[answer],
+    };
 
-      const filteredData: any = {};
-      const filteredDataTest: any = [];
-
-      for (const key of newState) {
-        if (key in predictData) {
-          filteredData[key] = predictData[key];
-        }
-      }
-      setPredictData("");
-      setPredictData(filteredData);
-
-      // console.log(filteredDataTest)
-      // console.log(filteredDataTest)
-
-      await CallApi.post("/predict", filteredData)
-        .then(async (resp) => {
-          dispatch(setChanceData({ chance: resp.data.result }));
-          for (const key of newState) {
-            const matchingObject = prevCounterQuestion.find((obj) => obj.type === key);
-            if (matchingObject) {
-              if (matchingObject.countAnswer === questionCounter) {
-                matchingObject.chance = Math.round(Number(resp.data.result) * 100);
-              }
-              filteredDataTest.push(matchingObject);
-            }
-          }
-          dispatch(setNextPredictData({ nextVariable: resp.data.next_variable }));
-          dispatch(setNextPredictBackup({ nextVariable: resp.data.next_variable }));
-          setPredictData({ ...filteredData, [resp.data.next_variable]: "" });
-          setPrevCounterQuestion(filteredDataTest);
-
-          await CallApi.post("/grouped_xai", filteredData).then(async (resp) => {
-            dispatch(setGroupedXai({ data: resp.data }));
-            await CallApi.post("/potential", filteredData)
-              .then((resp) => {
-                dispatch(setPotentialData(resp.data.result));
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-            if (predict.countAnswer === 1) {
-              dispatch(addCounterQuestionIndex({ payload: "" }));
-              // setPrevCounterQuestion([
-              //   {
-              //     type: "sex",
-              //     questionIndex: 0,
-              //     chance: predict.chance,
-              //     chartValues: predict.chartDataValues,
-              //     countAnswer: predict.countAnswer,
-              //     answer: testValue,
-              //     activeButton: activeButton,
-              //   },
-              // ]);
-            } else {
-              dispatch(addCounterQuestionIndex({ change: true }));
-              // setPrevCounterQuestion([
-              //   ...prevCounterQuestion,
-              //   {
-              //     type: predict.nextPredict,
-              //     questionIndex: predict.questionIndex,
-              //     chance: predict.chance,
-              //     chartValues: predict.chartDataValues,
-              //     countAnswer: predict.countAnswer,
-              //     answer: testValue,
-              //     activeButton: activeButton,
-              //   },
-              // ]);
-            }
-            dispatch(addCountQuestion());
-            dispatch(setCountAnswer());
-            setTestValue("");
-            setQuestionCounter((prev) => prev + 1);
-            // dispatch(addCountAnswer());
-            setActiveButton("");
-          });
-        })
-        .catch((error) => {
-          // if (error.response.data.detail.includes("max")) {
-          //   dispatch(setToFinished());
-          // }
-          console.log(error);
-        });
-    } else if (editMode && predict.countAnswer > predict.questionNumber + 1) {
-      console.log(prevCounterQuestion[questionCounter - 1]);
-      console.log(predict.nextPredictBackup);
-      if (predict.countAnswer === predict.questionNumber + 1) {
-        dispatch(
-          setNextPredictData({
-            nextVariable: predict.nextPredictBackup,
-          })
-        );
-      } else {
-        dispatch(
-          setNextPredictData({
-            nextVariable:
-              questionCounter > 1
-                ? prevCounterQuestion[questionCounter].type
-                : prevCounterQuestion[1].type,
-          })
-        );
-      }
-      setTestValue(
-        questionCounter > 1
-          ? prevCounterQuestion[questionCounter].answer
-          : prevCounterQuestion[1].answer
-      );
-      dispatch(addCountQuestion());
-      dispatch(addCounterQuestionIndex({ change: true }));
-      console.log(prevCounterQuestion[questionCounter - 1].chance);
-      dispatch(
-        setChanceData({
-          chance: prevCounterQuestion[questionCounter - 1].chance,
-        })
-      );
-      dispatch(setPotentialData(prevCounterQuestion[questionCounter - 1].potential));
-      setQuestionCounter((prev) => prev + 1);
-    } else {
-      setQuestionCounter((prev) => prev + 1);
-      setEditMode(false);
-      if (predict.countAnswer === predict.questionNumber) {
-        await CallApi.post("/predict", predictData)
-          .then(async (respo) => {
-            if (!respo.data.next_variable) {
-              setToFinished(true);
-            }
-            console.log("haa");
-            dispatch(setChanceData({ chance: respo.data.result }));
-            dispatch(setNextPredictData({ nextVariable: respo.data.next_variable }));
-            dispatch(setNextPredictBackup({ nextVariable: respo.data.next_variable }));
-            setPredictData({ ...predictData, [respo.data.next_variable]: "" });
-            await CallApi.post("/grouped_xai", predictData).then(async (resp) => {
+    await CallApi.post("/predict", filteredData)
+      .then(async (respon) => {
+        // if answer all questions goes finish slider
+        if (!respon.data.next_variable) {
+          setActiveButton("");
+          setAnswer(null);
+          setLoading(false);
+          setAnswerPopup(false);
+          return dispatch(setToFinished());
+        } else {
+          await CallApi.post("/grouped_xai", filteredData)
+            .then(async (resp) => {
               dispatch(setGroupedXai({ data: resp.data }));
-              await CallApi.post("/potential", predictData)
+              setChanceHistory((prev) => [
+                ...prev,
+                {
+                  question: questions[currentQuestionIndex].question_value,
+                  answer: answer,
+                  chance: Math.round(Number(respon.data.result) * 100),
+                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
+                    (value * 100).toFixed(2)
+                  ),
+                },
+              ]);
+
+              await CallApi.post("/potential", filteredData)
                 .then(async (response) => {
                   dispatch(setPotentialData(response.data.result));
                   if (predict.countAnswer === 1) {
@@ -434,7 +351,7 @@ export default function MainSlider() {
                       {
                         type: "sex",
                         questionIndex: 0,
-                        chance: Math.round(Number(respo.data.result) * 100),
+                        chance: Math.round(Number(resp.data.result) * 100),
                         chartValues: predict.chartDataValues,
                         countAnswer: predict.countAnswer,
                         answer: testValue,
@@ -449,7 +366,7 @@ export default function MainSlider() {
                       {
                         type: predict.nextPredict,
                         questionIndex: predict.questionIndex,
-                        chance: Math.round(Number(respo.data.result) * 100),
+                        chance: Math.round(Number(resp.data.result) * 100),
                         chartValues: predict.chartDataValues,
                         countAnswer: predict.countAnswer,
                         answer: testValue,
@@ -458,156 +375,61 @@ export default function MainSlider() {
                       },
                     ]);
                   }
-                  // await CallApi.post("/grouped_xai_expanded", predictData).then((respon) => {
-                  //   dispatch(setGroupedXaiExpanded(respon.data.grouped_xai_expanded));
-                  // });
+                  setActiveButton("");
+                  setAnswer(null);
+                  setLoading(false);
+                  setAnswerPopup(false);
+                  setQuestionCounter((prev) => prev + 1);
+                  setAnimate((prev) => !prev);
+
+                  setCurrentQuestionIndex(
+                    questions.findIndex(
+                      (question) => question.question_value === respon.data.next_variable
+                    )
+                  );
+                  dispatch(setChanceData({ chance: respon.data.result }));
+                  dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
+                  dispatch(setNextPredictBackup({ nextVariable: respon.data.next_variable }));
+                  setNextPredictData({ ...predictData, [respon.data.next_variable]: "" });
+                  setPredictData(filteredData);
                 })
                 .catch((error) => {
                   console.log(error);
                 });
-
-              setTestValue("");
-              dispatch(addCountAnswer());
-              setActiveButton("");
+            })
+            .catch((error) => {
+              console.log(error);
             });
-          })
-          .catch((error) => {
-            // if (error.response.data.detail.includes("max")) {
-            //   dispatch(setToFinished());
-            // }
-            console.log(error);
-          });
-      } else {
-        console.log("chance2", prevCounterQuestion[questionCounter - 1].chance);
-        if (predict.questionNumber === prevCounterQuestion.length) {
-          dispatch(setNextPredictData({ nextVariable: predict.nextPredictBackup }));
-          dispatch(addCountQuestion());
-          dispatch(addCounterQuestionIndex({ change: true }));
-          setTestValue("");
-          setEditMode(false);
-          setEditChanges(false);
-          dispatch(
-            setChanceData({
-              chance: prevCounterQuestion[questionCounter - 1].chance,
-            })
-          );
-        } else {
-          setTestValue(prevCounterQuestion[predict.questionNumber].answer);
-          dispatch(
-            setNextPredictData({
-              nextVariable: prevCounterQuestion[predict.questionNumber].type,
-            })
-          );
-          dispatch(
-            setChanceData({
-              chance: prevCounterQuestion[questionCounter - 1].chance,
-            })
-          );
-          dispatch(addCountQuestion());
-          setQuestionCounter((prev) => prev + 1);
-          dispatch(addCounterQuestionIndex({ change: true }));
         }
-      }
-    }
-  };
-
-  function isNumberIncreasing(previousNumber: any, currentNumber: any) {
-    return currentNumber > previousNumber
-      ? "more"
-      : currentNumber < previousNumber
-        ? "low"
-        : currentNumber === previousNumber
-          ? "equal"
-          : "";
-  }
-
-  const handleBack = () => {
-    setEditMode(true);
-    setTestValue(prevCounterQuestion[questionCounter - 2].answer);
-    setActiveButton(prevCounterQuestion[questionCounter - 2].activeButton);
-    dispatch(
-      setNextPredictData({
-        nextVariable: prevCounterQuestion[questionCounter - 2].type,
       })
-    );
-    console.log(prevCounterQuestion[questionCounter - 2]);
-    dispatch(
-      setChanceData({
-        chance: prevCounterQuestion[questionCounter - 3 < 0 ? 0 : questionCounter - 3].chance,
-      })
-    );
-    dispatch(
-      setPotentialData(
-        prevCounterQuestion[questionCounter - 3 < 0 ? 0 : questionCounter - 3].potential
-      )
-    );
-    dispatch(minusCountQuestion());
-    dispatch(addCounterQuestionIndex({ change: true }));
-
-    if (questionCounter > 1) {
-      setQuestionCounter((prev) => prev - 1);
-    }
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
-  // useEffect(() => {
-  //   if () {
-  //     setMobileSize(true);
-  //   }
-  // }, []);
 
   useEffect(() => {
-    if (predict.questionIndex > 0) {
-      dispatch(addCounterQuestionIndex({ change: true }));
+    if (questions[currentQuestionIndex].type === "number") {
+      setAnswer(questions[currentQuestionIndex].answer.value_fa[0]);
     }
-    if (predict.countAnswer === predict.questionNumber) {
-      setEditMode(false);
-      setQuestionCounter(predict.countAnswer);
-    }
-  }, [predict.questionIndex]);
+  }, [questionCounter]);
 
   useEffect(() => {
-    setQuestionCounter(predict.countAnswer);
-    dispatch(setCountQuestion());
+    document.documentElement.style.setProperty(
+      "--progress",
+      String(800 - 800 * (predict.chance / 100))
+    );
+  }, [predict.chance]);
 
-    // if (questions[predict.questionIndex].type === "number") {
-    //   handleSelectedChoiceNumber({ default: questions[predict.questionIndex].answer.value_fa[0] })
-    // }
-  }, [predict.countAnswer]);
-
-  let marks = {};
-  const handleMarks = ({ min, max, stepNumber, hardCode }) => {
-    if (hardCode === "age") {
-      marks = {
-        18: min,
-        25: 25,
-        30: 30,
-        35: 35,
-        40: 40,
-        45: 45,
-        50: max,
-      };
-    } else {
-      const step = stepNumber;
-      for (let i = min; i <= max; i += step) {
-        marks[i] = i;
-      }
-    }
-
-    return marks;
-  };
-
-  console.log(prevCounterQuestion);
-  console.log("questionCounter", questionCounter);
-  console.log("countAnswer", predict.countAnswer);
-  console.log("questionNumber", predict.questionNumber);
-  const [isMobile, setIsMobile] = useState(false);
-
-  console.log(800 - (800 * (50 / 100)))
-  document.documentElement.style.setProperty("--progress", String(800 - (800 * (50 / 100))));
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--potential",
+      String(800 - 800 * (predict.potential / 100))
+    );
+  }, [predict.potential]);
 
   return (
     <div className={styles.mainSliderPage}>
-      <style>{`--progress: ${800 - (800 * (50 / 100))}`}</style>
+      <style>{`--progress: ${800 - 800 * (50 / 100)}`}</style>
       <Navbar />
 
       <div className={styles.mainSlider}>
@@ -643,6 +465,7 @@ export default function MainSlider() {
                 <div className={styles.questionNumber}>
                   <button onClick={() => setAnswer((prevValue) => Number(prevValue + 1))}>+</button>
                   <input
+                    style={{ maxWidth: "500px" }}
                     type="number"
                     min={questions[currentQuestionIndex].answer.value_fa[0]}
                     max={questions[currentQuestionIndex].answer.value_fa[1]}
@@ -677,14 +500,20 @@ export default function MainSlider() {
               )}
             </div>
             <div className={styles.buttonGroups}>
-              <button>
-                ثبت پاسخ
-                <img src="forward-arrow.svg" alt="arrow" />
+              <button onClick={handleSubmit}>
+                {loading ? (
+                  <Loading desktop={true} />
+                ) : (
+                  <>
+                    ثبت پاسخ <img src="forward-arrow.svg" alt="arrow-forward" />
+                  </>
+                )}
               </button>
 
               <button disabled={true}>اطلاعات بیشتر</button>
             </div>
           </div>
+
           <div className={styles.chancePotentialBox}>
             <div className={styles.chanceBox}>
               <p>شانس ویزا</p>
@@ -704,23 +533,21 @@ export default function MainSlider() {
                   width="200"
                   height="200"
                   viewBox="0 0 200 200"
-                  className={styles.progress}
+                  className={`${styles.progress}`}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
                 </svg>
                 <div className={styles.chanceNumber}>
-                  <img src="/CaretUp.svg" alt="icon" />
-                  <p><span>%</span> 84</p>
-                  {/* {isNumberIncreasing(
+                  {isNumberIncreasing(
                     chanceHistory[chanceHistory.length - 2]?.chance,
                     chanceHistory[chanceHistory.length - 1]?.chance
                   ) === "more" ? (
                     <img src="/CaretUp.svg" alt="icon" />
                   ) : isNumberIncreasing(
-                    chanceHistory[chanceHistory.length - 2]?.chance,
-                    chanceHistory[chanceHistory.length - 1]?.chance
-                  ) === "low" ? (
+                      chanceHistory[chanceHistory.length - 2]?.chance,
+                      chanceHistory[chanceHistory.length - 1]?.chance
+                    ) === "low" ? (
                     <img
                       src="/CaretDown.svg"
                       style={{
@@ -731,7 +558,10 @@ export default function MainSlider() {
                     />
                   ) : (
                     <img src="/CaretEqual.svg" alt="icon" />
-                  )} */}
+                  )}
+                  <p>
+                    <span>%</span> {predict.chance}
+                  </p>
                 </div>
               </div>
             </div>
@@ -753,18 +583,21 @@ export default function MainSlider() {
                   width="200"
                   height="200"
                   viewBox="0 0 200 200"
-                  className={styles.progress}
+                  className={`${styles.potential}`}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path d="M100 200L0 200L0 0L200 0L200 200L100 200" stroke-width="40" />
                 </svg>
+
                 <div className={styles.potentialNumber}>
                   <div className={styles.footerVisHead}>
                     <img src="vizard-head.svg" alt="vizard-head" />
                   </div>
                   <div className={styles.potentialNumberIcon}>
                     <img src="/CaretUp.svg" alt="icon" />
-                    <p><span>%</span> 84</p>
+                    <p>
+                      <span>%</span> {predict.potential}
+                    </p>
                   </div>
                   {/* {isNumberIncreasing(
                     chanceHistory[chanceHistory.length - 2]?.chance,
@@ -791,36 +624,109 @@ export default function MainSlider() {
             </div>
           </div>
         </div>
+
         <div className={styles.mainSliderLeft}>
-          <InfoAlert />
+          <InfoAlert desktop={true} />
 
           <div className={styles.mainCharts}>
-            <div className={styles.mainChartsArea}>
-              {questionCounter === 1 && (
-                <div className={styles.blurChart}>
-                  <p className={styles.noBlur}>نامشخص</p>
-                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-                </div>
-              )}
-              <ApexChart options={data.options} series={data.series} type="area" height={250} />
-            </div>
+            {chartSelected === "bar" ? (
+              <div className={styles.mainChartsArea}>
+                {questionCounter === 1 && (
+                  <div className={styles.blurChart}>
+                    <p className={styles.noBlur}>نامشخص</p>
+                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                  </div>
+                )}
+
+                <ApexChart
+                  stacked={true}
+                  options={barChart.options}
+                  series={barChart.series}
+                  type="bar"
+                  height={250}
+                />
+              </div>
+            ) : chartSelected === "radar" ? (
+              <div className={styles.mainChartsArea}>
+                {questionCounter === 1 && (
+                  <div className={styles.blurChart}>
+                    <p className={styles.noBlur}>نامشخص</p>
+                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                  </div>
+                )}
+
+                <ApexChart
+                  stacked={true}
+                  options={radarDara.options}
+                  series={radarDara.series}
+                  type="radar"
+                  height={250}
+                />
+              </div>
+            ) : chartSelected === "line" ? (
+              <div className={styles.mainChartsArea}>
+                {questionCounter === 1 && (
+                  <div className={styles.blurChart}>
+                    <p className={styles.noBlur}>نامشخص</p>
+                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                  </div>
+                )}
+
+                <ApexChart
+                  stacked={true}
+                  options={barData.options}
+                  series={barData.series}
+                  type="line"
+                  height={250}
+                />
+              </div>
+            ) : chartSelected === "area" ? (
+              <div className={styles.mainChartsArea}>
+                {questionCounter === 1 && (
+                  <div className={styles.blurChart}>
+                    <p className={styles.noBlur}>نامشخص</p>
+                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                  </div>
+                )}
+                <ApexChart options={data.options} series={data.series} type="area" height={250} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className={styles.chartsIconsBox}>
-            <div className={styles.chartIcon}>
-              <img src="chart/LineChartIcon.svg" alt="chart-icon" />
+            <div
+              onClick={() => setChartSelected("area")}
+              className={`${styles.chartIcon} ${chartSelected === "area" && styles.activeChart}`}
+            >
+              <Image width="25" height="25" src="chart/LineChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
-            <div className={styles.chartIcon}>
-              <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
+            <div
+              onClick={() => setChartSelected("bar")}
+              className={`${styles.chartIcon} ${chartSelected === "bar" && styles.activeChart}`}
+            >
+              <Image
+                width="25"
+                height="25"
+                src="chart/NegativeBarChart Icon.svg"
+                alt="chart-icon"
+              />
               <p>نام جدول</p>
             </div>
-            <div className={styles.chartIcon}>
-              <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
+            <div
+              onClick={() => setChartSelected("radar")}
+              className={`${styles.chartIcon} ${chartSelected === "radar" && styles.activeChart}`}
+            >
+              <Image width="25" height="25" src="chart/RadarChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
-            <div className={styles.chartIcon}>
-              <img src="chart/BarChartIcon.svg" alt="chart-icon" />
+            <div
+              onClick={() => setChartSelected("line")}
+              className={`${styles.chartIcon} ${chartSelected === "line" && styles.activeChart}`}
+            >
+              <Image width="25" height="25" src="chart/BarChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
           </div>

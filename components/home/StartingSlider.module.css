@@ -178,13 +178,13 @@
 
 @-webkit-keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * -12)); /* Reverse direction with a negative value */
+    transform: translateX(calc(160px * 12)); /* Reverse direction with a negative value */
   }
 }
 
 @keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * -12)); /* Reverse direction with a negative value */
+    transform: translateX(calc(160px * 12)); /* Reverse direction with a negative value */
   }
 }
 .slideOption {
@@ -232,8 +232,8 @@
 
 .infinite .highwayBarrier .highwayLane .highwayCarSecond {
   width: 160px;
-  -webkit-animation: translateinfiniteSecond 25s linear infinite;
-  animation: translateinfiniteSecond 25s linear infinite;
+  -webkit-animation: translateinfiniteSecond 25s linear reverse infinite;
+  animation: translateinfiniteSecond 25s linear reverse infinite;
   background: #fff;
   padding: 10px;
   color: #343434;

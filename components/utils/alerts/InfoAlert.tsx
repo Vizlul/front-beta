@@ -1,9 +1,8 @@
 import styles from "./InfoAlert.module.css";
 
-export default function InfoAlert({ questionCounter }) {
-  console.log(questionCounter)
+export default function InfoAlert({ questionCounter, desktop }) {
   return (
-    <div className={styles.infoAlertBox}>
+    <div className={styles.infoAlertBox} style={{ width: desktop && "80%" }}>
       <img src="InfoIcon.svg" alt="icon" />
       {questionCounter === 1 ? (
         <p>جهت محاسبه پارامترها به اولین سوال پاسخ دهید </p>

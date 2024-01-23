@@ -9,7 +9,8 @@
 }
 
 :root {
-  --progress: 0%;
+  --progress: 0;
+  --potential: 0;
 }
 
 * {
@@ -26,11 +27,20 @@ body {
   background-color: #f0f2f5;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .mainLayout {
   height: 100vh;
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
 }
 
 .swiper {
@@ -42,8 +52,6 @@ body {
   text-align: center;
   font-size: 18px;
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +91,7 @@ body
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   border: 1px solid #999999 !important;
   background-color: #cccccc !important;
 }
