@@ -465,7 +465,7 @@ export default function MainSlider() {
                 <div className={styles.questionNumber}>
                   <button onClick={() => setAnswer((prevValue) => Number(prevValue + 1))}>+</button>
                   <input
-                    style={{ maxWidth: "500px" }}
+                    style={{ maxWidth: "400px" }}
                     type="number"
                     min={questions[currentQuestionIndex].answer.value_fa[0]}
                     max={questions[currentQuestionIndex].answer.value_fa[1]}
