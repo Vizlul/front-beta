@@ -6,12 +6,15 @@ import { useRef, useState } from "react";
 import AnswerPopup from "@/components/utils/popups/AnswerPopup";
 import PotentialPopup from "@/components/utils/popups/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CountUp from "react-countup";
 import ProgressAnimate from "@/components/utils/ProgressAnimate";
 import { SliderState } from "@/constants";
+import { setToFinished } from "@/store/features/sliderSlice";
+import FinishSliderPopup from "./FinishSliderPopup";
 
 export default function MainSliderMobile() {
+  const dispatch = useDispatch();
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
   const [answerPopup, setAnswerPopup] = useState(false);
@@ -20,6 +23,7 @@ export default function MainSliderMobile() {
   const [chanceHistory, setChanceHistory] = useState<any[]>([]);
   const [questionCounter, setQuestionCounter] = useState<any>(1);
   const [closeChart, setCloseChart] = useState(false);
+  const [finishPopup, setFinishPopup] = useState(false);
 
   let data = {
     series: [
@@ -160,15 +164,12 @@ export default function MainSliderMobile() {
     ],
     options: {
       chart: {
-        height: 350,
-        type: "radar",
-        toolbar: {
-          show: false,
-        },
+        type: 'radar',
       },
+    
       xaxis: {
-        // categories: ["January", "February", "March", "April", "May", "June"],
-      },
+        categories: ['January', 'February', 'March', 'April', 'May', 'June']
+      }
     },
   };
 
@@ -409,7 +410,7 @@ export default function MainSliderMobile() {
               </div>
             </div>
             <div className={styles.footerFinished}>
-              <button>مشاهده پرونده‌های مشابه شما</button>
+              <button onClick={() => setFinishPopup(true)}>مشاهده پرونده‌های مشابه شما</button>
             </div>
           </div>
         ) : (
@@ -477,7 +478,7 @@ export default function MainSliderMobile() {
             <img src="chart/BarChartIcon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
-          <img src="chart/x.svg" alt="chart-icon" />
+            <img src="chart/x.svg" alt="chart-icon" />
           </div>
         </div>
       </div>
@@ -492,6 +493,9 @@ export default function MainSliderMobile() {
         questionCounter={questionCounter}
         setQuestionCounter={setQuestionCounter}
       />
+      <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
+        {finishPopup && <FinishSliderPopup finishPopup={finishPopup} />}
+      </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
   );

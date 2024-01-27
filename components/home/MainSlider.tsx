@@ -18,6 +18,8 @@ import {
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Loading from "../utils/Loading";
+import ApexCharts from "apexcharts";
+import Chart from "react-apexcharts";
 
 export default function MainSlider() {
   const [questionCounter, setQuestionCounter] = useState<any>(1);
@@ -30,22 +32,30 @@ export default function MainSlider() {
   const [answerPopup, setAnswerPopup] = useState(false);
   const [chancePopup, setChancePopup] = useState(false);
   const [closeChart, setCloseChart] = useState(false);
-  const [chartSelected, setChartSelected] = useState("line");
+  const [chartSelected, setChartSelected] = useState("bar");
   const [answer, setAnswer] = useState(null);
   const [loading, setLoading] = useState(false);
   const [predictData, setPredictData] = useState<any>({});
   const [prevCounterQuestion, setPrevCounterQuestion] = useState<any>([]);
   const [animate, setAnimate] = useState(false);
+  const [optionsBar, setOptionsBar] = useState("");
+  const [seriesBar, setSeriesBar] = useState("");
+  const [toggler, setToggler] = useState(false);
 
-  let data = {
+  console.log(
+    chanceHistory.length > 0 && questionCounter >= 2
+      ? chanceHistory[questionCounter - 2].chartData
+      : [0, 0, 0, 0, 0]
+  );
+
+  console.log(
+    chanceHistory.length > 0 && questionCounter >= 3
+      ? chanceHistory[questionCounter - 3].chartData
+      : [0, 0, 0, 0, 0]
+  );
+
+  let areaData = {
     series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
       {
         name: "تغییرات پاسخ قبلی نسبت فعلی",
         data:
@@ -53,33 +63,46 @@ export default function MainSlider() {
             ? chanceHistory[questionCounter - 3].chartData
             : [0, 0, 0, 0, 0],
       },
+      {
+        name: "تغییرات پاسخ فعلی",
+        data:
+          chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0, 0],
+      },
     ],
     options: {
       chart: {
-        height: 770,
-        type: "area",
-        toolbar: {
-          show: false,
-        },
+        id: "area",
       },
+      colors: ["#00E396", "#2E93FA"],
       dataLabels: {
         enabled: false,
       },
       stroke: {
         curve: "smooth",
       },
-      xaxis: {
-        categories: [],
-      },
-      tooltip: {
-        x: {
-          // format: "dd/MM/yy HH:mm",
-        },
-      },
     },
   };
 
-  let barData = {
+  // series: [
+  //   {
+  //     name: "تغییرات پاسخ فعلی",
+  //     data:
+  //       chanceHistory.length > 0 && questionCounter >= 2
+  //         ? chanceHistory[questionCounter - 2].chartData
+  //         : [0, 0, 0, 0, 0],
+  //   },
+  //   {
+  //     name: "تغییرات پاسخ قبلی نسبت فعلی",
+  //     data:
+  //       chanceHistory.length > 0 && questionCounter >= 3
+  //         ? chanceHistory[questionCounter - 3].chartData
+  //         : [0, 0, 0, 0, 0],
+  //   },
+  // ],
+  // colors: ["#00E396", "#2E93FA"],
+  let barNegativeData = {
     series: [
       {
         name: "تغییرات پاسخ فعلی",
@@ -101,9 +124,6 @@ export default function MainSlider() {
         type: "bar",
         height: 440,
         stacked: true,
-        toolbar: {
-          show: false,
-        },
       },
       colors: ["#008FFB", "#FF4560"],
       plotOptions: {
@@ -148,6 +168,29 @@ export default function MainSlider() {
         },
       },
       xaxis: {
+        categories: [
+          "هدف",
+          "عاطفی",
+          "شغلی",
+          "اقتصادی",
+          "65-69",
+          "60-64",
+          "55-59",
+          "50-54",
+          "45-49",
+          "40-44",
+          "35-39",
+          "30-34",
+          "25-29",
+          "20-24",
+          "15-19",
+          "10-14",
+          "5-9",
+          "0-4",
+        ],
+        title: {
+          text: "Percent",
+        },
         labels: {
           formatter: function (val) {
             return Math.abs(Math.round(val)) + "%";
@@ -157,7 +200,7 @@ export default function MainSlider() {
     },
   };
 
-  let radarDara = {
+  let radarData = {
     series: [
       {
         name: "تغییرات پاسخ فعلی",
@@ -176,19 +219,13 @@ export default function MainSlider() {
     ],
     options: {
       chart: {
-        height: 350,
-        type: "radar",
-        toolbar: {
-          show: false,
-        },
+        id: "radar",
       },
-      xaxis: {
-        // categories: ["January", "February", "March", "April", "May", "June"],
-      },
+      colors: ["#00E396", "#2E93FA"],
     },
   };
 
-  let barChart = {
+  let columnData = {
     series: [
       {
         name: "تغییرات پاسخ فعلی",
@@ -207,69 +244,20 @@ export default function MainSlider() {
     ],
     options: {
       chart: {
-        height: 350,
         type: "bar",
-        toolbar: {
-          show: false,
-        },
+        height: 350,
+        id: "column",
       },
+      colors: ["#00E396", "#2E93FA"],
       plotOptions: {
         bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: "top", // top, center, bottom
-          },
+          horizontal: false,
+          columnWidth: "55%",
+          endingShape: "rounded",
         },
       },
       dataLabels: {
-        enabled: true,
-        formatter: function (val) {
-          return val + "%";
-        },
-        offsetY: -20,
-        style: {
-          fontSize: "12px",
-          colors: ["#304758"],
-        },
-      },
-
-      xaxis: {
-        position: "top",
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          fill: {
-            type: "gradient",
-            gradient: {
-              colorFrom: "#D8E3F0",
-              colorTo: "#BED1E6",
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            },
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val) {
-            return val + "%";
-          },
-        },
+        enabled: false,
       },
     },
   };
@@ -426,6 +414,30 @@ export default function MainSlider() {
       String(800 - 800 * (predict.potential / 100))
     );
   }, [predict.potential]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (chartSelected === "area") {
+        console.log(ApexCharts.getChartByID("area"));
+        ApexCharts.getChartByID("area")?.updateOptions(areaData.options);
+        ApexCharts.getChartByID("area")?.updateSeries(areaData.series);
+      } else if (chartSelected === "bar") {
+        console.log(ApexCharts.getChartByID("bar"));
+        ApexCharts.getChartByID("bar")?.updateOptions(radarData.options);
+        ApexCharts.getChartByID("bar")?.updateSeries(radarData.series);
+      } else if (chartSelected === "radar") {
+        console.log(ApexCharts.getChartByID("radar"));
+        ApexCharts.getChartByID("radar")?.updateOptions(radarData.options);
+        ApexCharts.getChartByID("radar")?.updateSeries(radarData.series);
+      } else if (chartSelected === "column") {
+        console.log(ApexCharts.getChartByID("column"));
+        ApexCharts.getChartByID("column")?.updateOptions(columnData.options);
+        ApexCharts.getChartByID("column")?.updateSeries(columnData.series);
+      }
+    }, 1000);
+  }, [questionCounter, chartSelected]);
+
+  console.log(chartSelected);
 
   return (
     <div className={styles.mainSliderPage}>
@@ -629,70 +641,50 @@ export default function MainSlider() {
           <InfoAlert desktop={true} />
 
           <div className={styles.mainCharts}>
-            {chartSelected === "bar" ? (
-              <div className={styles.mainChartsArea}>
-                {questionCounter === 1 && (
-                  <div className={styles.blurChart}>
-                    <p className={styles.noBlur}>نامشخص</p>
-                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-                  </div>
-                )}
+            <div className={styles.mainChartsArea}>
+              {questionCounter === 1 && (
+                <div className={styles.blurChart}>
+                  <p className={styles.noBlur}>نامشخص</p>
+                  <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
+                </div>
+              )}
 
-                <ApexChart
-                  stacked={true}
-                  options={barChart.options}
-                  series={barChart.series}
+              {chartSelected === "area" ? (
+                <Chart
+                  height={320}
+                  key={chartSelected}
+                  options={areaData.options}
+                  series={areaData.series}
+                  type="area"
+                />
+              ) : chartSelected === "bar" ? (
+                <Chart
+                  height={320}
+                  key={chartSelected}
+                  options={barNegativeData.options}
+                  series={barNegativeData.series}
                   type="bar"
-                  height={250}
                 />
-              </div>
-            ) : chartSelected === "radar" ? (
-              <div className={styles.mainChartsArea}>
-                {questionCounter === 1 && (
-                  <div className={styles.blurChart}>
-                    <p className={styles.noBlur}>نامشخص</p>
-                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-                  </div>
-                )}
-
-                <ApexChart
-                  stacked={true}
-                  options={radarDara.options}
-                  series={radarDara.series}
+              ) : chartSelected === "radar" ? (
+                <Chart
+                  height={320}
+                  key={chartSelected}
+                  options={radarData.options}
+                  series={radarData.series}
                   type="radar"
-                  height={250}
                 />
-              </div>
-            ) : chartSelected === "line" ? (
-              <div className={styles.mainChartsArea}>
-                {questionCounter === 1 && (
-                  <div className={styles.blurChart}>
-                    <p className={styles.noBlur}>نامشخص</p>
-                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-                  </div>
-                )}
-
-                <ApexChart
-                  stacked={true}
-                  options={barData.options}
-                  series={barData.series}
-                  type="line"
-                  height={250}
+              ) : chartSelected === "column" ? (
+                <Chart
+                  height={320}
+                  key={chartSelected}
+                  options={columnData.options}
+                  series={columnData.series}
+                  type="column"
                 />
-              </div>
-            ) : chartSelected === "area" ? (
-              <div className={styles.mainChartsArea}>
-                {questionCounter === 1 && (
-                  <div className={styles.blurChart}>
-                    <p className={styles.noBlur}>نامشخص</p>
-                    <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
-                  </div>
-                )}
-                <ApexChart options={data.options} series={data.series} type="area" height={250} />
-              </div>
-            ) : (
-              ""
-            )}
+              ) : (
+                ""
+              )}
+            </div>
           </div>
 
           <div className={styles.chartsIconsBox}>
@@ -723,8 +715,8 @@ export default function MainSlider() {
               <p>نام جدول</p>
             </div>
             <div
-              onClick={() => setChartSelected("line")}
-              className={`${styles.chartIcon} ${chartSelected === "line" && styles.activeChart}`}
+              onClick={() => setChartSelected("column")}
+              className={`${styles.chartIcon} ${chartSelected === "column" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/BarChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>

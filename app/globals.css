@@ -152,7 +152,7 @@ body
 @media (max-height: 900px) {
   .mainLayout {
     height: 100%;
-    margin: 40px 0;
+    /* margin: 40px 0; */
   }
 }
 

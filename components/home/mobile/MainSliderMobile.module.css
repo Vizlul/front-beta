@@ -118,7 +118,7 @@
   margin-right: -10px;
 }
 
-.chanceNumberIcon{
+.chanceNumberIcon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,4 +270,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.finishPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(0);
+  transition: all ease 0.3s;
+  z-index: 99;
+}
+.finishPopupNot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(100%);
+  transition: all ease 0.3s;
+  z-index: 99;
 }
