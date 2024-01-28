@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import InfoAlert from "../utils/alerts/InfoAlert";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
-import ApexChart from "@/utils/ApexChart";
 import Image from "next/image";
 import CallApi from "@/utils/CallApi";
 import {
@@ -20,11 +19,12 @@ import { setToFinished } from "@/store/features/sliderSlice";
 import Loading from "../utils/Loading";
 import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
+import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 
 export default function MainSlider() {
-  const [questionCounter, setQuestionCounter] = useState<any>(1);
+  const [questionCounter, setQuestionCounter] = useState(1);
   const [testValue, setTestValue] = useState("");
-  const [activeButton, setActiveButton] = useState<any>("");
+  const [activeButton, setActiveButton] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [chanceHistory, setChanceHistory] = useState([]);
   const predict = useSelector((state) => state.predict);
@@ -35,235 +35,14 @@ export default function MainSlider() {
   const [chartSelected, setChartSelected] = useState("bar");
   const [answer, setAnswer] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [predictData, setPredictData] = useState<any>({});
-  const [prevCounterQuestion, setPrevCounterQuestion] = useState<any>([]);
+  const [predictData, setPredictData] = useState({});
+  const [prevCounterQuestion, setPrevCounterQuestion] = useState([]);
   const [animate, setAnimate] = useState(false);
   const [optionsBar, setOptionsBar] = useState("");
   const [seriesBar, setSeriesBar] = useState("");
   const [toggler, setToggler] = useState(false);
 
-  console.log(
-    chanceHistory.length > 0 && questionCounter >= 2
-      ? chanceHistory[questionCounter - 2].chartData
-      : [0, 0, 0, 0, 0]
-  );
-
-  console.log(
-    chanceHistory.length > 0 && questionCounter >= 3
-      ? chanceHistory[questionCounter - 3].chartData
-      : [0, 0, 0, 0, 0]
-  );
-
-  let areaData = {
-    series: [
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        id: "area",
-      },
-      colors: ["#00E396", "#2E93FA"],
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: "smooth",
-      },
-    },
-  };
-
-  // series: [
-  //   {
-  //     name: "تغییرات پاسخ فعلی",
-  //     data:
-  //       chanceHistory.length > 0 && questionCounter >= 2
-  //         ? chanceHistory[questionCounter - 2].chartData
-  //         : [0, 0, 0, 0, 0],
-  //   },
-  //   {
-  //     name: "تغییرات پاسخ قبلی نسبت فعلی",
-  //     data:
-  //       chanceHistory.length > 0 && questionCounter >= 3
-  //         ? chanceHistory[questionCounter - 3].chartData
-  //         : [0, 0, 0, 0, 0],
-  //   },
-  // ],
-  // colors: ["#00E396", "#2E93FA"],
-  let barNegativeData = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 440,
-        stacked: true,
-      },
-      colors: ["#008FFB", "#FF4560"],
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          barHeight: "80%",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 1,
-        colors: ["#fff"],
-      },
-
-      grid: {
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      yaxis: {
-        min: -5,
-        max: 5,
-        title: {
-          // text: 'Age',
-        },
-      },
-      tooltip: {
-        shared: false,
-        x: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-        y: {
-          formatter: function (val) {
-            return Math.abs(val) + "%";
-          },
-        },
-      },
-      xaxis: {
-        categories: [
-          "هدف",
-          "عاطفی",
-          "شغلی",
-          "اقتصادی",
-          "65-69",
-          "60-64",
-          "55-59",
-          "50-54",
-          "45-49",
-          "40-44",
-          "35-39",
-          "30-34",
-          "25-29",
-          "20-24",
-          "15-19",
-          "10-14",
-          "5-9",
-          "0-4",
-        ],
-        title: {
-          text: "Percent",
-        },
-        labels: {
-          formatter: function (val) {
-            return Math.abs(Math.round(val)) + "%";
-          },
-        },
-      },
-    },
-  };
-
-  let radarData = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        id: "radar",
-      },
-      colors: ["#00E396", "#2E93FA"],
-    },
-  };
-
-  let columnData = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-        id: "column",
-      },
-      colors: ["#00E396", "#2E93FA"],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-    },
-  };
-
-  function isNumberIncreasing(previousNumber: any, currentNumber: any) {
-    // console.log(previousNumber, currentNumber);
+  function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
       ? "more"
       : currentNumber < previousNumber
@@ -276,7 +55,6 @@ export default function MainSlider() {
   const dispatch = useDispatch();
 
   const handleChange = (value, type) => {
-    console.log(type);
     if (type === "number") {
       setAnswer(Number(value));
     } else if (type === "radio_multi") {
@@ -307,7 +85,6 @@ export default function MainSlider() {
 
     await CallApi.post("/predict", filteredData)
       .then(async (respon) => {
-        // if answer all questions goes finish slider
         if (!respon.data.next_variable) {
           setActiveButton("");
           setAnswer(null);
@@ -415,29 +192,80 @@ export default function MainSlider() {
     );
   }, [predict.potential]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (chartSelected === "area") {
-        console.log(ApexCharts.getChartByID("area"));
-        ApexCharts.getChartByID("area")?.updateOptions(areaData.options);
-        ApexCharts.getChartByID("area")?.updateSeries(areaData.series);
-      } else if (chartSelected === "bar") {
-        console.log(ApexCharts.getChartByID("bar"));
-        ApexCharts.getChartByID("bar")?.updateOptions(radarData.options);
-        ApexCharts.getChartByID("bar")?.updateSeries(radarData.series);
-      } else if (chartSelected === "radar") {
-        console.log(ApexCharts.getChartByID("radar"));
-        ApexCharts.getChartByID("radar")?.updateOptions(radarData.options);
-        ApexCharts.getChartByID("radar")?.updateSeries(radarData.series);
-      } else if (chartSelected === "column") {
-        console.log(ApexCharts.getChartByID("column"));
-        ApexCharts.getChartByID("column")?.updateOptions(columnData.options);
-        ApexCharts.getChartByID("column")?.updateSeries(columnData.series);
-      }
-    }, 1000);
-  }, [questionCounter, chartSelected]);
+  // useEffect(() => {
+  //   if (chartSelected === "area") {
+  //     console.log(ApexCharts.getChartByID("area"));
+  //     ApexCharts.getChartByID("area")?.updateOptions(
+  //       areaData(chanceHistory, questionCounter).options
+  //     );
+  //     ApexCharts.getChartByID("area")?.updateSeries(
+  //       areaData(chanceHistory, questionCounter).series
+  //     );
+  //   } else if (chartSelected === "bar") {
+  //     console.log(ApexCharts.getChartByID("bar"));
+  //     ApexCharts.getChartByID("bar")?.updateOptions(
+  //       barNegativeData(chanceHistory, questionCounter).options
+  //     );
+  //     ApexCharts.getChartByID("bar")?.updateSeries(
+  //       barNegativeData(chanceHistory, questionCounter).series
+  //     );
+  //   } else if (chartSelected === "radar") {
+  //     console.log(ApexCharts.getChartByID("radar"));
+  //     ApexCharts.getChartByID("radar")?.updateOptions(
+  //       radarData(chanceHistory, questionCounter).options
+  //     );
+  //     ApexCharts.getChartByID("radar")?.updateSeries(
+  //       radarData(chanceHistory, questionCounter).series
+  //     );
+  //   } else if (chartSelected === "column") {
+  //     console.log(ApexCharts.getChartByID("column"));
+  //     ApexCharts.getChartByID("column")?.updateOptions(
+  //       columnData(chanceHistory, questionCounter).options
+  //     );
+  //     ApexCharts.getChartByID("column")?.updateSeries(
+  //       columnData(chanceHistory, questionCounter).series
+  //     );
+  //   }
+  // }, [questionCounter, chartSelected]);
 
   console.log(chartSelected);
+
+  const handleSetActiveChart = (value) => {
+    setChartSelected(value);
+    if (value === "area") {
+      console.log(ApexCharts.getChartByID("area"));
+      ApexCharts.getChartByID("area")?.updateOptions(
+        areaData(chanceHistory, questionCounter).options
+      );
+      ApexCharts.getChartByID("area")?.updateSeries(
+        areaData(chanceHistory, questionCounter).series
+      );
+    } else if (value === "bar") {
+      console.log(ApexCharts.getChartByID("bar"));
+      ApexCharts.getChartByID("bar")?.updateOptions(
+        barNegativeData(chanceHistory, questionCounter).options
+      );
+      ApexCharts.getChartByID("bar")?.updateSeries(
+        barNegativeData(chanceHistory, questionCounter).series
+      );
+    } else if (value === "radar") {
+      console.log(ApexCharts.getChartByID("radar"));
+      ApexCharts.getChartByID("radar")?.updateOptions(
+        radarData(chanceHistory, questionCounter).options
+      );
+      ApexCharts.getChartByID("radar")?.updateSeries(
+        radarData(chanceHistory, questionCounter).series
+      );
+    } else if (value === "column") {
+      console.log(ApexCharts.getChartByID("column"));
+      ApexCharts.getChartByID("column")?.updateOptions(
+        columnData(chanceHistory, questionCounter).options
+      );
+      ApexCharts.getChartByID("column")?.updateSeries(
+        columnData(chanceHistory, questionCounter).series
+      );
+    }
+  };
 
   return (
     <div className={styles.mainSliderPage}>
@@ -532,8 +360,8 @@ export default function MainSlider() {
               <div className={styles.progressBar}>
                 <svg
                   fill="none"
-                  width="200"
                   height="200"
+                  width="200"
                   viewBox="0 0 200 200"
                   className={styles.progressFull}
                   xmlns="http://www.w3.org/2000/svg"
@@ -653,33 +481,33 @@ export default function MainSlider() {
                 <Chart
                   height={320}
                   key={chartSelected}
-                  options={areaData.options}
-                  series={areaData.series}
+                  options={areaData(chanceHistory, questionCounter).options}
+                  series={areaData(chanceHistory, questionCounter).series}
                   type="area"
                 />
               ) : chartSelected === "bar" ? (
                 <Chart
                   height={320}
                   key={chartSelected}
-                  options={barNegativeData.options}
-                  series={barNegativeData.series}
+                  options={barNegativeData(chanceHistory, questionCounter).options}
+                  series={barNegativeData(chanceHistory, questionCounter).series}
                   type="bar"
                 />
               ) : chartSelected === "radar" ? (
                 <Chart
                   height={320}
                   key={chartSelected}
-                  options={radarData.options}
-                  series={radarData.series}
+                  options={radarData(chanceHistory, questionCounter).options}
+                  series={radarData(chanceHistory, questionCounter).series}
                   type="radar"
                 />
               ) : chartSelected === "column" ? (
                 <Chart
                   height={320}
                   key={chartSelected}
-                  options={columnData.options}
-                  series={columnData.series}
-                  type="column"
+                  options={columnData(chanceHistory, questionCounter).options}
+                  series={columnData(chanceHistory, questionCounter).series}
+                  type="bar"
                 />
               ) : (
                 ""
@@ -689,14 +517,14 @@ export default function MainSlider() {
 
           <div className={styles.chartsIconsBox}>
             <div
-              onClick={() => setChartSelected("area")}
+              onClick={() => handleSetActiveChart("area")}
               className={`${styles.chartIcon} ${chartSelected === "area" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/LineChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
             <div
-              onClick={() => setChartSelected("bar")}
+              onClick={() => handleSetActiveChart("bar")}
               className={`${styles.chartIcon} ${chartSelected === "bar" && styles.activeChart}`}
             >
               <Image
@@ -708,14 +536,14 @@ export default function MainSlider() {
               <p>نام جدول</p>
             </div>
             <div
-              onClick={() => setChartSelected("radar")}
+              onClick={() => handleSetActiveChart("radar")}
               className={`${styles.chartIcon} ${chartSelected === "radar" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/RadarChartIcon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
             <div
-              onClick={() => setChartSelected("column")}
+              onClick={() => handleSetActiveChart("column")}
               className={`${styles.chartIcon} ${chartSelected === "column" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/BarChartIcon.svg" alt="chart-icon" />

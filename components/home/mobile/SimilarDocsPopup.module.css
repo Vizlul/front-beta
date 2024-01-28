@@ -1,0 +1,151 @@
+.box {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.headerBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.headerBox p{
+  margin: 0;
+  font-weight: 700;
+}
+
+.axis {
+  width: 100%;
+  height: 2px;
+  background-color: #c8c8c8;
+  position: relative;
+}
+
+.textAxisBox p:first-of-type {
+  margin-bottom: 42px;
+}
+
+.textAxisBox p:last-of-type {
+  margin-top: 42px;
+}
+
+.signAxisStart {
+  width: 2px;
+  height: 4px;
+  background-color: #c8c8c8;
+  position: absolute;
+  top: 2px;
+  left: 0%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  padding-top: 4px;
+}
+
+.signAxisHalf {
+  width: 2px;
+  height: 4px;
+  background-color: #c8c8c8;
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  padding-top: 4px;
+}
+
+.signAxisEnd {
+  width: 2px;
+  height: 4px;
+  background-color: #c8c8c8;
+  position: absolute;
+  top: 2px;
+  left: 99.7%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  padding-top: 4px;
+}
+
+.signAxisActive {
+  position: absolute;
+  bottom: 0px;
+  left: calc(var(--progress-axis) - 15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signAxisActive div:first-of-type {
+  border: 1px solid #f00;
+  background: rgba(255, 0, 0, 0.2);
+  width: 30px;
+  height: 16px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+}
+
+.signAxisActive div:last-of-type {
+  width: 1px;
+  height: 15px;
+  background: red;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tr th,
+.table tr td {
+  border-bottom: 1px solid #d9d9d9;
+  border-left: 1px solid #d9d9d9;
+  padding: 8px;
+  text-align: right;
+}
+
+.table tr th:last-of-type,
+.table tr td:last-of-type {
+  border-left: none;
+}
+
+.table tr:last-of-type th,
+.table tr:last-of-type td {
+  border-bottom: none;
+}
+
+.guide {
+  border: 1px solid #f00;
+  background: rgba(255, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+}
+
+.guide p {
+  line-height: 28px; /* 175% */
+  text-align: right;
+}
+
+.button {
+  background-color: #00554e;
+  color: #fff;
+  height: 50px;
+  width: 100%;
+  margin-top: 32px;
+  border: 1px solid #00554e;
+  font-size: 18px;
+}

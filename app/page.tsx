@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
 import { SliderState } from "@/constants";
 import StartingSlider from "@/components/home/StartingSlider";
-import MainSlider from "@/components/home/MainSlider";
 import FinishSlider from "@/components/home/FinishSlider";
 import { useEffect, useState } from "react";
 import StartingSliderMobile from "@/components/home/mobile/StartingSliderMobile";
 import MainSliderMobile from "@/components/home/mobile/MainSliderMobile";
+import MainSlider from "@/components/home/MainSlider";
 
 interface SliderInterface {
   name: number;
@@ -16,7 +16,7 @@ interface SliderInterface {
 export default function Home() {
   const dispatch = useDispatch();
   const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   return isMobile ? (
     <div className={styles.mainLayout}>

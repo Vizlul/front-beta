@@ -11,6 +11,7 @@
 :root {
   --progress: 0;
   --potential: 0;
+  --progress-axis: 0%;
 }
 
 * {

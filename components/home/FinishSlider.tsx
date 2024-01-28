@@ -6,10 +6,6 @@ import VideoPlayer from "@/components/VideoPlayer";
 export default function FinishSlider() {
   const predict = useSelector((state: { predict: PredictInterface }) => state.predict);
 
-  const handleReload = () => {
-    // window.location.reload()
-  }
-
   return (
     <div className={styles.finishSlider}>
       <VideoPlayer />

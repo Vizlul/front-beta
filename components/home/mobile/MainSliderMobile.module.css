@@ -294,3 +294,26 @@
   transition: all ease 0.3s;
   z-index: 99;
 }
+
+.similarDocsPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(0);
+  transition: all ease 0.3s;
+  z-index: 99;
+}
+.similarDocsPopupNot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(100%);
+  transition: all ease 0.3s;
+  z-index: 99;
+}

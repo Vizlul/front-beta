@@ -191,10 +191,6 @@
   margin-top: 10px;
   overflow: hidden;
 }
-.infinite:last-of-type {
-  /* transform: translateX(-20px); */
-  /* overflow: hidden; */
-}
 
 .infinite .highwayBarrier::before,
 .infinite .highwayBarrier::after {

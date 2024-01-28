@@ -12,6 +12,7 @@ import ProgressAnimate from "@/components/utils/ProgressAnimate";
 import { SliderState } from "@/constants";
 import { setToFinished } from "@/store/features/sliderSlice";
 import FinishSliderPopup from "./FinishSliderPopup";
+import SimilarDocsPopup from "./SimilarDocsPopup";
 
 export default function MainSliderMobile() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function MainSliderMobile() {
   const [questionCounter, setQuestionCounter] = useState<any>(1);
   const [closeChart, setCloseChart] = useState(false);
   const [finishPopup, setFinishPopup] = useState(false);
+  const [similarDocsPopup, setSimilarDocsPopup] = useState(false);
 
   let data = {
     series: [
@@ -164,12 +166,12 @@ export default function MainSliderMobile() {
     ],
     options: {
       chart: {
-        type: 'radar',
+        type: "radar",
       },
-    
+
       xaxis: {
-        categories: ['January', 'February', 'March', 'April', 'May', 'June']
-      }
+        categories: ["January", "February", "March", "April", "May", "June"],
+      },
     },
   };
 
@@ -386,7 +388,7 @@ export default function MainSliderMobile() {
             </div>
           </div>
         </div>
-        {slider.name === SliderState.FINISHED ? (
+        {slider.name !== SliderState.FINISHED ? (
           <div className={styles.footer}>
             <div className={styles.footerTop}>
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
@@ -410,7 +412,7 @@ export default function MainSliderMobile() {
               </div>
             </div>
             <div className={styles.footerFinished}>
-              <button onClick={() => setFinishPopup(true)}>مشاهده پرونده‌های مشابه شما</button>
+              <button onClick={() => setSimilarDocsPopup(true)}>مشاهده پرونده‌های مشابه شما</button>
             </div>
           </div>
         ) : (
@@ -493,8 +495,13 @@ export default function MainSliderMobile() {
         questionCounter={questionCounter}
         setQuestionCounter={setQuestionCounter}
       />
+
       <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
         {finishPopup && <FinishSliderPopup finishPopup={finishPopup} />}
+      </div>
+
+      <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
+        {similarDocsPopup && <SimilarDocsPopup similarDocsPopup={similarDocsPopup} setSimilarDocsPopup={setSimilarDocsPopup} />}
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
