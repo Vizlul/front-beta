@@ -1,0 +1,103 @@
+.progressBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* height: 200px; */
+}
+
+.progressFull > path {
+  stroke: #e6f3e6;
+}
+
+.progress {
+  position: absolute;
+  /* inset: 0; */
+  stroke-dashoffset: var(--progress);
+  stroke-dasharray: 800;
+  transition: all 0.5s ease;
+}
+
+.potential {
+  position: absolute;
+  /* inset: 0; */
+  stroke-dashoffset: var(--potential);
+  stroke-dasharray: 800;
+  transition: all 0.5s ease;
+}
+
+.progress > path {
+  stroke: #008000;
+}
+
+.potential > path {
+  stroke: #008000;
+}
+.chanceNumber {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  width: 100%;
+}
+
+.chanceNumber p {
+  background-color: #008000;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 16px;
+  margin: 0;
+}
+
+.chanceNumber span {
+  font-size: 12px;
+}
+
+.potentialNumber {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.potentialNumber p {
+  margin: 0;
+}
+
+.potentialNumberIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.potentialNumberIcon p {
+  background-color: #008000;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 16px;
+}
+
+.potentialNumberIcon span {
+  font-size: 12px;
+}
+
+.footerVisHead {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #ebedef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -10px;
+}

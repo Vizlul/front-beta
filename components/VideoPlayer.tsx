@@ -35,6 +35,11 @@ const VideoPlayer = ({ finishPopup }) => {
         const percent = (video.currentTime / video.duration) * 100;
         progressBar.style.width = `${percent}%`;
       });
+
+      video.addEventListener("ended", () => {
+        // Call your function to show a popup here
+        console.log("Video ended");
+      });
     }, 1000);
   };
 

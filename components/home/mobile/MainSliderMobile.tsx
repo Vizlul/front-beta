@@ -167,6 +167,9 @@ export default function MainSliderMobile() {
     options: {
       chart: {
         type: "radar",
+        toolbar: {
+          show: false,
+        },
       },
 
       xaxis: {
@@ -386,15 +389,21 @@ export default function MainSliderMobile() {
                 height={250}
               />
             </div>
+
+            <button onClick={() => setFinishPopup(true)} className={styles.moreInfoButton} disabled={slider.name !== SliderState.FINISHED && true}>اطلاعات بیشتر</button>
           </div>
         </div>
-        {slider.name !== SliderState.FINISHED ? (
+        {slider.name === SliderState.FINISHED ? (
           <div className={styles.footer}>
             <div className={styles.footerTop}>
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
                 <p>شناخت ویزارد از شما</p>
                 <p>
-                  <CountUp end={predict.potential} />%
+                  <CountUp
+                    start={chanceHistory[chanceHistory.length - 1]?.potential}
+                    end={predict.potential}
+                  />
+                  %
                 </p>
               </div>
 
@@ -501,7 +510,12 @@ export default function MainSliderMobile() {
       </div>
 
       <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
-        {similarDocsPopup && <SimilarDocsPopup similarDocsPopup={similarDocsPopup} setSimilarDocsPopup={setSimilarDocsPopup} />}
+        {similarDocsPopup && (
+          <SimilarDocsPopup
+            similarDocsPopup={similarDocsPopup}
+            setSimilarDocsPopup={setSimilarDocsPopup}
+          />
+        )}
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>

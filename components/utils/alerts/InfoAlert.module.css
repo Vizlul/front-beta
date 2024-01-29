@@ -1,7 +1,7 @@
 .infoAlertBox {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 6px;
   padding: 10px;
   border: 1px solid #bbd7f2;
@@ -11,4 +11,36 @@
 
 .infoAlertBox p {
   margin: 0;
+  flex: 1 1 auto;
+}
+
+.infoAlertBox img {
+  cursor: pointer;
+}
+
+.infoAlertBox img:hover {
+  animation: shakeIcon 0.5s ease-in-out alternate;
+}
+
+@keyframes shakeIcon {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 0.5s forwards; /* adjust the time to match your setTimeout duration */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }

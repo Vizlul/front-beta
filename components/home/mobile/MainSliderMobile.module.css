@@ -317,3 +317,13 @@
   transition: all ease 0.3s;
   z-index: 99;
 }
+
+.moreInfoButton{
+  width: 100%;
+  background-color: #00554E;
+  color: #fff;
+  font-weight: 700;
+  padding: 15px 0;
+  border: 1px solid #00554E;
+  font-size: 16px !important;
+}

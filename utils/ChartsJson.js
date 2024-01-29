@@ -31,6 +31,7 @@ export const areaData = (chanceHistory, questionCounter) => {
       stroke: {
         curve: "smooth",
       },
+      yaxis: {},
     },
   };
 };
@@ -105,20 +106,14 @@ export const barNegativeData = (chanceHistory, questionCounter) => {
         },
       },
       xaxis: {
-        categories: [
-          "هدف",
-          "عاطفی",
-          "شغلی",
-          "اقتصادی",
-        ],
+        categories: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
         labels: {
           formatter: function (val) {
             return Math.abs(Math.round(val)) + "%";
           },
         },
       },
-      yaxis: {
-      },
+      yaxis: {},
     },
   };
 };
@@ -150,12 +145,12 @@ export const radarData = (chanceHistory, questionCounter) => {
         },
       },
       colors: ["#00E396", "#2E93FA"],
+      yaxis: {},
     },
   };
 };
 
 export const columnData = (chanceHistory, questionCounter) => {
-  console.log("wtastdasfdytafasdau");
   return {
     series: [
       {
@@ -191,6 +186,7 @@ export const columnData = (chanceHistory, questionCounter) => {
       dataLabels: {
         enabled: false,
       },
+      yaxis: {},
     },
   };
 };
