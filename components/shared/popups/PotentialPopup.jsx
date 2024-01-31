@@ -2,13 +2,11 @@ import { useSelector } from "react-redux";
 import styles from "./PotentialPopup.module.css";
 
 export default function PotentialPopup({ chancePopup, setChancePopup }) {
-  const predict = useSelector((state) => state.predict)
+  const predict = useSelector((state) => state.predict);
 
   return (
     <>
-      {chancePopup && (
-        <div onClick={() => setChancePopup(false)} className={styles.closePopupLayout}></div>
-      )}
+      {chancePopup && <div onClick={() => setChancePopup(false)} className={styles.closePopupLayout}></div>}
       <div className={chancePopup ? styles.answerPopup : styles.answerPopupNot}>
         <div className={`${styles.footerTopChance} ${chancePopup ? styles.stickyOnTop : ""} `}>
           <p>شناخت ویزارد از شما</p>

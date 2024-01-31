@@ -5,7 +5,11 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 export default function AboutModal() {
   return (
     <div>
-      <label className={`${styles.buttonAbout} add-counter`} style={{ display: "flex", alignItems: "center", gap: "4px" }} htmlFor={`modal-1`}>
+      <label
+        className={`${styles.buttonAbout} add-counter`}
+        style={{ display: "flex", alignItems: "center", gap: "4px" }}
+        htmlFor={`modal-1`}
+      >
         درباره ویزارد
       </label>
 
@@ -20,8 +24,8 @@ export default function AboutModal() {
               </div>
               <div className={styles.startingSliderRightContent}>
                 <p>
-                  می دانید چقدر برای اخذ ویزا شانس دارید؟ ویزارد هوش مصنوعی ویزالند است که تحت آموزش با تجربه ترین کارشناسان و بررسی صد ها
-                  پرونده موفق و ناموفق ویزا، تبدیل به یک مشاور قدرتمند ویزا شده است.
+                  می دانید چقدر برای اخذ ویزا شانس دارید؟ ویزارد هوش مصنوعی ویزالند است که تحت آموزش با تجربه ترین
+                  کارشناسان و بررسی صد ها پرونده موفق و ناموفق ویزا، تبدیل به یک مشاور قدرتمند ویزا شده است.
                 </p>
                 <p style={{ textDecoration: "underline" }}>
                   همین حالا می توانید با ویزارد گفتگو و شرایط پرونده خود را موشکافانه بررسی کنید.

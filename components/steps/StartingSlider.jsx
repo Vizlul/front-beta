@@ -1,16 +1,23 @@
 import { setToMain } from "@/store/features/sliderSlice";
-import ButtonComponent from "../utils/button/ButtonComponent";
 import styles from "./StartingSlider.module.css";
 import { useDispatch } from "react-redux";
-import { useEffect, useRef, useState } from "react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
+import Navbar from "../shared/Navbar";
+import Footer from "../shared/Footer";
+import ButtonComponent from "../shared/button/ButtonComponent.jsx";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function StartingSlider() {
   const dispatch = useDispatch();
+  const [users, setUsers] = useState([]);
+
   const handleClick = () => {
     dispatch(setToMain());
   };
+
+  useEffect(() => {
+    console.log("test");
+  }, []);
 
   return (
     <div className={styles.startingSlider}>
@@ -24,8 +31,7 @@ export default function StartingSlider() {
           </div>
 
           <p className={styles.mainHeroInfo}>
-            ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود
-            دهید.
+            ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.
           </p>
 
           <div className={styles.starterMainHero}>
@@ -33,15 +39,17 @@ export default function StartingSlider() {
 
             <div>
               <input placeholder="نام" />
-              <button onClick={handleClick}>
-                شروع بررسی <img src="forward-arrow.svg" alt="icon" />
-              </button>
+              <ButtonComponent
+                title="شروع بررسی"
+                icon={<img src="forward-arrow.svg" alt="icon" />}
+                onClickFunc={handleClick}
+              ></ButtonComponent>
             </div>
           </div>
         </div>
 
         <div className={styles.mainHeroLeft}>
-          <img src="visard-character.svg" alt="vizard" />
+          <Image width="100" height="100" src="visard-character.svg" alt="vizard" />
           <div className={styles.absoluteBox}>
             <p className={styles.absoluteText}>ویزارد</p>
           </div>
@@ -58,7 +66,11 @@ export default function StartingSlider() {
                     {Array.from({ length: 70 }, (_, index) => (
                       <li
                         className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
-                        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
                       >
                         <span className={styles.progressUserName}>مریم رادمنش</span>
                         <span className={styles.progressUsers}>

@@ -1,7 +1,7 @@
-import ProgressBar from "@/components/MainSlider/ProgressBar";
+import ProgressBar from "@/components/shared/ProgressBar";
 import styles from "./ChancePotentialModalDesktop.module.css";
 
-export default function ChacnePotentialModalDesktop({
+export default function ChancePotentialModalDesktop({
   isNumberIncreasing,
   chanceHistory,
   number,
@@ -13,11 +13,7 @@ export default function ChacnePotentialModalDesktop({
   return (
     <div className={styles.popupBox}>
       <div className={styles.popupHeader}>
-        {chancePotentialPopup.type === "chance" ? (
-          <p>شانس اخذ ویزا %{number}</p>
-        ) : (
-          <p>شناخت ویزارد از شما</p>
-        )}
+        {chancePotentialPopup.type === "chance" ? <p>شانس اخذ ویزا %{number}</p> : <p>شناخت ویزارد از شما</p>}
         <img
           onClick={() =>
             setChancePotentialPopup({
@@ -53,8 +49,8 @@ export default function ChacnePotentialModalDesktop({
               <p>میزان پر بودن خط جلو این باکس نشانگر همین موضوع است.</p>
             ) : (
               <p>
-                برای ارزیابی دقیق‌تر پیشنهاد می‌شود به سوالات بیشتری پاسخ دهید، در هر مرحله شانس
-                ویزا شما مجدد محاسبه میشود.
+                برای ارزیابی دقیق‌تر پیشنهاد می‌شود به سوالات بیشتری پاسخ دهید، در هر مرحله شانس ویزا شما مجدد محاسبه
+                میشود.
               </p>
             )}
           </div>
@@ -66,9 +62,8 @@ export default function ChacnePotentialModalDesktop({
             ) : (
               <p>
                 علامت <img src="CaretUp.svg" alt="icon" /> نشانگر تغییر مثبت و علامت{" "}
-                <img src="CaretDown.svg" alt="icon" /> نشانگر تغییر منفی و علامت{" "}
-                <img src="CaretEqual.svg" alt="icon" /> نشانگر عدم تغییر شانس نسبت به آخرین پاسخ
-                می‌باشد.
+                <img src="CaretDown.svg" alt="icon" /> نشانگر تغییر منفی و علامت <img src="CaretEqual.svg" alt="icon" />{" "}
+                نشانگر عدم تغییر شانس نسبت به آخرین پاسخ می‌باشد.
               </p>
             )}
           </div>

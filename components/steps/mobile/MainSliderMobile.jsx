@@ -1,18 +1,18 @@
 "use client";
-import InfoAlert from "@/components/utils/alerts/InfoAlert";
+import InfoAlert from "@/components/shared/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
 import ApexChart from "@/utils/ApexChart";
 import { useRef, useState } from "react";
-import AnswerPopup from "@/components/utils/popups/AnswerPopup";
-import PotentialPopup from "@/components/utils/popups/PotentialPopup";
+import PotentialPopup from "../../shared/popups/PotentialPopup";
+
 import { questions } from "@/utils/QuestionJson";
 import { useDispatch, useSelector } from "react-redux";
 import CountUp from "react-countup";
-import ProgressAnimate from "@/components/utils/ProgressAnimate";
+import ProgressAnimate from "@/components/shared/ProgressAnimate";
 import { SliderState } from "@/constants";
-import { setToFinished } from "@/store/features/sliderSlice";
 import FinishSliderPopup from "./FinishSliderPopup";
 import SimilarDocsPopup from "./SimilarDocsPopup";
+import AnswerPopup from "@/components/shared/popups/AnswerPopup";
 
 export default function MainSliderMobile() {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ export default function MainSliderMobile() {
   const [answerPopup, setAnswerPopup] = useState(false);
   const [chancePopup, setChancePopup] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [chanceHistory, setChanceHistory] = useState<any[]>([]);
-  const [questionCounter, setQuestionCounter] = useState<any>(1);
+  const [chanceHistory, setChanceHistory] = useState([]);
+  const [questionCounter, setQuestionCounter] = useState < any > 1;
   const [closeChart, setCloseChart] = useState(false);
   const [finishPopup, setFinishPopup] = useState(false);
   const [similarDocsPopup, setSimilarDocsPopup] = useState(false);
@@ -264,7 +264,7 @@ export default function MainSliderMobile() {
     },
   };
 
-  function isNumberIncreasing(previousNumber: any, currentNumber: any) {
+  function isNumberIncreasing(previousNumber, currentNumber) {
     // console.log(previousNumber, currentNumber);
     return currentNumber > previousNumber
       ? "more"
@@ -347,13 +347,7 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart
-                stacked={true}
-                options={barData.options}
-                series={barData.series}
-                type="bar"
-                height={250}
-              />
+              <ApexChart stacked={true} options={barData.options} series={barData.series} type="bar" height={250} />
             </div>
 
             <div ref={thirdChartRef} className={styles.mainChartsArea}>
@@ -381,16 +375,16 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart
-                stacked={true}
-                options={barChart.options}
-                series={barChart.series}
-                type="bar"
-                height={250}
-              />
+              <ApexChart stacked={true} options={barChart.options} series={barChart.series} type="bar" height={250} />
             </div>
 
-            <button onClick={() => setFinishPopup(true)} className={styles.moreInfoButton} disabled={slider.name !== SliderState.FINISHED && true}>اطلاعات بیشتر</button>
+            <button
+              onClick={() => setFinishPopup(true)}
+              className={styles.moreInfoButton}
+              disabled={slider.name !== SliderState.FINISHED && true}
+            >
+              اطلاعات بیشتر
+            </button>
           </div>
         </div>
         {slider.name === SliderState.FINISHED ? (
@@ -399,11 +393,7 @@ export default function MainSliderMobile() {
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
                 <p>شناخت ویزارد از شما</p>
                 <p>
-                  <CountUp
-                    start={chanceHistory[chanceHistory.length - 1]?.potential}
-                    end={predict.potential}
-                  />
-                  %
+                  <CountUp start={chanceHistory[chanceHistory.length - 1]?.potential} end={predict.potential} />%
                 </p>
               </div>
 
@@ -473,19 +463,13 @@ export default function MainSliderMobile() {
           <div onClick={() => firstChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/LineChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => secondChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => secondChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => thirdChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => fourthChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => fourthChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/BarChartIcon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
@@ -511,10 +495,7 @@ export default function MainSliderMobile() {
 
       <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
         {similarDocsPopup && (
-          <SimilarDocsPopup
-            similarDocsPopup={similarDocsPopup}
-            setSimilarDocsPopup={setSimilarDocsPopup}
-          />
+          <SimilarDocsPopup similarDocsPopup={similarDocsPopup} setSimilarDocsPopup={setSimilarDocsPopup} />
         )}
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />

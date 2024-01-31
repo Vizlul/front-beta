@@ -1,19 +1,9 @@
-export const areaData = (chanceHistory, questionCounter) => {
+export const areaData = (chanceHistory, questionCounte, chanceDataChart) => {
   return {
     series: [
       {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
+        name: "درصد شانس شما برای هر سوال",
+        data: chanceHistory.map((item) => item.chance),
       },
     ],
     options: {
@@ -24,7 +14,7 @@ export const areaData = (chanceHistory, questionCounter) => {
           show: false,
         },
       },
-      colors: ["#00E396", "#2E93FA"],
+      colors: ["#00E396"],
       dataLabels: {
         enabled: false,
       },
@@ -46,13 +36,7 @@ export const barNegativeData = (chanceHistory, questionCounter) => {
             ? chanceHistory[questionCounter - 2].chartData
             : [0, 0, 0, 0, 0],
       },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
+      
     ],
     options: {
       chart: {
@@ -154,18 +138,8 @@ export const columnData = (chanceHistory, questionCounter) => {
   return {
     series: [
       {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
+        name: "درصد شناخت ویزارد",
+        data: chanceHistory.map((item) => item.potential),
       },
     ],
     options: {

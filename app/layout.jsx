@@ -1,12 +1,10 @@
 "use client";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Provider } from "react-redux";
 import store from "@/store/store";
 import { ConfigProvider } from "antd";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <ConfigProvider
       direction="rtl"

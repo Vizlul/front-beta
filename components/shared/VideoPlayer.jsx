@@ -4,17 +4,17 @@ import "./VideoPlayer.css";
 const VideoPlayer = ({ finishPopup }) => {
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const playIconRef = useRef<SVGSVGElement>(null);
-  const pauseIconRef = useRef<SVGSVGElement>(null);
+  const videoRef = useRef(null);
+  const playIconRef = useRef(null);
+  const pauseIconRef = useRef(null);
 
   const playToggleHandler = () => {
     const video = videoRef.current;
 
     if (!video) return;
 
-    const playIcon = playIconRef.current!;
-    const pauseIcon = pauseIconRef.current!;
+    const playIcon = playIconRef.current;
+    const pauseIcon = pauseIconRef.current;
 
     isPlaying ? video.pause() : video.play();
 
@@ -26,7 +26,7 @@ const VideoPlayer = ({ finishPopup }) => {
   const playHandler = () => {
     setTimeout(() => {
       const video = videoRef.current;
-      const progressBar = document.querySelector(".progress_bar") as HTMLDivElement;
+      const progressBar = document.querySelector(".progress_bar");
       video?.play();
 
       if (!video) return;

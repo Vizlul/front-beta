@@ -2,9 +2,9 @@ import styles from "./MainSlider.module.css";
 import { questions } from "@/utils/QuestionJson";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import InfoAlert from "../utils/alerts/InfoAlert";
-import Footer from "../Footer";
-import Navbar from "../Navbar";
+import InfoAlert from "../shared/alerts/InfoAlert";
+import Footer from "../shared/Footer";
+import Navbar from "../shared/Navbar";
 import Image from "next/image";
 import CallApi from "@/utils/CallApi";
 import {
@@ -16,15 +16,15 @@ import {
   setPotentialData,
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
-import Loading from "../utils/Loading";
 import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
-import CountUp from "react-countup";
-import ProgressBar from "../MainSlider/ProgressBar";
-import ChacnePotentialModalDesktop from "../utils/modal/ChacnePotentialModalDesktop";
+import ProgressBar from "../shared/ProgressBar";
+import ChacnePotentialModalDesktop from "../shared/popups/ChancePotentialModalDesktop";
+import ButtonComponent from "../shared/button/ButtonComponent";
 
 export default function MainSlider() {
+  const dispatch = useDispatch();
   const [questionCounter, setQuestionCounter] = useState(1);
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState("");
@@ -44,6 +44,7 @@ export default function MainSlider() {
   const [prevCounterQuestion, setPrevCounterQuestion] = useState([]);
   const [animate, setAnimate] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
+  const [finsihed, setFinished] = useState(false);
 
   console.log(chanceHistory);
 
@@ -56,8 +57,6 @@ export default function MainSlider() {
       ? "equal"
       : "";
   }
-
-  const dispatch = useDispatch();
 
   const handleChange = (value, type) => {
     if (type === "number") {
@@ -94,7 +93,8 @@ export default function MainSlider() {
           setActiveButton("");
           setAnswer(null);
           setLoading(false);
-          return dispatch(setToFinished());
+          setFinished(true);
+          return;
         } else {
           await CallApi.post("/grouped_xai", filteredData)
             .then(async (resp) => {
@@ -152,9 +152,7 @@ export default function MainSlider() {
                   setAnimate((prev) => !prev);
 
                   setCurrentQuestionIndex(
-                    questions.findIndex(
-                      (question) => question.question_value === respon.data.next_variable
-                    )
+                    questions.findIndex((question) => question.question_value === respon.data.next_variable)
                   );
                   dispatch(setChanceData({ chance: respon.data.result }));
                   dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
@@ -183,57 +181,18 @@ export default function MainSlider() {
   }, [questionCounter]);
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--potential",
-      String(800 - 800 * (predict.potential / 100))
-    );
-
-    document.documentElement.style.setProperty(
-      "--progress",
-      String(800 - 800 * (predict.chance / 100))
-    );
+    document.documentElement.style.setProperty("--potential", String(800 - 800 * (predict.potential / 100)));
+    document.documentElement.style.setProperty("--progress", String(800 - 800 * (predict.chance / 100)));
   }, [predict.potential, predict.chance]);
 
   const handleSetActiveChart = (value) => {
     setChartSelected(value);
-    if (value === "area") {
-      console.log(ApexCharts.getChartByID("area"));
-      ApexCharts.getChartByID("area")?.updateOptions(
-        areaData(chanceHistory, questionCounter).options
-      );
-      ApexCharts.getChartByID("area")?.updateSeries(
-        areaData(chanceHistory, questionCounter).series
-      );
-    } else if (value === "bar") {
-      console.log(ApexCharts.getChartByID("bar"));
-      ApexCharts.getChartByID("bar")?.updateOptions(
-        barNegativeData(chanceHistory, questionCounter).options
-      );
-      ApexCharts.getChartByID("bar")?.updateSeries(
-        barNegativeData(chanceHistory, questionCounter).series
-      );
-    } else if (value === "radar") {
-      console.log(ApexCharts.getChartByID("radar"));
-      ApexCharts.getChartByID("radar")?.updateOptions(
-        radarData(chanceHistory, questionCounter).options
-      );
-      ApexCharts.getChartByID("radar")?.updateSeries(
-        radarData(chanceHistory, questionCounter).series
-      );
-    } else if (value === "column") {
-      console.log(ApexCharts.getChartByID("column"));
-      ApexCharts.getChartByID("column")?.updateOptions(
-        columnData(chanceHistory, questionCounter).options
-      );
-      ApexCharts.getChartByID("column")?.updateSeries(
-        columnData(chanceHistory, questionCounter).series
-      );
-    }
+    ApexCharts.getChartByID(value)?.updateOptions(areaData(chanceHistory, questionCounter).options);
+    ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
   };
 
   return (
     <div key={slider.name} className={`${styles.mainSliderPage} `}>
-      <style>{`--progress: ${800 - 800 * (50 / 100)}`}</style>
       <Navbar />
 
       <div className={`${styles.mainSlider} ${styles.slideDown}`}>
@@ -245,6 +204,7 @@ export default function MainSlider() {
                 {questions[currentQuestionIndex].question}
               </p>
             </div>
+
             <div key={questionCounter} className={`${styles.answerChioces} ${styles.slideLeft}`}>
               {questions[currentQuestionIndex].type === "radio" ? (
                 questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
@@ -291,10 +251,7 @@ export default function MainSlider() {
                     }
                     key={index}
                     onClick={() => {
-                      handleChange(
-                        questions[currentQuestionIndex].answer.value_en[index],
-                        "radio_multi"
-                      );
+                      handleChange(questions[currentQuestionIndex].answer.value_en[index], "radio_multi");
                       setActiveButton(index);
                     }}
                   >
@@ -305,18 +262,21 @@ export default function MainSlider() {
                 ""
               )}
             </div>
-            <div className={styles.buttonGroups}>
-              <button onClick={handleSubmit} disabled={answer === null && true}>
-                {loading ? (
-                  <Loading desktop={true} />
-                ) : (
-                  <>
-                    ثبت پاسخ <img src="forward-arrow.svg" alt="arrow-forward" />
-                  </>
-                )}
-              </button>
 
-              <button disabled={true}>اطلاعات بیشتر</button>
+            <div className={styles.buttonGroups}>
+              <ButtonComponent
+                title="ثبت پاسخ"
+                onClickFunc={handleSubmit}
+                disabledFunc={answer === null && true}
+                loading={loading}
+                icon={<img src="forward-arrow.svg" alt="arrow-forward" />}
+              ></ButtonComponent>
+
+              <ButtonComponent
+                title="اطلاعات بیشتر"
+                onClickFunc={() => dispatch(setToFinished())}
+                disabledFunc={!finsihed && true}
+              ></ButtonComponent>
             </div>
           </div>
 
@@ -339,6 +299,7 @@ export default function MainSlider() {
                 type="chance"
               />
             </div>
+
             <div
               className={styles.potentialBox}
               style={{ height: "100%" }}
@@ -416,18 +377,13 @@ export default function MainSlider() {
               className={`${styles.chartIcon} ${chartSelected === "area" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/LineChartIcon.svg" alt="chart-icon" />
-              <p>نام جدول</p>
+              <p>شانس ویزا</p>
             </div>
             <div
               onClick={() => handleSetActiveChart("bar")}
               className={`${styles.chartIcon} ${chartSelected === "bar" && styles.activeChart}`}
             >
-              <Image
-                width="25"
-                height="25"
-                src="chart/NegativeBarChart Icon.svg"
-                alt="chart-icon"
-              />
+              <Image width="25" height="25" src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
               <p>نام جدول</p>
             </div>
             <div
@@ -442,7 +398,7 @@ export default function MainSlider() {
               className={`${styles.chartIcon} ${chartSelected === "column" && styles.activeChart}`}
             >
               <Image width="25" height="25" src="chart/BarChartIcon.svg" alt="chart-icon" />
-              <p>نام جدول</p>
+              <p>شناخت ویزارد</p>
             </div>
           </div>
         </div>
@@ -451,15 +407,8 @@ export default function MainSlider() {
       <Footer />
 
       <div
-        onClick={() =>
-          setChancePotentialPopup({
-            value: false,
-            type: "",
-          })
-        }
-        className={
-          chancePotentialPopup.value ? styles.popupBoxAnimation : styles.popupBoxAnimationNot
-        }
+        onClick={() => setChancePotentialPopup({ value: false, type: "" })}
+        className={chancePotentialPopup.value ? styles.popupBoxAnimation : styles.popupBoxAnimationNot}
       >
         {chancePotentialPopup.value && (
           <ChacnePotentialModalDesktop

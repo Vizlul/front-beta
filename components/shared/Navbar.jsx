@@ -1,16 +1,9 @@
-import { setToStart } from "@/store/features/sliderSlice";
 import styles from "./Navbar.module.css";
-import ButtonComponent from "./utils/button/ButtonComponent";
-import { useDispatch, useSelector } from "react-redux";
+import ButtonComponent from "../shared/button/ButtonComponent.jsx";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import AboutModal from "./utils/modal/AboutModal";
-
-interface SliderInterface {
-  name: number;
-}
+import AboutModal from "../shared/popups/AboutModal.jsx";
 
 export default function Navbar() {
-
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
@@ -24,10 +17,10 @@ export default function Navbar() {
           {/* <AboutModal /> */}
 
           <a href="https://visaland.org">
-            <button style={{ fontSize: "16px" }}>
-              وبسایت ویزالند
-              <AiOutlineArrowLeft style={{ fontSize: "12px" }} />
-            </button>
+            <ButtonComponent
+              title="وبسایت ویزالند"
+              icon={<AiOutlineArrowLeft style={{ fontSize: "12px" }} />}
+            ></ButtonComponent>
           </a>
         </div>
       </div>

@@ -1,10 +1,9 @@
-
-import { createSlice } from '@reduxjs/toolkit';
-import { SliderState } from "@/constants"
+import { createSlice } from "@reduxjs/toolkit";
+import { SliderState } from "@/constants";
 
 const initialState = {
   name: SliderState.START, // Use the enum value
-}
+};
 
 const sliderSlice = createSlice({
   name: "sliderSlice",

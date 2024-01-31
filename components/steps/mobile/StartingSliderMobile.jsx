@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import styles from "./StartingSliderMobile.module.css";
 import { setToMain } from "@/store/features/sliderSlice";
 import { useEffect, useState } from "react";
-import NamePopup from "@/components/utils/popups/NamePopup";
+import NamePopup from "../../shared/popups/NamePopup";
 
 export default function StartingSliderMobile() {
   const [namePopup, setNamePopup] = useState(false);
@@ -28,9 +28,7 @@ export default function StartingSliderMobile() {
           </div>
         </div>
         <p>اولین هوش مصنوعی ویزا</p>
-        <p>
-          ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.
-        </p>
+        <p>ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.</p>
       </div>
       <section className={styles.slideOption}>
         <div className={`${styles.highwaySlider} ${styles.infinite}`}>

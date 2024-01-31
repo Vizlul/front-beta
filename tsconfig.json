@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/NumberCounterAnimate.js", "utils/QuestionJson.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/NumberCounterAnimate.js", "utils/QuestionJson.tsx", "app/layout.jsx", "components/utils/button/ButtonComponent.jsx", "components/home/FinishSlider.jsx", "components/home/mobile/StartingSliderMobile.jsx", "components/home/mobile/MainSliderMobile.jsx", "components/home/mobile/FinishSliderPopup.jsx", "components/utils/popups/AnswerPopup.jsx", "components/shared/VideoPlayer.jsx", "components/shared/Navbar.jsx", "components/shared/Footer.jsx", "components/utils/TypeWriter.jsx", "components/utils/ProgressAnimate.jsx", "components/shared/Loading.jsx", "components/utils/popups/PotentialPopup.jsx", "components/utils/popups/NamePopup.jsx", "components/utils/modal/ChancePotentialModal.jsx", "components/utils/popups/AboutModal.jsx", "store/store.jsx", "store/features/predictSlice.jsx", "store/features/sliderSlice.jsx"],
   "exclude": ["node_modules"]
 }

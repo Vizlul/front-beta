@@ -12,7 +12,7 @@ import {
   setPotentialData,
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
-import Loading from "../Loading";
+import Loading from "../../shared/Loading";
 
 export default function AnswerPopup({
   answerPopup,
@@ -26,11 +26,11 @@ export default function AnswerPopup({
 }) {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
-  const [predictData, setPredictData] = useState<any>({});
+  const [predictData, setPredictData] = useState({});
   const [answer, setAnswer] = useState(null);
-  const [prevCounterQuestion, setPrevCounterQuestion] = useState<any[]>([]);
+  const [prevCounterQuestion, setPrevCounterQuestion] = useState([]);
   const [testValue, setTestValue] = useState("");
-  const [activeButton, setActiveButton] = useState<any>("");
+  const [activeButton, setActiveButton] = useState("");
   const [loading, setLoading] = useState(false);
 
   console.log(prevCounterQuestion);
@@ -60,7 +60,7 @@ export default function AnswerPopup({
     console.log(answer);
     setLoading(true);
 
-    const newState: any = [];
+    const newState = [];
     let keep = false;
 
     const filteredData = {
@@ -72,7 +72,7 @@ export default function AnswerPopup({
           ? answer
           : questions[currentQuestionIndex].answer.value_en[answer],
     };
-    const filteredDataTest: any = [];
+    const filteredDataTest = [];
 
     console.log(filteredData);
 
@@ -95,9 +95,7 @@ export default function AnswerPopup({
                   question: questions[currentQuestionIndex].question_value,
                   answer: answer,
                   chance: Math.round(Number(respon.data.result) * 100),
-                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
-                    (value * 100).toFixed(2)
-                  ),
+                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) => (value * 100).toFixed(2)),
                 },
               ]);
 
@@ -140,9 +138,7 @@ export default function AnswerPopup({
                   setAnswerPopup(false);
                   setQuestionCounter((prev) => prev + 1);
                   setCurrentQuestionIndex(
-                    questions.findIndex(
-                      (question) => question.question_value === respon.data.next_variable
-                    )
+                    questions.findIndex((question) => question.question_value === respon.data.next_variable)
                   );
                   dispatch(setChanceData({ chance: respon.data.result }));
                   dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
@@ -177,9 +173,7 @@ export default function AnswerPopup({
 
   return (
     <>
-      {answerPopup && (
-        <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>
-      )}
+      {answerPopup && <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>}
       <div className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
         <div className={styles.answerPopupQuestion}>
           <p>{questionCounter}</p>
@@ -230,10 +224,7 @@ export default function AnswerPopup({
                 }
                 key={index}
                 onClick={() => {
-                  handleChange(
-                    questions[currentQuestionIndex].answer.value_en[index],
-                    "radio_multi"
-                  );
+                  handleChange(questions[currentQuestionIndex].answer.value_en[index], "radio_multi");
                   setActiveButton(index);
                 }}
               >
@@ -244,11 +235,7 @@ export default function AnswerPopup({
             ""
           )}
         </div>
-        <button
-          disabled={answer === null && true}
-          onClick={handleSubmit}
-          className={styles.answerPopupSubmitButton}
-        >
+        <button disabled={answer === null && true} onClick={handleSubmit} className={styles.answerPopupSubmitButton}>
           {loading ? (
             <Loading />
           ) : (

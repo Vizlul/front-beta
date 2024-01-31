@@ -1,13 +1,8 @@
 import { useSelector } from "react-redux";
 import styles from "./Footer.module.css";
 
-interface SliderInterface {
-  name: number;
-}
-
 export default function Footer() {
-  const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
-
+  const slider = useSelector((state) => state.slider);
 
   return (
     <footer className={styles.footer}>
