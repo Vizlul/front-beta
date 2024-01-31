@@ -16,7 +16,7 @@ interface SliderInterface {
 export default function Home() {
   const dispatch = useDispatch();
   const slider = useSelector((state: { slider: SliderInterface }) => state.slider);
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   return isMobile ? (
     <div className={styles.mainLayout}>

@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import styles from "./ProgressBar.module.css";
 import CountUp from "react-countup";
 
-export default function ProgressBar({ isNumberIncreasing, chanceHistory, number, type }) {
+export default function ProgressBar({ isNumberIncreasing, chanceHistory, number, type, notWidth }) {
   return (
-    <div className={styles.progressBar}>
+    <div style={{ width: notWidth ? "" : "100%" }} className={styles.progressBar}>
       <svg
         fill="none"
         className={styles.progressFull}
@@ -17,7 +17,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
       </svg>
       <svg
         fill="none"
-        className={`${styles.progress}`}
+        className={type === "chance" ? styles.progress : styles.potential}
         width="220"
         height="220"
         viewBox="0 0 200 200"

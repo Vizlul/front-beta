@@ -1,0 +1,56 @@
+.popupBox {
+  width: calc(100% - 20%);
+  height: fit-content;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.popupHeader p {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.item > div {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #cfcfcf;
+}
+
+.item p {
+  font-size: 20px;
+  margin: 0;
+}
+
+.progressInfoBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+}

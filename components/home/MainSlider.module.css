@@ -129,14 +129,12 @@
   font-size: 20px;
   font-weight: 700;
   margin: 0;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .animate {
   animation: fill 0.5s ease forwards;
 }
-
-
 
 .chartsIconsBox {
   display: flex;
@@ -246,6 +244,40 @@
 
 .slideDown {
   animation: slideDown 0.5s ease-in-out forwards;
+}
+
+.popupBoxAnimation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 12, 10, 0.8);
+  z-index: 9;
+  width: 100%;
+  height: calc(100%g);
+  margin: 0 auto;
+  transform: scale(1);
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupBoxAnimationNot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 99;
+  width: 90%;
+  margin: 0 auto;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
 
 @keyframes slideRight {

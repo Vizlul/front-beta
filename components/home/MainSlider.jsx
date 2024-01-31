@@ -22,6 +22,7 @@ import Chart from "react-apexcharts";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 import CountUp from "react-countup";
 import ProgressBar from "../MainSlider/ProgressBar";
+import ChacnePotentialModalDesktop from "../utils/modal/ChacnePotentialModalDesktop";
 
 export default function MainSlider() {
   const [questionCounter, setQuestionCounter] = useState(1);
@@ -32,8 +33,10 @@ export default function MainSlider() {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
   const [answerPopup, setAnswerPopup] = useState(false);
-  const [chancePopup, setChancePopup] = useState(false);
-  const [closeChart, setCloseChart] = useState(false);
+  const [chancePotentialPopup, setChancePotentialPopup] = useState({
+    value: false,
+    type: "",
+  });
   const [chartSelected, setChartSelected] = useState("bar");
   const [answer, setAnswer] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -41,8 +44,6 @@ export default function MainSlider() {
   const [prevCounterQuestion, setPrevCounterQuestion] = useState([]);
   const [animate, setAnimate] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
-  const [seriesBar, setSeriesBar] = useState("");
-  const [toggler, setToggler] = useState(false);
 
   console.log(chanceHistory);
 
@@ -93,7 +94,6 @@ export default function MainSlider() {
           setActiveButton("");
           setAnswer(null);
           setLoading(false);
-          setAnswerPopup(false);
           return dispatch(setToFinished());
         } else {
           await CallApi.post("/grouped_xai", filteredData)
@@ -148,7 +148,6 @@ export default function MainSlider() {
                   setActiveButton("");
                   setAnswer(null);
                   setLoading(false);
-                  setAnswerPopup(false);
                   setQuestionCounter((prev) => prev + 1);
                   setAnimate((prev) => !prev);
 
@@ -233,7 +232,7 @@ export default function MainSlider() {
   };
 
   return (
-    <div key={slider.name} className={styles.mainSliderPage}>
+    <div key={slider.name} className={`${styles.mainSliderPage} `}>
       <style>{`--progress: ${800 - 800 * (50 / 100)}`}</style>
       <Navbar />
 
@@ -322,13 +321,41 @@ export default function MainSlider() {
           </div>
 
           <div className={styles.chancePotentialBox} style={{ maxHeight: "310px" }}>
-            <div className={styles.chanceBox} style={{ height: "100%" }}>
+            <div
+              className={styles.chanceBox}
+              style={{ height: "100%" }}
+              onClick={() =>
+                setChancePotentialPopup({
+                  value: true,
+                  type: "chance",
+                })
+              }
+            >
               <p>شانس ویزا</p>
-              <ProgressBar isNumberIncreasing={isNumberIncreasing} chanceHistory={chanceHistory} number={predict.chance} type="chance" />
+              <ProgressBar
+                isNumberIncreasing={isNumberIncreasing}
+                chanceHistory={chanceHistory}
+                number={predict.chance}
+                type="chance"
+              />
             </div>
-            <div className={styles.potentialBox} style={{ height: "100%" }}>
+            <div
+              className={styles.potentialBox}
+              style={{ height: "100%" }}
+              onClick={() =>
+                setChancePotentialPopup({
+                  value: true,
+                  type: "potential",
+                })
+              }
+            >
               <p>شناخت ویزارد از شما</p>
-              <ProgressBar isNumberIncreasing={isNumberIncreasing} chanceHistory={chanceHistory} number={predict.potential} type="potential" />
+              <ProgressBar
+                isNumberIncreasing={isNumberIncreasing}
+                chanceHistory={chanceHistory}
+                number={predict.potential}
+                type="potential"
+              />
             </div>
           </div>
         </div>
@@ -422,6 +449,28 @@ export default function MainSlider() {
       </div>
 
       <Footer />
+
+      <div
+        onClick={() =>
+          setChancePotentialPopup({
+            value: false,
+            type: "",
+          })
+        }
+        className={
+          chancePotentialPopup.value ? styles.popupBoxAnimation : styles.popupBoxAnimationNot
+        }
+      >
+        {chancePotentialPopup.value && (
+          <ChacnePotentialModalDesktop
+            chancePotentialPopup={chancePotentialPopup}
+            setChancePotentialPopup={setChancePotentialPopup}
+            isNumberIncreasing={isNumberIncreasing}
+            chanceHistory={chanceHistory}
+            number={predict.chance}
+          />
+        )}
+      </div>
     </div>
   );
 }
