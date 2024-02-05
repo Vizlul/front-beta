@@ -13,6 +13,7 @@ import { SliderState } from "@/constants";
 import FinishSliderPopup from "./FinishSliderPopup";
 import SimilarDocsPopup from "./SimilarDocsPopup";
 import AnswerPopup from "@/components/shared/popups/AnswerPopup";
+import ContactUsPopupMobile from "@/components/shared/popups/ContactUsPopupMobile";
 
 export default function MainSliderMobile() {
   const dispatch = useDispatch();
@@ -22,10 +23,12 @@ export default function MainSliderMobile() {
   const [chancePopup, setChancePopup] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [chanceHistory, setChanceHistory] = useState([]);
-  const [questionCounter, setQuestionCounter] = useState < any > 1;
+  const [questionCounter, setQuestionCounter] = useState(1);
   const [closeChart, setCloseChart] = useState(false);
   const [finishPopup, setFinishPopup] = useState(false);
   const [similarDocsPopup, setSimilarDocsPopup] = useState(false);
+  const [contactUsPopup, setContactUsPopup] = useState(false);
+  const [showAlert, setShowAlert] = useState(true);
 
   let data = {
     series: [
@@ -326,7 +329,7 @@ export default function MainSliderMobile() {
           </div>
         </div>
         <div className={styles.main}>
-          {<InfoAlert questionCounter={questionCounter} />}
+          {showAlert && <InfoAlert questionCounter={questionCounter} setShowAlert={setShowAlert} />}
 
           <div className={styles.mainCharts}>
             <div ref={firstChartRef} className={styles.mainChartsArea}>
@@ -347,7 +350,13 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart stacked={true} options={barData.options} series={barData.series} type="bar" height={250} />
+              <ApexChart
+                stacked={true}
+                options={barData.options}
+                series={barData.series}
+                type="bar"
+                height={250}
+              />
             </div>
 
             <div ref={thirdChartRef} className={styles.mainChartsArea}>
@@ -375,7 +384,13 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart stacked={true} options={barChart.options} series={barChart.series} type="bar" height={250} />
+              <ApexChart
+                stacked={true}
+                options={barChart.options}
+                series={barChart.series}
+                type="bar"
+                height={250}
+              />
             </div>
 
             <button
@@ -393,7 +408,11 @@ export default function MainSliderMobile() {
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
                 <p>شناخت ویزارد از شما</p>
                 <p>
-                  <CountUp start={chanceHistory[chanceHistory.length - 1]?.potential} end={predict.potential} />%
+                  <CountUp
+                    start={chanceHistory[chanceHistory.length - 1]?.potential}
+                    end={predict.potential}
+                  />
+                  %
                 </p>
               </div>
 
@@ -463,13 +482,19 @@ export default function MainSliderMobile() {
           <div onClick={() => firstChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/LineChartIcon.svg" alt="chart-icon" />
           </div>
-          <div onClick={() => secondChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
+          <div
+            onClick={() => secondChartRef.current.scrollIntoView()}
+            className={styles.chartsIcon}
+          >
             <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => thirdChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
           </div>
-          <div onClick={() => fourthChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
+          <div
+            onClick={() => fourthChartRef.current.scrollIntoView()}
+            className={styles.chartsIcon}
+          >
             <img src="chart/BarChartIcon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
@@ -490,13 +515,22 @@ export default function MainSliderMobile() {
       />
 
       <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
-        {finishPopup && <FinishSliderPopup finishPopup={finishPopup} />}
+        {finishPopup && (
+          <FinishSliderPopup finishPopup={finishPopup} setContactUsPopup={setContactUsPopup} />
+        )}
       </div>
 
       <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
         {similarDocsPopup && (
-          <SimilarDocsPopup similarDocsPopup={similarDocsPopup} setSimilarDocsPopup={setSimilarDocsPopup} />
+          <SimilarDocsPopup
+            similarDocsPopup={similarDocsPopup}
+            setSimilarDocsPopup={setSimilarDocsPopup}
+          />
         )}
+      </div>
+
+      <div className={contactUsPopup ? styles.contactPopup : styles.contactPopupNot}>
+        <ContactUsPopupMobile setContactUsPopup={setContactUsPopup} />
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./VideoPlayer.css";
 
-const VideoPlayer = ({ finishPopup }) => {
+const VideoPlayer = ({ finishPopup, setContactUsPopup }) => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const videoRef = useRef(null);
@@ -23,25 +23,37 @@ const VideoPlayer = ({ finishPopup }) => {
     setIsPlaying((prev) => !prev);
   };
 
+  const video = videoRef.current;
   const playHandler = () => {
     setTimeout(() => {
-      const video = videoRef.current;
       const progressBar = document.querySelector(".progress_bar");
       video?.play();
 
       if (!video) return;
 
+      video.addEventListener("ended", () => {
+        setContactUsPopup(true);
+        console.log("Video ended");
+      });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const progressBar = document.querySelector(".progress_bar");
+
+    if (video && progressBar) {
       video.addEventListener("timeupdate", () => {
         const percent = (video.currentTime / video.duration) * 100;
         progressBar.style.width = `${percent}%`;
       });
 
       video.addEventListener("ended", () => {
-        // Call your function to show a popup here
+        setContactUsPopup(true);
         console.log("Video ended");
       });
-    }, 1000);
-  };
+    }
+  }, []);
 
   useEffect(() => {
     if (finishPopup) {
@@ -64,7 +76,7 @@ const VideoPlayer = ({ finishPopup }) => {
           ></video>
         </div>
         <div className="progress_bar_wrap">
-          <div className="progress_bar"></div>
+          <div className="progress_bar" style={{ transition: "all ease 0.3s" }}></div>
         </div>
         <div className="card_controls">
           <div className="profile">

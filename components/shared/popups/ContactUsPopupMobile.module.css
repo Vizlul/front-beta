@@ -1,0 +1,51 @@
+.popup {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.popup > p {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header p {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.header svg {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.contactInfo p {
+  margin: 0;
+  font-size: 24px;
+  color: #00554e;
+  font-weight: bold;
+}
+
+.button {
+  background-color: #00554e;
+  color: #fff;
+  border: 1px solid #00554e;
+  height: 50px;
+  font-size: 18px;
+}

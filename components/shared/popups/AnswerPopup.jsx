@@ -95,7 +95,9 @@ export default function AnswerPopup({
                   question: questions[currentQuestionIndex].question_value,
                   answer: answer,
                   chance: Math.round(Number(respon.data.result) * 100),
-                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) => (value * 100).toFixed(2)),
+                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
+                    (value * 100).toFixed(2)
+                  ),
                 },
               ]);
 
@@ -138,7 +140,9 @@ export default function AnswerPopup({
                   setAnswerPopup(false);
                   setQuestionCounter((prev) => prev + 1);
                   setCurrentQuestionIndex(
-                    questions.findIndex((question) => question.question_value === respon.data.next_variable)
+                    questions.findIndex(
+                      (question) => question.question_value === respon.data.next_variable
+                    )
                   );
                   dispatch(setChanceData({ chance: respon.data.result }));
                   dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
@@ -173,7 +177,9 @@ export default function AnswerPopup({
 
   return (
     <>
-      {answerPopup && <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>}
+      {answerPopup && (
+        <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>
+      )}
       <div className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
         <div className={styles.answerPopupQuestion}>
           <p>{questionCounter}</p>
@@ -203,7 +209,17 @@ export default function AnswerPopup({
             </select>
           ) : questions[currentQuestionIndex].type === "number" ? (
             <div className={styles.questionNumber}>
-              <button onClick={() => setAnswer((prevValue) => Number(prevValue + 1))}>+</button>
+              <button
+                onClick={() =>
+                  setAnswer((prevValue) =>
+                    prevValue < questions[currentQuestionIndex].answer.value_fa[1]
+                      ? Number(prevValue + 1)
+                      : Number(prevValue)
+                  )
+                }
+              >
+                +
+              </button>
               <input
                 type="number"
                 min={questions[currentQuestionIndex].answer.value_fa[0]}
@@ -212,7 +228,17 @@ export default function AnswerPopup({
                 defaultValue={questions[currentQuestionIndex].answer.value_fa[0]}
                 onChange={(event) => handleChange(event.target.value, "number")}
               />
-              <button onClick={() => setAnswer((prevValue) => Number(prevValue - 1))}>-</button>
+              <button
+                onClick={() =>
+                  setAnswer((prevValue) =>
+                    prevValue > questions[currentQuestionIndex].answer.value_fa[0]
+                      ? Number(prevValue - 1)
+                      : Number(prevValue)
+                  )
+                }
+              >
+                -
+              </button>
             </div>
           ) : questions[currentQuestionIndex].type === "radio_multi" ? (
             questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
@@ -224,7 +250,10 @@ export default function AnswerPopup({
                 }
                 key={index}
                 onClick={() => {
-                  handleChange(questions[currentQuestionIndex].answer.value_en[index], "radio_multi");
+                  handleChange(
+                    questions[currentQuestionIndex].answer.value_en[index],
+                    "radio_multi"
+                  );
                   setActiveButton(index);
                 }}
               >
@@ -235,7 +264,11 @@ export default function AnswerPopup({
             ""
           )}
         </div>
-        <button disabled={answer === null && true} onClick={handleSubmit} className={styles.answerPopupSubmitButton}>
+        <button
+          disabled={answer === null && true}
+          onClick={handleSubmit}
+          className={styles.answerPopupSubmitButton}
+        >
           {loading ? (
             <Loading />
           ) : (

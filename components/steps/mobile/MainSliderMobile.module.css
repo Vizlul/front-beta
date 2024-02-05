@@ -318,12 +318,34 @@
   z-index: 99;
 }
 
-.moreInfoButton{
+.moreInfoButton {
   width: 100%;
-  background-color: #00554E;
+  background-color: #00554e;
   color: #fff;
   font-weight: 700;
   padding: 15px 0;
-  border: 1px solid #00554E;
+  border: 1px solid #00554e;
   font-size: 16px !important;
+}
+
+.contactPopup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(0);
+  transition: all ease 0.3s;
+  z-index: 99;
+}
+
+.contactPopupNot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(100%);
+  transition: all ease 0.3s;
+  z-index: 99;
 }

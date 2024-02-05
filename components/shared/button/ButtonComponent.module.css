@@ -3,6 +3,7 @@
   font-family: FarhangFanum, sans-serif !important;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
 }
 

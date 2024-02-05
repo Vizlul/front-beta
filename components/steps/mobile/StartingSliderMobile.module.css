@@ -134,48 +134,31 @@
   align-items: center;
   width: 160px !important;
 }
-@-webkit-keyframes translatestf {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-@keyframes translatestf {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
 @-webkit-keyframes translateinfinite {
   100% {
     transform: translateX(calc(160px * 12));
   }
 }
+
 @keyframes translateinfinite {
   100% {
     transform: translateX(calc(160px * 12));
   }
 }
+
 @-webkit-keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * 6));
+    transform: translateX(calc(160px * 12)); /* Reverse direction with a negative value */
   }
 }
+
 @keyframes translateinfiniteSecond {
   100% {
-    transform: translateX(calc(160px * 6));
+    transform: translateX(calc(160px * 12)); /* Reverse direction with a negative value */
   }
 }
 .slideOption {
   margin-top: 10px;
-  overflow: hidden;
-}
-.infinite:last-of-type {
-  transform: translateX(-20px);
   overflow: hidden;
 }
 
@@ -215,8 +198,8 @@
 
 .infinite .highwayBarrier .highwayLane .highwayCarSecond {
   width: 160px;
-  -webkit-animation: translateinfiniteSecond 25s reverse infinite;
-  animation: translateinfiniteSecond 25s reverse infinite;
+  -webkit-animation: translateinfiniteSecond 25s linear reverse infinite;
+  animation: translateinfiniteSecond 25s linear reverse infinite;
   background: #fff;
   padding: 10px;
   color: #343434;

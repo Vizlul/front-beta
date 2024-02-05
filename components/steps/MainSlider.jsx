@@ -22,6 +22,7 @@ import { areaData, barNegativeData, radarData, columnData } from "@/utils/Charts
 import ProgressBar from "../shared/ProgressBar";
 import ChacnePotentialModalDesktop from "../shared/popups/ChancePotentialModalDesktop";
 import ButtonComponent from "../shared/button/ButtonComponent";
+import SimilarDocsPopupDesktop from "../shared/popups/SimilarDocsPopupDesktop";
 
 export default function MainSlider() {
   const dispatch = useDispatch();
@@ -45,8 +46,8 @@ export default function MainSlider() {
   const [animate, setAnimate] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
   const [finsihed, setFinished] = useState(false);
-
-  console.log(chanceHistory);
+  const [openSimilarDocsPopup, setOpenSimilarDocsPopup] = useState(false);
+  const [contactUs, setContatcUs] = useState(false);
 
   function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
@@ -152,7 +153,9 @@ export default function MainSlider() {
                   setAnimate((prev) => !prev);
 
                   setCurrentQuestionIndex(
-                    questions.findIndex((question) => question.question_value === respon.data.next_variable)
+                    questions.findIndex(
+                      (question) => question.question_value === respon.data.next_variable
+                    )
                   );
                   dispatch(setChanceData({ chance: respon.data.result }));
                   dispatch(setNextPredictData({ nextVariable: respon.data.next_variable }));
@@ -181,8 +184,14 @@ export default function MainSlider() {
   }, [questionCounter]);
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--potential", String(800 - 800 * (predict.potential / 100)));
-    document.documentElement.style.setProperty("--progress", String(800 - 800 * (predict.chance / 100)));
+    document.documentElement.style.setProperty(
+      "--potential",
+      String(800 - 800 * (predict.potential / 100))
+    );
+    document.documentElement.style.setProperty(
+      "--progress",
+      String(800 - 800 * (predict.chance / 100))
+    );
   }, [predict.potential, predict.chance]);
 
   const handleSetActiveChart = (value) => {
@@ -251,7 +260,10 @@ export default function MainSlider() {
                     }
                     key={index}
                     onClick={() => {
-                      handleChange(questions[currentQuestionIndex].answer.value_en[index], "radio_multi");
+                      handleChange(
+                        questions[currentQuestionIndex].answer.value_en[index],
+                        "radio_multi"
+                      );
                       setActiveButton(index);
                     }}
                   >
@@ -264,13 +276,21 @@ export default function MainSlider() {
             </div>
 
             <div className={styles.buttonGroups}>
-              <ButtonComponent
-                title="ثبت پاسخ"
-                onClickFunc={handleSubmit}
-                disabledFunc={answer === null && true}
-                loading={loading}
-                icon={<img src="forward-arrow.svg" alt="arrow-forward" />}
-              ></ButtonComponent>
+              {finsihed ? (
+                <ButtonComponent
+                  onClickFunc={() => setOpenSimilarDocsPopup(true)}
+                  title="مشاهده پرونده مشابه شما"
+                  width="200px"
+                ></ButtonComponent>
+              ) : (
+                <ButtonComponent
+                  title="ثبت پاسخ"
+                  onClickFunc={handleSubmit}
+                  disabledFunc={answer === null && true}
+                  loading={loading}
+                  icon={<img src="forward-arrow.svg" alt="arrow-forward" />}
+                ></ButtonComponent>
+              )}
 
               <ButtonComponent
                 title="اطلاعات بیشتر"
@@ -383,7 +403,12 @@ export default function MainSlider() {
               onClick={() => handleSetActiveChart("bar")}
               className={`${styles.chartIcon} ${chartSelected === "bar" && styles.activeChart}`}
             >
-              <Image width="25" height="25" src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
+              <Image
+                width="25"
+                height="25"
+                src="chart/NegativeBarChart Icon.svg"
+                alt="chart-icon"
+              />
               <p>نام جدول</p>
             </div>
             <div
@@ -408,7 +433,9 @@ export default function MainSlider() {
 
       <div
         onClick={() => setChancePotentialPopup({ value: false, type: "" })}
-        className={chancePotentialPopup.value ? styles.popupBoxAnimation : styles.popupBoxAnimationNot}
+        className={
+          chancePotentialPopup.value ? styles.popupBoxAnimation : styles.popupBoxAnimationNot
+        }
       >
         {chancePotentialPopup.value && (
           <ChacnePotentialModalDesktop
@@ -419,6 +446,10 @@ export default function MainSlider() {
             number={predict.chance}
           />
         )}
+      </div>
+
+      <div className={openSimilarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
+        <SimilarDocsPopupDesktop contactUs={contactUs} setContatcUs={setContatcUs} />
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 @font-face {
   font-family: "FarhangFanum";
-  src: local("FarhangFanum"), url(/fonts/farhangfanum-regular.woff2) format("truetype");
+  src: local("FarhangFanum"), url(/fonts/Farhang2FaNum-Regular.woff2) format("truetype");
 }
 
 @font-face {
   font-family: "FarhangFanumBold";
-  src: local("FarhangFanumBold"), url(/fonts/farhangfanum-bold.woff2) format("truetype");
+  src: local("FarhangFanumBold"), url(/fonts/Farhang2FaNum-Bold.woff2) format("truetype");
 }
 
 :root {
