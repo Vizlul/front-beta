@@ -23,6 +23,7 @@ import ProgressBar from "../shared/ProgressBar";
 import ChacnePotentialModalDesktop from "../shared/popups/ChancePotentialModalDesktop";
 import ButtonComponent from "../shared/button/ButtonComponent";
 import SimilarDocsPopupDesktop from "../shared/popups/SimilarDocsPopupDesktop";
+import VideoPlayer from "../shared/VideoPlayer";
 
 export default function MainSlider() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export default function MainSlider() {
   const [finsihed, setFinished] = useState(false);
   const [openSimilarDocsPopup, setOpenSimilarDocsPopup] = useState(false);
   const [contactUs, setContatcUs] = useState(false);
+  const [videoPopup, setVideoPopup] = useState(false);
 
   function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
@@ -200,6 +202,9 @@ export default function MainSlider() {
     ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
   };
 
+  console.log(videoPopup);
+  console.log(contactUs);
+
   return (
     <div key={slider.name} className={`${styles.mainSliderPage} `}>
       <Navbar />
@@ -294,7 +299,7 @@ export default function MainSlider() {
 
               <ButtonComponent
                 title="اطلاعات بیشتر"
-                onClickFunc={() => dispatch(setToFinished())}
+                onClickFunc={() => setVideoPopup(true)}
                 disabledFunc={!finsihed && true}
               ></ButtonComponent>
             </div>
@@ -449,7 +454,28 @@ export default function MainSlider() {
       </div>
 
       <div className={openSimilarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
-        <SimilarDocsPopupDesktop contactUs={contactUs} setContatcUs={setContatcUs} />
+        <SimilarDocsPopupDesktop
+          contactUs={contactUs}
+          setContatcUs={setContatcUs}
+          setOpenSimilarDocsPopup={setOpenSimilarDocsPopup}
+        />
+      </div>
+
+      <div className={videoPopup || contactUs ? styles.videoPopup : styles.videoPopupNot}>
+        {videoPopup && (
+          <VideoPlayer
+            videoPopup={videoPopup}
+            setContactUsPopup={setContatcUs}
+            setVideoPopup={setVideoPopup}
+          />
+        )}
+        {!videoPopup && contactUs && (
+          <SimilarDocsPopupDesktop
+            contactUs={contactUs}
+            setContatcUs={setContatcUs}
+            setOpenSimilarDocsPopup={setOpenSimilarDocsPopup}
+          />
+        )}
       </div>
     </div>
   );

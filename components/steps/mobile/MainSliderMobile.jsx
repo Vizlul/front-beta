@@ -1,22 +1,22 @@
 "use client";
 import InfoAlert from "@/components/shared/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
-import ApexChart from "@/utils/ApexChart";
+import ApexCharts from "apexcharts";
+import Chart from "react-apexcharts";
 import { useRef, useState } from "react";
 import PotentialPopup from "../../shared/popups/PotentialPopup";
 
 import { questions } from "@/utils/QuestionJson";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CountUp from "react-countup";
-import ProgressAnimate from "@/components/shared/ProgressAnimate";
 import { SliderState } from "@/constants";
 import FinishSliderPopup from "./FinishSliderPopup";
 import SimilarDocsPopup from "./SimilarDocsPopup";
 import AnswerPopup from "@/components/shared/popups/AnswerPopup";
 import ContactUsPopupMobile from "@/components/shared/popups/ContactUsPopupMobile";
+import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 
 export default function MainSliderMobile() {
-  const dispatch = useDispatch();
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
   const [answerPopup, setAnswerPopup] = useState(false);
@@ -29,242 +29,12 @@ export default function MainSliderMobile() {
   const [similarDocsPopup, setSimilarDocsPopup] = useState(false);
   const [contactUsPopup, setContactUsPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
+  const [chartSelected, setChartSelected] = useState("bar");
 
-  let data = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: "area",
-        toolbar: {
-          show: false,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: "smooth",
-      },
-      xaxis: {
-        categories: [],
-      },
-      tooltip: {
-        x: {
-          // format: "dd/MM/yy HH:mm",
-        },
-      },
-    },
-  };
-
-  let barData = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 440,
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ["#008FFB", "#FF4560"],
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          barHeight: "80%",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 1,
-        colors: ["#fff"],
-      },
-
-      grid: {
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      yaxis: {
-        min: -5,
-        max: 5,
-        title: {
-          // text: 'Age',
-        },
-      },
-      tooltip: {
-        shared: false,
-        x: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-        y: {
-          formatter: function (val) {
-            return Math.abs(val) + "%";
-          },
-        },
-      },
-      xaxis: {
-        labels: {
-          formatter: function (val) {
-            return Math.abs(Math.round(val)) + "%";
-          },
-        },
-      },
-    },
-  };
-
-  let radarDara = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        type: "radar",
-        toolbar: {
-          show: false,
-        },
-      },
-
-      xaxis: {
-        categories: ["January", "February", "March", "April", "May", "June"],
-      },
-    },
-  };
-
-  let barChart = {
-    series: [
-      {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
-      },
-      {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: "bar",
-        toolbar: {
-          show: false,
-        },
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: "top", // top, center, bottom
-          },
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val) {
-          return val + "%";
-        },
-        offsetY: -20,
-        style: {
-          fontSize: "12px",
-          colors: ["#304758"],
-        },
-      },
-
-      xaxis: {
-        position: "top",
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          fill: {
-            type: "gradient",
-            gradient: {
-              colorFrom: "#D8E3F0",
-              colorTo: "#BED1E6",
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            },
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val) {
-            return val + "%";
-          },
-        },
-      },
-    },
+  const handleSetActiveChart = (value) => {
+    setChartSelected(value);
+    ApexCharts.getChartByID(value)?.updateOptions(areaData(chanceHistory, questionCounter).options);
+    ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
   };
 
   function isNumberIncreasing(previousNumber, currentNumber) {
@@ -339,7 +109,6 @@ export default function MainSliderMobile() {
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
                 </div>
               )}
-              <ApexChart options={data.options} series={data.series} type="area" height={250} />
             </div>
 
             <div ref={secondChartRef} className={styles.mainChartsArea}>
@@ -350,12 +119,12 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart
-                stacked={true}
-                options={barData.options}
-                series={barData.series}
+              <Chart
+                height={320}
+                key={chartSelected}
+                options={barNegativeData(chanceHistory, questionCounter).options}
+                series={barNegativeData(chanceHistory, questionCounter).series}
                 type="bar"
-                height={250}
               />
             </div>
 
@@ -367,12 +136,12 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart
-                stacked={true}
-                options={radarDara.options}
-                series={radarDara.series}
+              <Chart
+                height={320}
+                key={chartSelected}
+                options={radarData(chanceHistory, questionCounter).options}
+                series={radarData(chanceHistory, questionCounter).series}
                 type="radar"
-                height={250}
               />
             </div>
 
@@ -384,12 +153,12 @@ export default function MainSliderMobile() {
                 </div>
               )}
 
-              <ApexChart
-                stacked={true}
-                options={barChart.options}
-                series={barChart.series}
-                type="bar"
-                height={250}
+              <Chart
+                height={320}
+                key={chartSelected}
+                options={areaData(chanceHistory, questionCounter).options}
+                series={areaData(chanceHistory, questionCounter).series}
+                type="area"
               />
             </div>
 

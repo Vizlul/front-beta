@@ -13,6 +13,8 @@ export default function ButtonComponent({
   loading,
   width,
   height,
+  fontSize,
+  fontWeight
 }) {
   return (
     <button
@@ -25,6 +27,8 @@ export default function ButtonComponent({
         border: `1px solid ${background}`,
         width: width && width,
         height: height && height,
+        fontSize: fontSize && fontSize,
+        fontWeight: fontWeight && fontWeight
       }}
       disabled={disabledFunc}
     >

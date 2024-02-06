@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
   background-color: #f0f2f5;
 }
 
@@ -129,7 +129,7 @@
   font-size: 20px;
   font-weight: 700;
   margin: 0;
-  /* margin-bottom: 20px; */
+  margin-bottom: 20px;
 }
 
 .animate {
@@ -298,6 +298,40 @@
 }
 
 .similarDocsPopupNot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translate3d(0, 100%, 0);
+  background-color: rgba(0, 12, 10, 0.8);
+  z-index: 100;
+  padding: 8px 10px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.videoPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translate3d(0, 0, 0);
+  background-color: rgba(0, 12, 10, 0.8);
+  z-index: 100;
+  padding: 8px 10px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.videoPopupNot {
   position: fixed;
   top: 0;
   left: 0;

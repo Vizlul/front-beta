@@ -1,16 +1,28 @@
 import ButtonComponent from "../button/ButtonComponent";
 import styles from "./SimilarDocsPopupDesktop.module.css";
 
-export default function SimilarDocsPopupDesktop({ contactUs, setContatcUs }) {
+export default function SimilarDocsPopupDesktop({
+  contactUs,
+  setContatcUs,
+  setOpenSimilarDocsPopup,
+}) {
   return (
     <>
       {contactUs ? (
-        <div className={styles.popup}>
+        <div style={{ width: "calc(100% - 740px)" }} className={styles.popup}>
           <div className={styles.header}>
             <p>دریافت مشاوره جهت اخذ ویزا</p>
-            <img src="close.svg" alt="close" />
+            <img
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpenSimilarDocsPopup(false);
+                setContatcUs(false);
+              }}
+              src="close.svg"
+              alt="close"
+            />
           </div>
-          <p style={{ color: "rgba(0, 12, 10, 0.8)" }}>
+          <p style={{ color: "rgba(0, 12, 10, 0.8)", fontSize: "20px" }}>
             جهت دریافت مشاوره و اقدام برای ویزا با ما تماس بگیرید.
           </p>
           <div className={styles.buttonGroups}>
@@ -20,13 +32,18 @@ export default function SimilarDocsPopupDesktop({ contactUs, setContatcUs }) {
               height="56px"
               background="#00554e"
               color="#fff"
+              fontSize="18px"
             />
             <ButtonComponent
-              title="026 33143"
+              title="33143 026"
               width="100%"
               height="56px"
               color="#00554e"
               background="#fff"
+              fontWeight="bold"
+              icon={<img src="phone-icon.svg" alt="phone" />}
+              fontSize="18px"
+              onClickFunc={() => window.open("tel:02633143")}
             />
           </div>
         </div>
@@ -34,7 +51,12 @@ export default function SimilarDocsPopupDesktop({ contactUs, setContatcUs }) {
         <div className={styles.popup}>
           <div className={styles.header}>
             <p>پرونده‌های مشابه شما</p>
-            <img src="close.svg" alt="close" />
+            <img
+              style={{ cursor: "pointer" }}
+              onClick={() => setOpenSimilarDocsPopup(false)}
+              src="close.svg"
+              alt="close"
+            />
           </div>
           <div className={styles.content}>
             <div className={styles.textAxisBox}>

@@ -136,3 +136,17 @@
 .hidden {
   display: none;
 }
+
+.card {
+  height: 100%;
+}
+
+.videoPopup {
+  width: 100%;
+  max-width: 550px;
+  height: 100%;
+  max-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

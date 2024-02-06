@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./VideoPlayer.css";
 
-const VideoPlayer = ({ finishPopup, setContactUsPopup }) => {
+const VideoPlayer = ({ finishPopup, setContactUsPopup, videoPopup, setVideoPopup }) => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const videoRef = useRef(null);
@@ -33,6 +33,9 @@ const VideoPlayer = ({ finishPopup, setContactUsPopup }) => {
 
       video.addEventListener("ended", () => {
         setContactUsPopup(true);
+        if (videoPopup) {
+          setVideoPopup(false);
+        }
         console.log("Video ended");
       });
     }, 1000);
@@ -50,6 +53,9 @@ const VideoPlayer = ({ finishPopup, setContactUsPopup }) => {
 
       video.addEventListener("ended", () => {
         setContactUsPopup(true);
+        if (videoPopup) {
+          setVideoPopup(false);
+        }
         console.log("Video ended");
       });
     }
@@ -62,7 +68,7 @@ const VideoPlayer = ({ finishPopup, setContactUsPopup }) => {
   }, [finishPopup]);
 
   return (
-    <div>
+    <div className="videoPopup">
       <div className="card">
         <div className="cover">
           <video

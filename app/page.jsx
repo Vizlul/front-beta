@@ -14,7 +14,7 @@ import MainSliderMobile from "@/components/steps/mobile/MainSliderMobile";
 export default function Home() {
   const dispatch = useDispatch();
   const slider = useSelector((state) => state.slider);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   return isMobile ? (
     <div className={styles.mainLayout}>
@@ -32,8 +32,6 @@ export default function Home() {
         <StartingSlider />
       ) : slider.name === SliderState.MAIN ? (
         <MainSlider />
-      ) : slider.name === SliderState.FINISHED ? (
-        <FinishSlider />
       ) : (
         ""
       )}

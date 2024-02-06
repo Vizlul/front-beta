@@ -8,7 +8,7 @@ export default function FinishSlider() {
   return (
     <div className={styles.finishSlider}>
       <VideoPlayer />
-      <ContactUsPopup />
+      {/* <ContactUsPopup /> */}
     </div>
   );
 }
