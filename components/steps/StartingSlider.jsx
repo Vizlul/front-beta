@@ -7,17 +7,13 @@ import ButtonComponent from "../shared/button/ButtonComponent.jsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function StartingSlider() {
+export default function StartingSlider({ name, setName }) {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
 
   const handleClick = () => {
     dispatch(setToMain());
   };
-
-  useEffect(() => {
-    console.log("test");
-  }, []);
 
   return (
     <div className={styles.startingSlider}>
@@ -31,14 +27,20 @@ export default function StartingSlider() {
           </div>
 
           <p className={styles.mainHeroInfo}>
-            ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.
+            ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود
+            دهید.
           </p>
 
           <div className={styles.starterMainHero}>
             <p>برای شروع یک نام را انتخاب کنید.</p>
 
             <div>
-              <input placeholder="نام" />
+              <input
+                type="text"
+                placeholder="نام"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
               <ButtonComponent
                 title="شروع بررسی"
                 icon={<img src="forward-arrow.svg" alt="icon" />}

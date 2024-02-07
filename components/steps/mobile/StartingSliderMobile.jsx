@@ -3,15 +3,31 @@ import styles from "./StartingSliderMobile.module.css";
 import { setToMain } from "@/store/features/sliderSlice";
 import { useEffect, useState } from "react";
 import NamePopup from "../../shared/popups/NamePopup";
+import { ColorCalc } from "../../../utils/ChanceColors";
 
-export default function StartingSliderMobile() {
+export default function StartingSliderMobile({ setName, name }) {
   const [namePopup, setNamePopup] = useState(false);
   const dispatch = useDispatch();
+  const [users, setUsers] = useState([]);
 
   const handleClick = () => {
     setNamePopup(false);
     dispatch(setToMain());
   };
+
+  const getUsers = async () => {
+    await fetch(`/api/user-chance`).then(async (res) => {
+      const { data } = await res.json();
+      while (data.length < 70) {
+        data.push(...data);
+      }
+      setUsers(data.slice(0, 70));
+    });
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div>
@@ -37,7 +53,7 @@ export default function StartingSliderMobile() {
           {Array.from({ length: 2 }, (_, ind) => (
             <div key={ind} className={`${styles.highwayBarrier} ${styles.infinite}`}>
               <ul className={styles.highwayLane}>
-                {Array.from({ length: 70 }, (_, index) => (
+                {users.map((item, index) => (
                   <li
                     className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
                     style={{
@@ -46,15 +62,23 @@ export default function StartingSliderMobile() {
                       gap: "10px",
                     }}
                   >
-                    <span className={styles.progressUserName}>مریم رادمنش</span>
-                    <span className={styles.progressUsers}>
-                      40<span>%</span>
+                    <span className={styles.progressUserName}>{item.name}</span>
+                    <span
+                      style={{
+                        border: `1px solid ${ColorCalc(item.chance).color}`,
+                        color: ColorCalc(item.chance).color,
+                        background: ColorCalc(item.chance).bg,
+                      }}
+                      className={styles.progressUsers}
+                    >
+                      {item.chance}
+                      <span>%</span>
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
-          ))}
+          ))}{" "}
         </div>
       </section>
       <div className={styles.footer}>
@@ -63,7 +87,13 @@ export default function StartingSliderMobile() {
         </button>
       </div>
 
-      <NamePopup handleClick={handleClick} namePopup={namePopup} setNamePopup={setNamePopup} />
+      <NamePopup
+        handleClick={handleClick}
+        namePopup={namePopup}
+        setNamePopup={setNamePopup}
+        setName={setName}
+        name={name}
+      />
     </div>
   );
 }

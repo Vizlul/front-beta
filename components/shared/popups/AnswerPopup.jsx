@@ -23,6 +23,9 @@ export default function AnswerPopup({
   chanceHistory,
   questionCounter,
   setQuestionCounter,
+  setName,
+  name,
+  setSimilarDocsData,
 }) {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
@@ -38,7 +41,6 @@ export default function AnswerPopup({
   const dispatch = useDispatch();
 
   const handleChange = (value, type) => {
-    console.log(type);
     if (type === "number") {
       setAnswer(Number(value));
     } else if (type === "radio_multi") {
@@ -74,12 +76,39 @@ export default function AnswerPopup({
     };
     const filteredDataTest = [];
 
-    console.log(filteredData);
-
     await CallApi.post("/predict", filteredData)
       .then(async (respon) => {
         // if answer all questions goes finish slider
         if (!respon.data.next_variable) {
+          await fetch(`/api/user-chance`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+              chance: chanceHistory[chanceHistory.length - 1].chance,
+            }),
+          });
+          await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/artificial_records?acceptance_rate=${
+              chanceHistory[chanceHistory.length - 1].chance / 100
+            }&number_of_records=5`,
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: null,
+            }
+          ).then(async (res) => {
+            const data = await res.json();
+            console.log(data)
+            setSimilarDocsData(data);
+          });
+          setName("");
           setActiveButton("");
           setAnswer(null);
           setLoading(false);
@@ -89,17 +118,6 @@ export default function AnswerPopup({
           await CallApi.post("/grouped_xai", filteredData)
             .then(async (resp) => {
               dispatch(setGroupedXai({ data: resp.data }));
-              setChanceHistory((prev) => [
-                ...prev,
-                {
-                  question: questions[currentQuestionIndex].question_value,
-                  answer: answer,
-                  chance: Math.round(Number(respon.data.result) * 100),
-                  chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
-                    (value * 100).toFixed(2)
-                  ),
-                },
-              ]);
 
               await CallApi.post("/potential", filteredData)
                 .then(async (response) => {
@@ -116,6 +134,18 @@ export default function AnswerPopup({
                         answer: testValue,
                         activeButton: activeButton,
                         potential: Math.round(Number(response.data.result) * 100),
+                      },
+                    ]);
+                    setChanceHistory((prev) => [
+                      ...prev,
+                      {
+                        question: questions[currentQuestionIndex].question_value,
+                        answer: answer,
+                        chance: Math.round(Number(respon.data.result) * 100),
+                        potential: Math.round(Number(response.data.result) * 100),
+                        chartData: Object.values(resp.data.aggregated_shap_values).map((value) =>
+                          (value * 100).toFixed(2)
+                        ),
                       },
                     ]);
                   } else {

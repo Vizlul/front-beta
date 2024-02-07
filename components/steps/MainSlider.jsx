@@ -25,7 +25,7 @@ import ButtonComponent from "../shared/button/ButtonComponent";
 import SimilarDocsPopupDesktop from "../shared/popups/SimilarDocsPopupDesktop";
 import VideoPlayer from "../shared/VideoPlayer";
 
-export default function MainSlider() {
+export default function MainSlider({ name, setName }) {
   const dispatch = useDispatch();
   const [questionCounter, setQuestionCounter] = useState(1);
   const [testValue, setTestValue] = useState("");
@@ -93,10 +93,22 @@ export default function MainSlider() {
     await CallApi.post("/predict", filteredData)
       .then(async (respon) => {
         if (!respon.data.next_variable) {
+          await fetch(`/api/user-chance`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+              chance: chanceHistory[chanceHistory.length - 1].chance,
+            }),
+          });
           setActiveButton("");
           setAnswer(null);
           setLoading(false);
           setFinished(true);
+          setName("")
           return;
         } else {
           await CallApi.post("/grouped_xai", filteredData)
@@ -201,9 +213,6 @@ export default function MainSlider() {
     ApexCharts.getChartByID(value)?.updateOptions(areaData(chanceHistory, questionCounter).options);
     ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
   };
-
-  console.log(videoPopup);
-  console.log(contactUs);
 
   return (
     <div key={slider.name} className={`${styles.mainSliderPage} `}>
@@ -474,6 +483,7 @@ export default function MainSlider() {
             contactUs={contactUs}
             setContatcUs={setContatcUs}
             setOpenSimilarDocsPopup={setOpenSimilarDocsPopup}
+            setVideoPopup={setVideoPopup}
           />
         )}
       </div>

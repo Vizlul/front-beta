@@ -11,7 +11,7 @@
   margin-bottom: 32px;
 }
 
-.headerBox p{
+.headerBox p {
   margin: 0;
   font-weight: 700;
 }
@@ -148,4 +148,11 @@
   margin-top: 32px;
   border: 1px solid #00554e;
   font-size: 18px;
+}
+
+.userSimilar {
+  color: transparent;
+  text-shadow: 0 0 8px #000;
+  pointer-events: none;
+  user-select: none;
 }

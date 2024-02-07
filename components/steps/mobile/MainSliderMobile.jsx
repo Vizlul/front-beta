@@ -16,7 +16,7 @@ import AnswerPopup from "@/components/shared/popups/AnswerPopup";
 import ContactUsPopupMobile from "@/components/shared/popups/ContactUsPopupMobile";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 
-export default function MainSliderMobile() {
+export default function MainSliderMobile({ setName, name }) {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
   const [answerPopup, setAnswerPopup] = useState(false);
@@ -30,6 +30,7 @@ export default function MainSliderMobile() {
   const [contactUsPopup, setContactUsPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
   const [chartSelected, setChartSelected] = useState("bar");
+  const [similarDocsData, setSimilarDocsData] = useState([]);
 
   const handleSetActiveChart = (value) => {
     setChartSelected(value);
@@ -109,6 +110,14 @@ export default function MainSliderMobile() {
                   <p className={styles.noBlur}>تعداد پاسخ‌های شما تخمین این نمودار کافی نیست</p>
                 </div>
               )}
+
+              <Chart
+                height={320}
+                key={chartSelected}
+                options={areaData(chanceHistory, questionCounter).options}
+                series={areaData(chanceHistory, questionCounter).series}
+                type="area"
+              />
             </div>
 
             <div ref={secondChartRef} className={styles.mainChartsArea}>
@@ -156,9 +165,9 @@ export default function MainSliderMobile() {
               <Chart
                 height={320}
                 key={chartSelected}
-                options={areaData(chanceHistory, questionCounter).options}
-                series={areaData(chanceHistory, questionCounter).series}
-                type="area"
+                options={columnData(chanceHistory, questionCounter).options}
+                series={columnData(chanceHistory, questionCounter).series}
+                type="bar"
               />
             </div>
 
@@ -281,6 +290,9 @@ export default function MainSliderMobile() {
         chanceHistory={chanceHistory}
         questionCounter={questionCounter}
         setQuestionCounter={setQuestionCounter}
+        setName={setName}
+        name={name}
+        setSimilarDocsData={setSimilarDocsData}
       />
 
       <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
@@ -294,12 +306,17 @@ export default function MainSliderMobile() {
           <SimilarDocsPopup
             similarDocsPopup={similarDocsPopup}
             setSimilarDocsPopup={setSimilarDocsPopup}
+            similarDocsData={similarDocsData}
           />
         )}
       </div>
 
       <div className={contactUsPopup ? styles.contactPopup : styles.contactPopupNot}>
-        <ContactUsPopupMobile setContactUsPopup={setContactUsPopup} />
+        <ContactUsPopupMobile
+          setContactUsPopup={setContactUsPopup}
+          setSimilarDocsPopup={setSimilarDocsPopup}
+          setFinishPopup={setFinishPopup}
+        />
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>

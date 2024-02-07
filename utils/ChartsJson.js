@@ -135,6 +135,7 @@ export const radarData = (chanceHistory, questionCounter) => {
 };
 
 export const columnData = (chanceHistory, questionCounter) => {
+  console.log(chanceHistory)
   return {
     series: [
       {

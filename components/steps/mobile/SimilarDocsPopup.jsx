@@ -1,6 +1,12 @@
 import styles from "./SimilarDocsPopup.module.css";
 
-export default function SimilarDocsPopup({ similarDocsPopup, setSimilarDocsPopup }) {
+export default function SimilarDocsPopup({
+  similarDocsPopup,
+  setSimilarDocsPopup,
+  similarDocsData,
+}) {
+  console.log(similarDocsData);
+
   return (
     <div className={styles.box}>
       <div className={styles.headerBox}>
@@ -31,38 +37,29 @@ export default function SimilarDocsPopup({ similarDocsPopup, setSimilarDocsPopup
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>کاربر مشابه یک</td>
-            <td>20%</td>
-            <td>ریجکت شده</td>
-          </tr>
-          <tr>
-            <td>کاربر مشابه یک</td>
-            <td>22%</td>
-            <td>ریجکت شده</td>
-          </tr>
-          <tr>
-            <td>کاربر مشابه یک</td>
-            <td>16%</td>
-            <td>ریجکت شده</td>
-          </tr>
-          <tr>
-            <td>کاربر مشابه یک</td>
-            <td>25%</td>
-            <td>پذیرفته شده</td>
-          </tr>
-          <tr>
-            <td>کاربر مشابه یک</td>
-            <td>18%</td>
-            <td>ریجکت شده</td>
-          </tr>
+          {similarDocsData.map((item, index) => (
+            <tr key={index}>
+              <td
+                className={styles.userName}
+              >
+                {item.first_name} {item.last_name}
+              </td>
+              <td>{Math.round(Number(item.acceptance_rate) * 100)}%</td>
+              <td style={{ color: item.acceptance_status ? "green" : "red" }}>
+                {item.acceptance_status ? "تایید شده" : "ریجکت شده"}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <p>جهت حفظ حریم خصوصی نام کاربران مخفی شده است.</p>
 
       <div className={styles.guide}>
         <img src="InformationIcon.svg" alt="Information" />
-        <p>شانس شما برای اخذ ویزا بسیار کم است، پیشنهاد می‌کنیم جهت بهبود پارامترهای تاثیرگذار در شانس خود اقدام نمایید</p>
+        <p>
+          شانس شما برای اخذ ویزا بسیار کم است، پیشنهاد می‌کنیم جهت بهبود پارامترهای تاثیرگذار در
+          شانس خود اقدام نمایید
+        </p>
       </div>
 
       <button className={styles.button}>دریافت مشاوره</button>

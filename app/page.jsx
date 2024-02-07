@@ -15,13 +15,14 @@ export default function Home() {
   const dispatch = useDispatch();
   const slider = useSelector((state) => state.slider);
   const [isMobile, setIsMobile] = useState(true);
+  const [name, setName] = useState("");
 
   return isMobile ? (
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
-        <StartingSliderMobile />
+        <StartingSliderMobile name={name} setName={setName} />
       ) : slider.name === SliderState.MAIN || slider.name === SliderState.FINISHED ? (
-        <MainSliderMobile />
+        <MainSliderMobile name={name} setName={setName} />
       ) : (
         ""
       )}
@@ -29,9 +30,9 @@ export default function Home() {
   ) : (
     <div className={styles.mainLayout}>
       {slider.name === SliderState.START ? (
-        <StartingSlider />
+        <StartingSlider name={name} setName={setName} />
       ) : slider.name === SliderState.MAIN ? (
-        <MainSlider />
+        <MainSlider name={name} setName={setName} />
       ) : (
         ""
       )}
