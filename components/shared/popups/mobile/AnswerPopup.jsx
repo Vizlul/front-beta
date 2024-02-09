@@ -12,7 +12,7 @@ import {
   setPotentialData,
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
-import Loading from "../../shared/Loading";
+import Loading from "../../Loading";
 
 export default function AnswerPopup({
   answerPopup,
@@ -210,7 +210,7 @@ export default function AnswerPopup({
       {answerPopup && (
         <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>
       )}
-      <div className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
+      <div data-tut="reactour__3" className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
         <div className={styles.answerPopupQuestion}>
           <p>{questionCounter}</p>
           <p>{questions[currentQuestionIndex].question}</p>

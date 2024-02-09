@@ -1,25 +1,27 @@
 "use client";
 import InfoAlert from "@/components/shared/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
-import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
-import { useRef, useState } from "react";
-import PotentialPopup from "../../shared/popups/PotentialPopup";
-
+import { useEffect, useRef, useState } from "react";
+import PotentialPopup from "../../shared/popups/mobile/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
 import { useSelector } from "react-redux";
 import CountUp from "react-countup";
 import { SliderState } from "@/constants";
 import FinishSliderPopup from "./FinishSliderPopup";
-import SimilarDocsPopup from "./SimilarDocsPopup";
-import AnswerPopup from "@/components/shared/popups/AnswerPopup";
-import ContactUsPopupMobile from "@/components/shared/popups/ContactUsPopupMobile";
+import SimilarDocsPopup from "../../shared/popups/mobile/SimilarDocsPopup";
+import AnswerPopup from "@/components/shared/popups/mobile/AnswerPopup";
+import ContactUsPopupMobile from "@/components/shared/popups/mobile/ContactUsPopupMobile";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
+import Tour from "reactour";
+import Link from "next/link";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { useTour, TourProvider } from "@reactour/tour";
 
-export default function MainSliderMobile({ setName, name }) {
+export default function MainSliderMobile({ setName, name, answerPopup, setAnswerPopup }) {
+  const { isOpen, currentStep, steps, setIsOpen, setCurrentStep, setSteps } = useTour();
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
-  const [answerPopup, setAnswerPopup] = useState(false);
   const [chancePopup, setChancePopup] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [chanceHistory, setChanceHistory] = useState([]);
@@ -32,12 +34,6 @@ export default function MainSliderMobile({ setName, name }) {
   const [chartSelected, setChartSelected] = useState("bar");
   const [similarDocsData, setSimilarDocsData] = useState([]);
 
-  const handleSetActiveChart = (value) => {
-    setChartSelected(value);
-    ApexCharts.getChartByID(value)?.updateOptions(areaData(chanceHistory, questionCounter).options);
-    ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
-  };
-
   function isNumberIncreasing(previousNumber, currentNumber) {
     // console.log(previousNumber, currentNumber);
     return currentNumber > previousNumber
@@ -49,6 +45,8 @@ export default function MainSliderMobile({ setName, name }) {
       : "";
   }
 
+  console.log(currentStep);
+
   const firstChartRef = useRef(null);
   const secondChartRef = useRef(null);
   const thirdChartRef = useRef(null);
@@ -59,9 +57,111 @@ export default function MainSliderMobile({ setName, name }) {
     }
   };
 
+  const [disableIntract, setDisableIntract] = useState(false);
+
+  const tourConfig = () => {
+    return [
+      {
+        selector: '[data-tut="reactour__1"]',
+        content: `به ویزارد خیلی خوش اومدی راهنما رو دنبال کن تا با محیط ویزارد آشنا بشی`,
+      },
+      {
+        selector: '[data-tut="reactour__2"]',
+        content: `برای مشاهده سوال و پاسخ به اون روی این قسمت ضربه بزنید`,
+        action: (node) => {
+          // setDisableIntract(true);
+          console.log("khob dobare true mishe dige");
+          // Or whatever event you're waiting for
+          node.onclick = () => {
+            setCurrentStep(4);
+
+            // ...
+          };
+        },
+        observe: '[data-tut="reactour__state--observe"]',
+      },
+      {
+        selector: '[data-tut="reactour__3"]',
+        content: `تست 3`,
+      },
+      {
+        selector: '[data-tut="reactour__4"]',
+        content: () => (
+          <div>
+            <p color="#e5e5e5">
+              The <p data-tooltip="this helper ⬇">tourist guide</p> could be dressed in any way, using custom
+              components, styles and so on…
+            </p>
+            <p color="#373737" size=".7em" style={{ marginTop: ".7em" }}>
+              <Link href="http://codepen.io/lbebber/full/ypgql/" color="dark" nospaces>
+                Text effect
+              </Link>{" "}
+              by{" "}
+              <Link href="https://twitter.com/lucasbebber" color="dark" nospaces>
+                Lucas Bebber
+              </Link>
+            </p>
+          </div>
+        ),
+      },
+      {
+        selector: '[data-tut="reactour__5"]',
+        content: ({ goTo }) => (
+          <div>
+            If you wanna go anywhere, skipping places, it is absolutely possible.
+            <br /> "Oh, I forgot something inside the bus…"{" "}
+            <button
+              style={{
+                border: "1px solid #f7f7f7",
+                background: "none",
+                padding: ".3em .7em",
+                fontSize: "inherit",
+                display: "block",
+                cursor: "pointer",
+                margin: "1em auto",
+              }}
+              onClick={() => goTo(1)}
+            >
+              {" "}
+              <span aria-label="bus" role="img">
+                🚌
+              </span>
+            </button>
+          </div>
+        ),
+      },
+    ];
+  };
+
+  const disableBody = (target) => disableBodyScroll(target);
+  const enableBody = (target) => enableBodyScroll(target);
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
+  useEffect(() => {
+    if (!answerPopup && questionCounter === 2) {
+      setCurrentStep((prev) => prev + 1)
+    }
+  }, [answerPopup]);
+  console.log(isOpen);
+
   return (
     <>
-      <div>
+      {/* <Tour
+        onRequestClose={() => setIsTourOpen(false)}
+        steps={tourConfig(setDisableIntract)}
+        isOpen={isTourOpen}
+        className="helper"
+        rounded={5}
+        accentColor="#5cb7b7"
+        onAfterOpen={disableBody}
+        onBeforeClose={enableBody}
+        disableKeyboardNavigation={disableIntract}
+        disableDotsNavigation={disableIntract}
+        showButtons={!disableIntract}
+      /> */}
+
+      <div data-tut="reactour__1">
         <div className={styles.header}>
           <div>
             <img src="visaland-logo2.svg" alt="visaland-logo" />
@@ -120,7 +220,7 @@ export default function MainSliderMobile({ setName, name }) {
               />
             </div>
 
-            <div ref={secondChartRef} className={styles.mainChartsArea}>
+            <div data-tut="reactour__4" className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -137,7 +237,7 @@ export default function MainSliderMobile({ setName, name }) {
               />
             </div>
 
-            <div ref={thirdChartRef} className={styles.mainChartsArea}>
+            <div className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -154,7 +254,7 @@ export default function MainSliderMobile({ setName, name }) {
               />
             </div>
 
-            <div ref={fourthChartRef} className={styles.mainChartsArea}>
+            <div className={styles.mainChartsArea}>
               {questionCounter === 1 && (
                 <div className={styles.blurChart}>
                   <p className={styles.noBlur}>نامشخص</p>
@@ -172,6 +272,7 @@ export default function MainSliderMobile({ setName, name }) {
             </div>
 
             <button
+              data-tut="reactour__5"
               onClick={() => setFinishPopup(true)}
               className={styles.moreInfoButton}
               disabled={slider.name !== SliderState.FINISHED && true}
@@ -186,11 +287,7 @@ export default function MainSliderMobile({ setName, name }) {
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
                 <p>شناخت ویزارد از شما</p>
                 <p>
-                  <CountUp
-                    start={chanceHistory[chanceHistory.length - 1]?.potential}
-                    end={predict.potential}
-                  />
-                  %
+                  <CountUp start={chanceHistory[chanceHistory.length - 1]?.potential} end={predict.potential} />%
                 </p>
               </div>
 
@@ -234,19 +331,20 @@ export default function MainSliderMobile({ setName, name }) {
                 <img src="vizard-head.svg" alt="vizard-head" />
               </div>
             </div>
-            <div className={styles.footerDown}>
+            <div
+              onClick={() => {
+                setAnswerPopup(true);
+                setDisableIntract(false);
+              }}
+              data-tut="reactour__2"
+              className={styles.footerDown}
+            >
               <div className={styles.footerDownQuestion}>
                 <p>{questionCounter}</p>
                 <p>{questions[currentQuestionIndex].question}</p>
               </div>
 
-              <button
-                className={styles.submitButton}
-                onClick={() => {
-                  setAnswerPopup(true);
-                  // setCurrentQuestionIndex(currentQuestionIndex + 1);
-                }}
-              >
+              <button className={styles.submitButton}>
                 <img src="forward-arrow.svg" alt="forward-arrow" />
               </button>
             </div>
@@ -260,19 +358,13 @@ export default function MainSliderMobile({ setName, name }) {
           <div onClick={() => firstChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/LineChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => secondChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => secondChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => thirdChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => fourthChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => fourthChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/BarChartIcon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
@@ -281,24 +373,24 @@ export default function MainSliderMobile({ setName, name }) {
         </div>
       </div>
 
-      <AnswerPopup
-        answerPopup={answerPopup}
-        setAnswerPopup={setAnswerPopup}
-        currentQuestionIndex={currentQuestionIndex}
-        setCurrentQuestionIndex={setCurrentQuestionIndex}
-        setChanceHistory={setChanceHistory}
-        chanceHistory={chanceHistory}
-        questionCounter={questionCounter}
-        setQuestionCounter={setQuestionCounter}
-        setName={setName}
-        name={name}
-        setSimilarDocsData={setSimilarDocsData}
-      />
+      <div>
+        <AnswerPopup
+          answerPopup={answerPopup}
+          setAnswerPopup={setAnswerPopup}
+          currentQuestionIndex={currentQuestionIndex}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          setChanceHistory={setChanceHistory}
+          chanceHistory={chanceHistory}
+          questionCounter={questionCounter}
+          setQuestionCounter={setQuestionCounter}
+          setName={setName}
+          name={name}
+          setSimilarDocsData={setSimilarDocsData}
+        />
+      </div>
 
       <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
-        {finishPopup && (
-          <FinishSliderPopup finishPopup={finishPopup} setContactUsPopup={setContactUsPopup} />
-        )}
+        {finishPopup && <FinishSliderPopup finishPopup={finishPopup} setContactUsPopup={setContactUsPopup} />}
       </div>
 
       <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
@@ -319,6 +411,7 @@ export default function MainSliderMobile({ setName, name }) {
         />
       </div>
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
+      {/* </TourProvider> */}
     </>
   );
 }

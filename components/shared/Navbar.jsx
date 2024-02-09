@@ -1,7 +1,7 @@
 import styles from "./Navbar.module.css";
 import ButtonComponent from "../shared/button/ButtonComponent.jsx";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import AboutModal from "../shared/popups/AboutModal.jsx";
+import AboutModal from "./popups/desktop/AboutModal.jsx";
 
 export default function Navbar() {
   return (

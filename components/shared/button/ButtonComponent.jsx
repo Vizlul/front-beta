@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import styles from "./ButtonComponent.module.css";
 import Loading from "../../shared/Loading";
 

@@ -1,4 +1,4 @@
-import ButtonComponent from "../button/ButtonComponent";
+import ButtonComponent from "../../button/ButtonComponent";
 import styles from "./SimilarDocsPopupDesktop.module.css";
 
 export default function SimilarDocsPopupDesktop({

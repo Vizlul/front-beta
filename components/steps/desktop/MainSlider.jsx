@@ -2,9 +2,9 @@ import styles from "./MainSlider.module.css";
 import { questions } from "@/utils/QuestionJson";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import InfoAlert from "../shared/alerts/InfoAlert";
-import Footer from "../shared/Footer";
-import Navbar from "../shared/Navbar";
+import InfoAlert from "../../shared/alerts/InfoAlert";
+import Footer from "../../shared/Footer";
+import Navbar from "../../shared/Navbar";
 import Image from "next/image";
 import CallApi from "@/utils/CallApi";
 import {
@@ -19,11 +19,11 @@ import { setToFinished } from "@/store/features/sliderSlice";
 import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
-import ProgressBar from "../shared/ProgressBar";
-import ChacnePotentialModalDesktop from "../shared/popups/ChancePotentialModalDesktop";
-import ButtonComponent from "../shared/button/ButtonComponent";
-import SimilarDocsPopupDesktop from "../shared/popups/SimilarDocsPopupDesktop";
-import VideoPlayer from "../shared/VideoPlayer";
+import ProgressBar from "../../shared/ProgressBar";
+import ChacnePotentialModalDesktop from "../../shared/popups/desktop/ChancePotentialModalDesktop";
+import ButtonComponent from "../../shared/button/ButtonComponent";
+import SimilarDocsPopupDesktop from "../../shared/popups/desktop/SimilarDocsPopupDesktop";
+import VideoPlayer from "../../shared/VideoPlayer";
 
 export default function MainSlider({ name, setName }) {
   const dispatch = useDispatch();

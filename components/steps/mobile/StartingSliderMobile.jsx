@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import styles from "./StartingSliderMobile.module.css";
 import { setToMain } from "@/store/features/sliderSlice";
 import { useEffect, useState } from "react";
-import NamePopup from "../../shared/popups/NamePopup";
+import NamePopup from "../../shared/popups/mobile/NamePopup";
 import { ColorCalc } from "../../../utils/ChanceColors";
 
 export default function StartingSliderMobile({ setName, name }) {
