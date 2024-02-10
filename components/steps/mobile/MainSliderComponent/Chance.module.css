@@ -1,0 +1,34 @@
+.chance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chance > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chance > div p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.chanceBoxUnknown {
+  background-color: #424242;
+  color: #fff;
+  padding: 10px;
+}
+
+.chanceBoxRed {
+  background-color: red;
+  color: #fff;
+  padding: 10px;
+}
+
+.chanceBoxGreen {
+  background-color: green;
+  color: #fff;
+  padding: 10px;
+}

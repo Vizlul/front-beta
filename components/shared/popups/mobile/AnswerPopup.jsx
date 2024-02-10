@@ -26,11 +26,14 @@ export default function AnswerPopup({
   setName,
   name,
   setSimilarDocsData,
+  setDisableIntract,
+  answer,
+  setAnswer,
+  setActiveButtonTour
 }) {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
   const [predictData, setPredictData] = useState({});
-  const [answer, setAnswer] = useState(null);
   const [prevCounterQuestion, setPrevCounterQuestion] = useState([]);
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState("");
@@ -56,11 +59,9 @@ export default function AnswerPopup({
     }
   };
 
-  console.log(answer);
-
   const handleSubmit = async () => {
-    console.log(answer);
     setLoading(true);
+    setDisableIntract(false);
 
     const newState = [];
     let keep = false;
@@ -105,7 +106,7 @@ export default function AnswerPopup({
             }
           ).then(async (res) => {
             const data = await res.json();
-            console.log(data)
+            console.log(data);
             setSimilarDocsData(data);
           });
           setName("");
@@ -179,6 +180,7 @@ export default function AnswerPopup({
                   dispatch(setNextPredictBackup({ nextVariable: respon.data.next_variable }));
                   setNextPredictData({ ...predictData, [respon.data.next_variable]: "" });
                   setPredictData(filteredData);
+                  setActiveButtonTour(false)
                 })
                 .catch((error) => {
                   console.log(error);
@@ -203,14 +205,15 @@ export default function AnswerPopup({
     }
   }, [questionCounter]);
 
-  console.log(chanceHistory);
-
   return (
     <>
       {answerPopup && (
         <div onClick={() => setAnswerPopup(false)} className={styles.closePopupLayout}></div>
       )}
-      <div data-tut="reactour__3" className={answerPopup ? styles.answerPopup : styles.answerPopupNot}>
+      <div
+        data-tut="reactour__3"
+        className={answerPopup ? styles.answerPopup : styles.answerPopupNot}
+      >
         <div className={styles.answerPopupQuestion}>
           <p>{questionCounter}</p>
           <p>{questions[currentQuestionIndex].question}</p>
