@@ -5,7 +5,6 @@ export default function SimilarDocsPopup({
   setSimilarDocsPopup,
   similarDocsData,
 }) {
-  console.log(similarDocsData);
 
   return (
     <div className={styles.box}>
@@ -46,7 +45,7 @@ export default function SimilarDocsPopup({
               </td>
               <td>{Math.round(Number(item.acceptance_rate) * 100)}%</td>
               <td style={{ color: item.acceptance_status ? "green" : "red" }}>
-                {item.acceptance_status ? "تایید شده" : "ریجکت شده"}
+                {item.acceptance_status ? "پذیرفته شده" : "ریجکت شده"}
               </td>
             </tr>
           ))}

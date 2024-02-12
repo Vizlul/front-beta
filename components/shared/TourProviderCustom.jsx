@@ -52,7 +52,7 @@ const tourSteps = (setDisableIntract, setActiveButtonTour) => {
   ];
 };
 
-export default function TourProviderCustom() {
+export default function TourProviderCustom({isMobile}) {
   const [answerPopup, setAnswerPopup] = useState(false);
   const [answer, setAnswer] = useState(null);
   const [disableInteraction, setDisableIntract] = useState(false);
@@ -64,7 +64,6 @@ export default function TourProviderCustom() {
   // onClickHighlighted react tour
   const onClickHighlighted = (e, clickProps) => {
     e.stopPropagation();
-    console.log("No interaction");
     if (clickProps.currentStep === 1) {
       setDisableIntract(false);
       clickProps.setCurrentStep(2);

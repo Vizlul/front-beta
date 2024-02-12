@@ -1,7 +1,6 @@
 "use client";
 import InfoAlert from "@/components/shared/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
-import Chart from "react-apexcharts";
 import { useEffect, useRef, useState } from "react";
 import PotentialPopup from "../../shared/popups/mobile/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
@@ -106,7 +105,7 @@ export default function MainSliderMobile({
             />
 
             <Charts
-              firstChartRef={thirdChartRef}
+              firstChartRef={fourthChartRef}
               dataTut="reactour__7"
               chartSelected={chartSelected}
               series={columnData(chanceHistory, questionCounter).series}

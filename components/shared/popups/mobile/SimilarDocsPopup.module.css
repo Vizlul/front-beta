@@ -156,3 +156,11 @@
   pointer-events: none;
   user-select: none;
 }
+
+.userName {
+  color: transparent;
+  text-shadow: 0 0 8px #000;
+  pointer-events: none;
+  user-select: none;
+  filter: blur(2px); /* Add blur filter */
+}

@@ -67,6 +67,7 @@ export default function StartingSlider({ name, setName }) {
                     {/* ================== 70 users repeat in each row ================== */}
                     {Array.from({ length: 70 }, (_, index) => (
                       <li
+                        key={index}
                         className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
                         style={{
                           display: "flex",

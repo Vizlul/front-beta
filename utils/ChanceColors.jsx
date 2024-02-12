@@ -1,5 +1,4 @@
 export const ColorCalc = (chance) => {
-  console.log(chance);
   return chance > 0 && chance < 20
     ? { color: "#FF0000", bg: "rgba(255, 0, 0, 0.2)" }
     : chance >= 20 && chance < 40

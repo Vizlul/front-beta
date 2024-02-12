@@ -1,5 +1,6 @@
-import Chart from "react-apexcharts";
+import dynamic from 'next/dynamic';
 import styles from "./Charts.module.css";
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function Charts({
   firstChartRef,
@@ -10,13 +11,6 @@ export default function Charts({
   questionCounter,
   type
 }) {
-  console.log(firstChartRef);
-  console.log(dataTut);
-  console.log(chartSelected);
-  console.log(series);
-  console.log(options);
-  console.log(questionCounter);
-
   return (
     <div data-tut={dataTut} ref={firstChartRef} className={styles.mainChartsArea}>
       {questionCounter === 1 && (
@@ -26,7 +20,7 @@ export default function Charts({
         </div>
       )}
 
-      <Chart height={320} key={chartSelected} options={options} series={series} type={type} />
+      <ApexCharts height={320} key={chartSelected} options={options} series={series} type={type} />
     </div>
   );
 }

@@ -10,25 +10,74 @@
   gap: 12px;
 }
 
-.chance > div p {
-  font-size: 14px;
+.chance > div > p {
+  font-size: 16px;
   margin: 0;
 }
 
+.chance > div > p:nth-child(2) {
+  height: 16px;
+}
+
 .chanceBoxUnknown {
+  transition: all ease 1s;
   background-color: #424242;
   color: #fff;
   padding: 10px;
+  width: 65px;
+  height: 40px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 13px;
 }
 
 .chanceBoxRed {
+  transition: all ease 1s;
   background-color: red;
   color: #fff;
   padding: 10px;
+  width: 65px;
+  height: 40px;
+  font-size: 22px !important;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .chanceBoxGreen {
-  background-color: green;
+  transition: all ease 0.7s;
   color: #fff;
   padding: 10px;
+  width: 65px;
+  height: 40px;
+  font-size: 22px !important;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.shakeIcon {
+  animation: shakeIcon 1s forwards;
+}
+
+@keyframes shakeIcon {
+  0% {
+    transform: rotate(-50deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(50deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

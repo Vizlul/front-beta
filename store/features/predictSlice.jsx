@@ -37,11 +37,9 @@ const predictSlice = createSlice({
   reducers: {
     addCounterQuestionIndex: (state, { payload }) => {
       if (payload) {
-        // console.log(payload)
-        // console.log(state.nextPredict)
-        // console.log(questions.findIndex((item) => item.question_value === state.nextPredict))
-        state.questionIndex = questions.findIndex((item) => item.question_value === state.nextPredict);
-        // console.log(state.questionIndex)
+        state.questionIndex = questions.findIndex(
+          (item) => item.question_value === state.nextPredict
+        );
       } else {
         state.questionIndex = state.questionIndex + 1;
       }
@@ -75,7 +73,6 @@ const predictSlice = createSlice({
     },
     setChanceData: (state, { payload }) => {
       if (payload.chance !== Math.floor(payload.chance)) {
-        console.log(payload.chance);
         state.chance = payload.chance === 1 ? 100 : Math.round(Number(payload.chance) * 100);
       } else {
         state.chance = payload.chance === 1 ? 100 : payload.chance;

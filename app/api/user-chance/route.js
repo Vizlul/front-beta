@@ -4,7 +4,6 @@ import { connectToDatabase } from "../db";
 export async function GET(request) {
   const connection = await connectToDatabase();
   const [results] = await connection.query("SELECT * FROM users");
-  console.log(results);
 
   return NextResponse.json({ message: "Success", data: results }, { status: 200 });
 }

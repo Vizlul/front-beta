@@ -1,10 +1,14 @@
+import { ColorCalc } from "@/utils/ChanceColors";
 import ButtonComponent from "../../button/ButtonComponent";
 import styles from "./SimilarDocsPopupDesktop.module.css";
+import { InformationIcon } from "@/components/shared/InformationIcon";
 
 export default function SimilarDocsPopupDesktop({
   contactUs,
   setContatcUs,
   setOpenSimilarDocsPopup,
+  chance,
+  similarDocsData,
 }) {
   return (
     <>
@@ -62,9 +66,17 @@ export default function SimilarDocsPopupDesktop({
             <div className={styles.textAxisBox}>
               <p>نمودار زیر نمایانگر تخمین شانس ویزای شما می‌باشد.</p>
               <div className={styles.axis}>
-                <div style={{ "--progress-axis": "50%" }} className={styles.signAxisActive}>
-                  <div>20%</div>
-                  <div></div>
+                <div style={{ "--progress-axis": `${chance}%` }} className={styles.signAxisActive}>
+                  <div
+                    style={{
+                      border: `1px solid ${ColorCalc(chance).color}`,
+                      background: ColorCalc(chance).bg,
+                      color: ColorCalc(chance).color,
+                    }}
+                  >
+                    {chance}%
+                  </div>
+                  <div style={{ background: ColorCalc(chance).color }}></div>
                 </div>
                 <div className={styles.signAxisStart}>0</div>
                 <div className={styles.signAxisHalf}>50</div>
@@ -88,37 +100,29 @@ export default function SimilarDocsPopupDesktop({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>کاربر مشابه یک</td>
-                        <td>20%</td>
-                        <td>ریجکت شده</td>
-                      </tr>
-                      <tr>
-                        <td>کاربر مشابه یک</td>
-                        <td>22%</td>
-                        <td>ریجکت شده</td>
-                      </tr>
-                      <tr>
-                        <td>کاربر مشابه یک</td>
-                        <td>16%</td>
-                        <td>ریجکت شده</td>
-                      </tr>
-                      <tr>
-                        <td>کاربر مشابه یک</td>
-                        <td>25%</td>
-                        <td>پذیرفته شده</td>
-                      </tr>
-                      <tr>
-                        <td>کاربر مشابه یک</td>
-                        <td>18%</td>
-                        <td>ریجکت شده</td>
-                      </tr>
+                      {similarDocsData.map((item, index) => (
+                        <tr key={index}>
+                          <td className={styles.userName}>
+                            {item.first_name} {item.last_name}
+                          </td>
+                          <td>{Math.round(Number(item.acceptance_rate) * 100)}%</td>
+                          <td style={{ color: item.acceptance_status ? "green" : "red" }}>
+                            {item.acceptance_status ? "پذیرفته شده" : "ریجکت شده"}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
                 <div className={styles.info}>
-                  <div className={styles.guide}>
-                    <img src="InformationIcon.svg" alt="Information" />
+                  <div
+                    style={{
+                      border: `1px solid ${ColorCalc(chance).color}`,
+                      backgroundColor: ColorCalc(chance).bg,
+                    }}
+                    className={styles.guide}
+                  >
+                    <InformationIcon chance={chance} />
                     <p>
                       شانس شما برای اخذ ویزا بسیار کم است، پیشنهاد می‌کنیم جهت بهبود پارامترهای
                       تاثیرگذار در شانس خود اقدام نمایید

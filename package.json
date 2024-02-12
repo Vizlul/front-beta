@@ -17,6 +17,7 @@
     "mysql2": "^3.9.0",
     "next": "13.5.5",
     "react": "^18",
+    "react-animated-counter": "^1.7.6",
     "react-apexcharts": "^1.4.1",
     "react-chartjs-2": "^5.2.0",
     "react-countup": "^6.4.2",

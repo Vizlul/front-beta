@@ -27,7 +27,7 @@ export default function Home() {
       {slider.name === SliderState.START ? (
         <StartingSliderMobile name={name} setName={setName} />
       ) : slider.name === SliderState.MAIN || slider.name === SliderState.FINISHED ? (
-        <TourProviderCustom name={name} setName={setName} />
+        <TourProviderCustom isMobile={isMobile} name={name} setName={setName} />
       ) : (
         ""
       )}

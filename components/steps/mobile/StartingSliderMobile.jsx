@@ -55,6 +55,7 @@ export default function StartingSliderMobile({ setName, name }) {
               <ul className={styles.highwayLane}>
                 {users.map((item, index) => (
                   <li
+                    key={index}
                     className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
                     style={{
                       display: "flex",

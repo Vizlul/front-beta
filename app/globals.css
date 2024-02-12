@@ -18,7 +18,7 @@
 * {
   box-sizing: border-box !important;
   font-family: FarhangFanum, sans-serif !important;
-  /* scroll-behavior: smooth; */
+  scroll-behavior: smooth;
 }
 
 body {
@@ -161,6 +161,12 @@ body
 
 .reactour__close-button {
   top: 10px !important;
+}
+
+.ticker-view{
+  flex-direction: row !important;
+  gap: 3px;
+  width: 65px;
 }
 
 @media (max-height: 900px) {

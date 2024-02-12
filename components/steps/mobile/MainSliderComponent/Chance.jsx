@@ -1,26 +1,23 @@
 import { useSelector } from "react-redux";
 import CountUp from "react-countup";
 import styles from "./Chance.module.css";
+import { ArrowChanceIcon } from "@/components/shared/ArrowChanceIcon";
+import { AnimatedCounter } from "react-animated-counter";
+import { ColorCalc } from "@/utils/ChanceColors";
 
 export default function Chance({ chanceHistory }) {
   const predict = useSelector((state) => state.predict);
-  function isNumberIncreasing(previousNumber, currentNumber) {
-    return currentNumber > previousNumber
-      ? "more"
-      : currentNumber < previousNumber
-      ? "low"
-      : currentNumber === previousNumber
-      ? "equal"
-      : "";
-  }
-
   return (
     <div className={styles.chance}>
       <img src="visaland-logo2.svg" alt="visaland-logo" />
       <div>
         <p>شانس اخذ ویزا</p>
         <p>
-          {isNumberIncreasing(
+          <ArrowChanceIcon
+            start={chanceHistory[chanceHistory.length - 2]?.chance}
+            end={chanceHistory[chanceHistory.length - 1]?.chance}
+          />
+          {/* {isNumberIncreasing(
             chanceHistory[chanceHistory.length - 2]?.chance,
             chanceHistory[chanceHistory.length - 1]?.chance
           ) === "more" ? (
@@ -38,20 +35,38 @@ export default function Chance({ chanceHistory }) {
               alt="icon"
             />
           ) : (
-            <img src="/CaretEqual.svg" alt="icon" />
+            <img
+              key={chanceHistory}
+              className={styles.shakeIcon}
+              src="/CaretEqual.svg"
+              alt="icon"
+            />
+          )} */}
+        </p>
+        <p
+          className={
+            predict.chance === 0 && chanceHistory.length === 0
+              ? styles.chanceBoxUnknown
+              : styles.chanceBoxGreen
+          }
+          style={{
+            backgroundColor: ColorCalc(predict.chance).color,
+          }}
+        >
+          {predict.chance === 0 ? (
+            "نامشخص"
+          ) : (
+            <>
+              <span>%</span>
+              <AnimatedCounter
+                includeDecimals={false}
+                value={predict.chance}
+                color="white"
+                fontSize="22px"
+              />
+            </>
           )}
         </p>
-        {predict.chance === 0 ? (
-          <p className={styles.chanceBoxUnknown}>نامشخص</p>
-        ) : (
-          <p className={predict.chance > 50 ? styles.chanceBoxGreen : styles.chanceBoxRed}>
-            <CountUp
-              start={chanceHistory.length > 0 ? chanceHistory[chanceHistory.length - 1].chance : 0}
-              end={predict.chance}
-            />
-            %
-          </p>
-        )}
       </div>
     </div>
   );

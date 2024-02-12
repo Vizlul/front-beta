@@ -16,14 +16,14 @@ import {
   setPotentialData,
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
-import ApexCharts from "apexcharts";
-import Chart from "react-apexcharts";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 import ProgressBar from "../../shared/ProgressBar";
 import ChacnePotentialModalDesktop from "../../shared/popups/desktop/ChancePotentialModalDesktop";
 import ButtonComponent from "../../shared/button/ButtonComponent";
 import SimilarDocsPopupDesktop from "../../shared/popups/desktop/SimilarDocsPopupDesktop";
 import VideoPlayer from "../../shared/VideoPlayer";
+import dynamic from 'next/dynamic';
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function MainSlider({ name, setName }) {
   const dispatch = useDispatch();
@@ -50,6 +50,7 @@ export default function MainSlider({ name, setName }) {
   const [openSimilarDocsPopup, setOpenSimilarDocsPopup] = useState(false);
   const [contactUs, setContatcUs] = useState(false);
   const [videoPopup, setVideoPopup] = useState(false);
+  const [similarDocsData, setSimilarDocsData] = useState([]);
 
   function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
@@ -103,12 +104,29 @@ export default function MainSlider({ name, setName }) {
               name: name,
               chance: chanceHistory[chanceHistory.length - 1].chance,
             }),
+          }).then(async (res) => {
+            await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/artificial_records?acceptance_rate=${
+                chanceHistory[chanceHistory.length - 1].chance / 100
+              }&number_of_records=5`,
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: null,
+              }
+            ).then(async (res) => {
+              const data = await res.json(); 
+              setSimilarDocsData(data);
+            });
           });
           setActiveButton("");
           setAnswer(null);
           setLoading(false);
           setFinished(true);
-          setName("")
+          setName("");
           return;
         } else {
           await CallApi.post("/grouped_xai", filteredData)
@@ -368,7 +386,7 @@ export default function MainSlider({ name, setName }) {
               )}
 
               {chartSelected === "area" ? (
-                <Chart
+                <ApexCharts
                   height={320}
                   key={chartSelected}
                   options={areaData(chanceHistory, questionCounter).options}
@@ -376,7 +394,7 @@ export default function MainSlider({ name, setName }) {
                   type="area"
                 />
               ) : chartSelected === "bar" ? (
-                <Chart
+                <ApexCharts
                   height={320}
                   key={chartSelected}
                   options={barNegativeData(chanceHistory, questionCounter).options}
@@ -384,7 +402,7 @@ export default function MainSlider({ name, setName }) {
                   type="bar"
                 />
               ) : chartSelected === "radar" ? (
-                <Chart
+                <ApexCharts
                   height={320}
                   key={chartSelected}
                   options={radarData(chanceHistory, questionCounter).options}
@@ -392,7 +410,7 @@ export default function MainSlider({ name, setName }) {
                   type="radar"
                 />
               ) : chartSelected === "column" ? (
-                <Chart
+                <ApexCharts
                   height={320}
                   key={chartSelected}
                   options={columnData(chanceHistory, questionCounter).options}
@@ -467,6 +485,8 @@ export default function MainSlider({ name, setName }) {
           contactUs={contactUs}
           setContatcUs={setContatcUs}
           setOpenSimilarDocsPopup={setOpenSimilarDocsPopup}
+          chance={chanceHistory[chanceHistory.length - 1]?.chance}
+          similarDocsData={similarDocsData}
         />
       </div>
 
@@ -484,6 +504,8 @@ export default function MainSlider({ name, setName }) {
             setContatcUs={setContatcUs}
             setOpenSimilarDocsPopup={setOpenSimilarDocsPopup}
             setVideoPopup={setVideoPopup}
+            chance={chanceHistory[chanceHistory.length - 1]?.chance}
+            similarDocsData={similarDocsData}
           />
         )}
       </div>

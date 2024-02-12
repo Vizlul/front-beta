@@ -39,7 +39,6 @@ export default function AnswerPopup({
   const [activeButton, setActiveButton] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(prevCounterQuestion);
 
   const dispatch = useDispatch();
 
@@ -106,7 +105,6 @@ export default function AnswerPopup({
             }
           ).then(async (res) => {
             const data = await res.json();
-            console.log(data);
             setSimilarDocsData(data);
           });
           setName("");
@@ -222,7 +220,7 @@ export default function AnswerPopup({
           {questions[currentQuestionIndex].type === "radio" ? (
             questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
               <button
-                className={activeButton === index && styles.activeButton}
+                className={activeButton === index ? styles.activeButton : undefined}
                 key={index}
                 onClick={() => {
                   handleChange(index);

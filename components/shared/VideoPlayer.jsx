@@ -36,7 +36,6 @@ const VideoPlayer = ({ finishPopup, setContactUsPopup, videoPopup, setVideoPopup
         if (videoPopup) {
           setVideoPopup(false);
         }
-        console.log("Video ended");
       });
     }, 1000);
   };
@@ -56,7 +55,6 @@ const VideoPlayer = ({ finishPopup, setContactUsPopup, videoPopup, setVideoPopup
         if (videoPopup) {
           setVideoPopup(false);
         }
-        console.log("Video ended");
       });
     }
   }, []);

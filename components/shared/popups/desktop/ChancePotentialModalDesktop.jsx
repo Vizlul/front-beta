@@ -8,7 +8,6 @@ export default function ChancePotentialModalDesktop({
   chancePotentialPopup,
   setChancePotentialPopup,
 }) {
-  console.log(chancePotentialPopup);
 
   return (
     <div className={styles.popupBox}>

@@ -27,10 +27,9 @@
   height: 20px;
 }
 
-.headerContentBox p{
+.headerContentBox p {
   font-size: 20px;
 }
-
 
 .headerContentButton {
   display: flex;
