@@ -1,4 +1,4 @@
-export const areaData = (chanceHistory, questionCounte, chanceDataChart) => {
+export const areaData = (chanceHistory) => {
   return {
     series: [
       {
@@ -9,7 +9,6 @@ export const areaData = (chanceHistory, questionCounte, chanceDataChart) => {
     options: {
       chart: {
         id: "area",
-        width: "100%",
         toolbar: {
           show: false,
         },
@@ -26,7 +25,9 @@ export const areaData = (chanceHistory, questionCounte, chanceDataChart) => {
   };
 };
 
-export const barNegativeData = (chanceHistory, questionCounter) => {
+export const barNegativeData = (chanceHistory, questionCounter, responseExplain) => {
+  console.log(chanceHistory);
+  console.log(responseExplain);
   return {
     series: [
       {
@@ -36,12 +37,9 @@ export const barNegativeData = (chanceHistory, questionCounter) => {
             ? chanceHistory[questionCounter - 2].chartData
             : [0, 0, 0, 0, 0],
       },
-      
     ],
     options: {
       chart: {
-        type: "bar",
-        width: "100%",
         stacked: true,
         toolbar: {
           show: false,
@@ -77,15 +75,31 @@ export const barNegativeData = (chanceHistory, questionCounter) => {
         },
       },
       tooltip: {
-        shared: false,
+        shared: true,
+        intersect: false,
         x: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-        y: {
-          formatter: function (val) {
-            return Math.abs(val) + "%";
+          formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+            let test = chanceHistory;
+            console.log(test);
+            return (
+              `<div style="direction: rtl; display: flex; flex-direction: column; gap: 8px; font-size: 14px;" class="apexcharts-tooltip-title">` +
+              `<p>` +
+              `<span> 1- </span>` +
+              `</p>` +
+              `<p>` +
+              `<span> 2- </span>` +
+              `</p>` +
+              `<p>` +
+              `<span> 3- </span>` +
+              `</p>` +
+              `<p>` +
+              `<span> 4- </span>` +
+              `</p>` +
+              `<p style="font-weight: bold;">` +
+              `<span> گزینه درست </span>` +
+              `</p>` +
+              `</div>`
+            );
           },
         },
       },
@@ -123,7 +137,6 @@ export const radarData = (chanceHistory, questionCounter) => {
     options: {
       chart: {
         id: "radar",
-        width: "100%",
         toolbar: {
           show: false,
         },
@@ -134,7 +147,7 @@ export const radarData = (chanceHistory, questionCounter) => {
   };
 };
 
-export const columnData = (chanceHistory, questionCounter) => {
+export const columnData = (chanceHistory) => {
   return {
     series: [
       {
@@ -145,7 +158,6 @@ export const columnData = (chanceHistory, questionCounter) => {
     options: {
       chart: {
         id: "column",
-        width: "100%",
         toolbar: {
           show: false,
         },

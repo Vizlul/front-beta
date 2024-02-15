@@ -11,7 +11,7 @@ import FinishSliderPopup from "./FinishSliderPopup";
 import SimilarDocsPopup from "../../shared/popups/mobile/SimilarDocsPopup";
 import AnswerPopup from "@/components/shared/popups/mobile/AnswerPopup";
 import ContactUsPopupMobile from "@/components/shared/popups/mobile/ContactUsPopupMobile";
-import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
+import { areaData, radarData, columnData } from "@/utils/ChartsJson";
 import { useTour } from "@reactour/tour";
 import Chance from "./MainSliderComponent/Chance";
 import Charts from "./MainSliderComponent/Charts";
@@ -39,6 +39,7 @@ export default function MainSliderMobile({
   const [showAlert, setShowAlert] = useState(true);
   const [chartSelected, setChartSelected] = useState("bar");
   const [similarDocsData, setSimilarDocsData] = useState([]);
+  const [responseExplain, setResponseExplain] = useState([]);
 
   const firstChartRef = useRef(null);
   const secondChartRef = useRef(null);
@@ -63,6 +64,99 @@ export default function MainSliderMobile({
       setCurrentStep((prev) => prev + 1);
     }
   }, [answerPopup]);
+
+  console.log(responseExplain);
+
+  const barNegativeData = (chanceHistory, questionCounter) => {
+    console.log(chanceHistory);
+    console.log(responseExplain);
+    return {
+      series: [
+        {
+          name: "تغییرات پاسخ فعلی",
+          data:
+            chanceHistory.length > 0 && questionCounter >= 2
+              ? chanceHistory[questionCounter - 2].chartData
+              : [0, 0, 0, 0, 0],
+        },
+      ],
+      options: {
+        chart: {
+          stacked: true,
+          toolbar: {
+            show: false,
+          },
+        },
+        colors: ["#00E396", "#2E93FA"],
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: "80%",
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          width: 1,
+          colors: ["#fff"],
+        },
+  
+        grid: {
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+        },
+        yaxis: {
+          min: -5,
+          max: 5,
+          title: {
+            // text: 'Age',
+          },
+        },
+        tooltip: {
+          shared: true,
+          intersect: false,
+          x: {
+            formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+              let test = responseExplain;
+              console.log(responseExplain);
+              return (
+                `<div style="direction: rtl; display: flex; flex-direction: column; gap: 8px; font-size: 14px;" class="apexcharts-tooltip-title">` +
+                `<p>` +
+                `<span> 1- </span>` +
+                `</p>` +
+                `<p>` +
+                `<span> 2- </span>` +
+                `</p>` +
+                `<p>` +
+                `<span> 3- </span>` +
+                `</p>` +
+                `<p>` +
+                `<span> 4- </span>` +
+                `</p>` +
+                `<p style="font-weight: bold;">` +
+                `<span> گزینه درست </span>` +
+                `</p>` +
+                `</div>`
+              );
+            },
+          },
+        },
+        xaxis: {
+          categories: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
+          labels: {
+            formatter: function (val) {
+              return Math.abs(Math.round(val)) + "%";
+            },
+          },
+        },
+        yaxis: {},
+      },
+    };
+  };
 
   return (
     <>
@@ -217,6 +311,7 @@ export default function MainSliderMobile({
           answer={answer}
           setAnswer={setAnswer}
           setActiveButtonTour={setActiveButtonTour}
+          setResponseExplain={setResponseExplain}
         />
       </div>
 

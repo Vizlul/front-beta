@@ -29,7 +29,8 @@ export default function AnswerPopup({
   setDisableIntract,
   answer,
   setAnswer,
-  setActiveButtonTour
+  setActiveButtonTour,
+  setResponseExplain,
 }) {
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
@@ -38,7 +39,6 @@ export default function AnswerPopup({
   const [testValue, setTestValue] = useState("");
   const [activeButton, setActiveButton] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const dispatch = useDispatch();
 
@@ -120,6 +120,23 @@ export default function AnswerPopup({
 
               await CallApi.post("/potential", filteredData)
                 .then(async (response) => {
+                  await CallApi.post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/response_explain`,
+                    filteredData,
+                    {
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  )
+                    .then((res) => {
+                      console.log(res.data)
+                      setResponseExplain(res.data);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                   dispatch(setPotentialData(response.data.result));
                   if (predict.countAnswer === 1) {
                     dispatch(addCounterQuestionIndex({ payload: "" }));
@@ -178,7 +195,7 @@ export default function AnswerPopup({
                   dispatch(setNextPredictBackup({ nextVariable: respon.data.next_variable }));
                   setNextPredictData({ ...predictData, [respon.data.next_variable]: "" });
                   setPredictData(filteredData);
-                  setActiveButtonTour(false)
+                  setActiveButtonTour(false);
                 })
                 .catch((error) => {
                   console.log(error);
