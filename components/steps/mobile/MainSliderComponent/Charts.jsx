@@ -10,11 +10,9 @@ export default function Charts({
   options,
   questionCounter,
   type,
+  responseExplain
 }) {
-  console.log(chartSelected);
-  console.log(series);
-  console.log(options);
-  console.log(type);
+  console.log(responseExplain);
   return (
     <div data-tut={dataTut} ref={firstChartRef} className={styles.mainChartsArea}>
       {questionCounter === 1 && (

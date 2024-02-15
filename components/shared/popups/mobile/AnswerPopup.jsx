@@ -131,7 +131,7 @@ export default function AnswerPopup({
                     }
                   )
                     .then((res) => {
-                      console.log(res.data)
+                      console.log(res.data);
                       setResponseExplain(res.data);
                     })
                     .catch((err) => {
