@@ -10,9 +10,9 @@ export default function Charts({
   options,
   questionCounter,
   type,
-  responseExplain
+  responseExplain,
 }) {
-  console.log(responseExplain);
+  console.log(type);
   return (
     <div data-tut={dataTut} ref={firstChartRef} className={styles.mainChartsArea}>
       {questionCounter === 1 && (
@@ -22,7 +22,14 @@ export default function Charts({
         </div>
       )}
 
-      <ApexCharts width="100%" height={320} key={chartSelected} options={options} series={series} type={type} />
+      <ApexCharts
+        width="100%"
+        height={320}
+        key={chartSelected}
+        options={options}
+        series={series}
+        type={type} // Make sure type is passed to ApexCharts
+      />
     </div>
   );
 }

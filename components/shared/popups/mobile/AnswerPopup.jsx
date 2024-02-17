@@ -13,6 +13,7 @@ import {
 } from "@/store/features/predictSlice";
 import { setToFinished } from "@/store/features/sliderSlice";
 import Loading from "../../Loading";
+import { setResponse } from "@/store/features/responseExplainSlice";
 
 export default function AnswerPopup({
   answerPopup,
@@ -133,6 +134,7 @@ export default function AnswerPopup({
                     .then((res) => {
                       console.log(res.data);
                       setResponseExplain(res.data);
+                      dispatch(setResponse(res.data))
                     })
                     .catch((err) => {
                       console.log(err);

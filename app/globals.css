@@ -13,6 +13,7 @@
   --potential: 0;
   --progress-axis: 0%;
   --reactour-accent: #002722;
+  --tour-width: 100%;
 }
 
 * {
@@ -153,10 +154,19 @@ body
 .reactour__popover {
   padding: 28px 30px !important;
   left: 20px !important;
+  /* width: 100px; */
 }
 
 .reactour__popover > span{
   background-color: #002722 !important;
+}
+
+.reactour__mask{
+  /* width: 100px; */
+}
+
+.reactour__mask svg{
+  /* width: 200px !important; */
 }
 
 .reactour__close-button {
@@ -169,6 +179,10 @@ body
   width: 65px;
 }
 
+.reactour__close-button {
+  display: none !important;
+}
+
 @media (max-height: 900px) {
   .mainLayout {
     height: 100%;
@@ -179,6 +193,7 @@ body
 @media (max-width: 768px) {
   .mainLayout {
     width: 100%;
+    min-width: var(--tour-width);
     height: 100%;
     margin: 0 auto;
   }

@@ -22,8 +22,9 @@ import ChacnePotentialModalDesktop from "../../shared/popups/desktop/ChancePoten
 import ButtonComponent from "../../shared/button/ButtonComponent";
 import SimilarDocsPopupDesktop from "../../shared/popups/desktop/SimilarDocsPopupDesktop";
 import VideoPlayer from "../../shared/VideoPlayer";
-import dynamic from 'next/dynamic';
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+import dynamic from "next/dynamic";
+import Charts from "../mobile/MainSliderComponent/Charts";
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function MainSlider({ name, setName }) {
   const dispatch = useDispatch();
@@ -51,6 +52,8 @@ export default function MainSlider({ name, setName }) {
   const [contactUs, setContatcUs] = useState(false);
   const [videoPopup, setVideoPopup] = useState(false);
   const [similarDocsData, setSimilarDocsData] = useState([]);
+  const [responseExplain, setResponseExplain] = useState([]);
+  console.log(chartSelected);
 
   function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
@@ -118,7 +121,7 @@ export default function MainSlider({ name, setName }) {
                 body: null,
               }
             ).then(async (res) => {
-              const data = await res.json(); 
+              const data = await res.json();
               setSimilarDocsData(data);
             });
           });
@@ -135,6 +138,23 @@ export default function MainSlider({ name, setName }) {
 
               await CallApi.post("/potential", filteredData)
                 .then(async (response) => {
+                  await CallApi.post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/response_explain`,
+                    filteredData,
+                    {
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  )
+                    .then((res) => {
+                      console.log(res.data);
+                      setResponseExplain(res.data);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                   dispatch(setPotentialData(response.data.result));
                   setChanceHistory((prev) => [
                     ...prev,
@@ -386,35 +406,35 @@ export default function MainSlider({ name, setName }) {
               )}
 
               {chartSelected === "area" ? (
-                <ApexCharts
+                <Charts
                   height={320}
                   key={chartSelected}
-                  options={areaData(chanceHistory, questionCounter).options}
-                  series={areaData(chanceHistory, questionCounter).series}
+                  options={areaData(chanceHistory, questionCounter, responseExplain).options}
+                  series={areaData(chanceHistory, questionCounter, responseExplain).series}
                   type="area"
                 />
               ) : chartSelected === "bar" ? (
-                <ApexCharts
+                <Charts
                   height={320}
                   key={chartSelected}
-                  options={barNegativeData(chanceHistory, questionCounter).options}
-                  series={barNegativeData(chanceHistory, questionCounter).series}
+                  options={barNegativeData(chanceHistory, questionCounter, responseExplain).options}
+                  series={barNegativeData(chanceHistory, questionCounter, responseExplain).series}
                   type="bar"
                 />
               ) : chartSelected === "radar" ? (
-                <ApexCharts
+                <Charts
                   height={320}
                   key={chartSelected}
-                  options={radarData(chanceHistory, questionCounter).options}
-                  series={radarData(chanceHistory, questionCounter).series}
+                  options={radarData(chanceHistory, questionCounter, responseExplain).options}
+                  series={radarData(chanceHistory, questionCounter, responseExplain).series}
                   type="radar"
                 />
               ) : chartSelected === "column" ? (
-                <ApexCharts
+                <Charts
                   height={320}
                   key={chartSelected}
-                  options={columnData(chanceHistory, questionCounter).options}
-                  series={columnData(chanceHistory, questionCounter).series}
+                  options={columnData(chanceHistory, questionCounter, responseExplain).options}
+                  series={columnData(chanceHistory, questionCounter, responseExplain).series}
                   type="bar"
                 />
               ) : (

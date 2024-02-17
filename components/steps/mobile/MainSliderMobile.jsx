@@ -53,7 +53,7 @@ export default function MainSliderMobile({
 
   const [disableIntract, setDisableIntract] = useState(false);
 
-  console.log(responseExplain)
+  console.log(responseExplain);
 
   useEffect(() => {
     if (!localStorage.getItem("tour") || localStorage.getItem("tour") === "false") {
@@ -83,8 +83,8 @@ export default function MainSliderMobile({
               firstChartRef={firstChartRef}
               dataTut="reactour__4"
               chartSelected={chartSelected}
-              series={areaData(chanceHistory, questionCounter).series}
-              options={areaData(chanceHistory, questionCounter).options}
+              series={areaData(chanceHistory, questionCounter, responseExplain).series}
+              options={areaData(chanceHistory, questionCounter, responseExplain).options}
               questionCounter={questionCounter}
               type="area"
             />
@@ -104,8 +104,8 @@ export default function MainSliderMobile({
               firstChartRef={thirdChartRef}
               dataTut="reactour__6"
               chartSelected={chartSelected}
-              series={radarData(chanceHistory, questionCounter).series}
-              options={radarData(chanceHistory, questionCounter).options}
+              series={radarData(chanceHistory, questionCounter, responseExplain).series}
+              options={radarData(chanceHistory, questionCounter, responseExplain).options}
               questionCounter={questionCounter}
               type="radar"
             />
@@ -114,8 +114,8 @@ export default function MainSliderMobile({
               firstChartRef={fourthChartRef}
               dataTut="reactour__7"
               chartSelected={chartSelected}
-              series={columnData(chanceHistory, questionCounter).series}
-              options={columnData(chanceHistory, questionCounter).options}
+              series={columnData(chanceHistory, questionCounter, responseExplain).series}
+              options={columnData(chanceHistory, questionCounter, responseExplain).options}
               questionCounter={questionCounter}
               type="bar"
             />

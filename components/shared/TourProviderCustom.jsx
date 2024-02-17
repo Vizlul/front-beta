@@ -1,6 +1,6 @@
 import { TourProvider, useTour } from "@reactour/tour";
 import MainSliderMobile from "../steps/mobile/MainSliderMobile";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import styles from "./TourProvider.module.css";
 
@@ -52,7 +52,7 @@ const tourSteps = (setDisableIntract, setActiveButtonTour) => {
   ];
 };
 
-export default function TourProviderCustom({isMobile}) {
+export default function TourProviderCustom({ isMobile }) {
   const [answerPopup, setAnswerPopup] = useState(false);
   const [answer, setAnswer] = useState(null);
   const [disableInteraction, setDisableIntract] = useState(false);
@@ -88,8 +88,12 @@ export default function TourProviderCustom({isMobile}) {
         onClick={() => {
           if (first) {
             setCurrentStep((s) => steps.length - 1);
+            setActiveButtonTour(false);
+            setDisableIntract(false);
           } else {
             setCurrentStep((s) => s - 1);
+            setActiveButtonTour(false);
+            setDisableIntract(false);
           }
         }}
       >
@@ -97,6 +101,7 @@ export default function TourProviderCustom({isMobile}) {
       </button>
     );
   };
+
   // next button react tour
   const nextButton = ({ Button, currentStep, stepsLength, setIsOpen, setCurrentStep, steps }) => {
     const last = currentStep === stepsLength - 1;
@@ -113,6 +118,8 @@ export default function TourProviderCustom({isMobile}) {
             } else {
               if (currentStep === 2) {
                 setAnswerPopup(false);
+              } else if (currentStep === 5) {
+                enableBodyScroll(tourRef.current);
               }
               setCurrentStep((s) => (s === steps?.length - 1 ? 0 : s + 1));
             }
@@ -129,6 +136,10 @@ export default function TourProviderCustom({isMobile}) {
       setCurrentStep(3);
     }
   }, [answerPopup]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--tour-width", `${window.innerWidth}px`);
+  }, []);
 
   return (
     <TourProvider

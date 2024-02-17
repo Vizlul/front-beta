@@ -26,16 +26,32 @@ export const areaData = (chanceHistory) => {
 };
 
 export const barNegativeData = (chanceHistory, questionCounter, responseExplain) => {
-  console.log(chanceHistory);
   console.log(responseExplain);
+  const mapThrough = (key) => {
+    if (responseExplain[key] && Array.isArray(responseExplain[key])) {
+      return responseExplain[key].map((item) => item.txt);
+    }
+    return [];
+  };
+
+  const seriesData =
+    chanceHistory.length > 0 && questionCounter >= 2
+      ? chanceHistory[questionCounter - 2].chartData
+      : [0, 0, 0, 0, 0];
+  console.log(seriesData);
+
+  const positiveData = seriesData.map((value) => (value > 0 ? value : 0));
+  const negativeData = seriesData.map((value) => (value < 0 ? value : 0));
+
   return {
     series: [
       {
-        name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
+        name: "تغییرات پاسخ فعلی (مثبت)",
+        data: positiveData,
+      },
+      {
+        name: "تغییرات پاسخ فعلی (منفی)",
+        data: negativeData,
       },
     ],
     options: {
@@ -45,21 +61,36 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
           show: false,
         },
       },
-      colors: ["#00E396", "#2E93FA"],
+      labels: Object.keys(responseExplain).reduce((acc, key) => {
+        acc[key] = mapThrough(key);
+        return acc;
+      }, {}),
+      colors: ["#00E396", "#FF0000"], // Assuming green for positive and red for negative
       plotOptions: {
         bar: {
           horizontal: true,
           barHeight: "80%",
+          dataLabels: {
+            formatter: function (val) {
+              if (val >= 0) {
+                return "+" + val + "%";
+              } else {
+                return "-" + Math.abs(val) + "%";
+              }
+            },
+          },
         },
       },
       dataLabels: {
         enabled: false,
+        formatter: function (val) {
+          return Math.abs(val) + "%";
+        },
       },
       stroke: {
         width: 1,
         colors: ["#fff"],
       },
-
       grid: {
         xaxis: {
           lines: {
@@ -75,36 +106,55 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
         },
       },
       tooltip: {
-        shared: true,
-        intersect: false,
-        x: {
-          formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
-            let test = chanceHistory;
-            console.log(test);
-            return (
-              `<div style="direction: rtl; display: flex; flex-direction: column; gap: 8px; font-size: 14px;" class="apexcharts-tooltip-title">` +
-              `<p>` +
-              `<span> 1- </span>` +
-              `</p>` +
-              `<p>` +
-              `<span> 2- </span>` +
-              `</p>` +
-              `<p>` +
-              `<span> 3- </span>` +
-              `</p>` +
-              `<p>` +
-              `<span> 4- </span>` +
-              `</p>` +
-              `<p style="font-weight: bold;">` +
-              `<span> گزینه درست </span>` +
-              `</p>` +
-              `</div>`
-            );
-          },
+        custom: function ({ series, seriesIndex, dataPointIndex, w, value }) {
+          // const value = w.globals.series[seriesIndex][dataPointIndex];
+          console.log("value", value);
+          console.log("series", series);
+          console.log("dataPointIndex", dataPointIndex);
+          console.log("w", w);
+          const emotionalData =
+            responseExplain &&
+            responseExplain[
+              dataPointIndex === 0
+                ? "purpose"
+                : dataPointIndex === 1
+                ? "emotional"
+                : dataPointIndex === 2
+                ? "career"
+                : "financial"
+            ]
+              ? responseExplain[
+                  dataPointIndex === 0
+                    ? "purpose"
+                    : dataPointIndex === 1
+                    ? "emotional"
+                    : dataPointIndex === 2
+                    ? "career"
+                    : "financial"
+                ]
+              : [];
+          const emotionalContent = emotionalData
+            .map((item, index) => `<p>${index + 1}- ${item.txt}</p>`)
+            .join("");
+          console.log(emotionalData);
+          console.log(emotionalContent);
+
+          return emotionalContent.length > 0
+            ? `<div style="direction: rtl; display: grid; gap: 8px; font-size: 14px; padding: 10px" margin: 0>` +
+                `<div style="grid-column: span 6 / span 6;">` +
+                `<p style="margin: 0;">` +
+                emotionalContent +
+                `</p>` +
+                `</div>` +
+                `</div>`
+            : `<p>برای نمایش مشاوره بیشتر تمامی سوالات را پاسخ دهید</p>`;
         },
       },
       xaxis: {
         categories: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
+        min: -100,
+        max: 100,
+        tickAmount: 4,
         labels: {
           formatter: function (val) {
             return Math.abs(Math.round(val)) + "%";
