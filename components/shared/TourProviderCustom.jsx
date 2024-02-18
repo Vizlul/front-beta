@@ -118,8 +118,6 @@ export default function TourProviderCustom({ isMobile }) {
             } else {
               if (currentStep === 2) {
                 setAnswerPopup(false);
-              } else if (currentStep === 5) {
-                enableBodyScroll(tourRef.current);
               }
               setCurrentStep((s) => (s === steps?.length - 1 ? 0 : s + 1));
             }
@@ -143,14 +141,14 @@ export default function TourProviderCustom({ isMobile }) {
 
   return (
     <TourProvider
-      afterOpen={disableBody}
-      beforeClose={enableBody}
+      // afterOpen={disableBody}
+      // beforeClose={enableBody}
       rtl
       steps={tourSteps(setDisableIntract, setActiveButtonTour)}
       disableDotsNavigation
       disableInteraction={disableInteraction}
       onClickHighlighted={onClickHighlighted}
-      onClickClose={onClickClose}
+      // onClickClose={onClickClose}
       prevButton={prevButton}
       nextButton={nextButton}
       badgeContent={({ totalSteps, currentStep }) => (

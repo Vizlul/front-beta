@@ -6,6 +6,7 @@ import Footer from "../../shared/Footer.jsx";
 import ButtonComponent from "../../shared/button/ButtonComponent.jsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ColorCalc } from "@/utils/ChanceColors";
 
 export default function StartingSlider({ name, setName }) {
   const dispatch = useDispatch();
@@ -14,6 +15,20 @@ export default function StartingSlider({ name, setName }) {
   const handleClick = () => {
     dispatch(setToMain());
   };
+
+  const getUsers = async () => {
+    await fetch(`/api/user-chance`).then(async (res) => {
+      const { data } = await res.json();
+      while (data.length < 70) {
+        data.push(...data);
+      }
+      setUsers(data.slice(0, 70));
+    });
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className={styles.startingSlider}>
@@ -45,6 +60,7 @@ export default function StartingSlider({ name, setName }) {
                 title="شروع بررسی"
                 icon={<img src="forward-arrow.svg" alt="icon" />}
                 onClickFunc={handleClick}
+                disabledFunc={!name}
               ></ButtonComponent>
             </div>
           </div>
@@ -64,8 +80,7 @@ export default function StartingSlider({ name, setName }) {
               {Array.from({ length: 2 }, (_, ind) => (
                 <div key={ind} className={`${styles.highwayBarrier} ${styles.infinite}`}>
                   <ul className={styles.highwayLane}>
-                    {/* ================== 70 users repeat in each row ================== */}
-                    {Array.from({ length: 70 }, (_, index) => (
+                    {users.map((item, index) => (
                       <li
                         key={index}
                         className={ind === 0 ? styles.highwayCar : styles.highwayCarSecond}
@@ -75,15 +90,23 @@ export default function StartingSlider({ name, setName }) {
                           gap: "10px",
                         }}
                       >
-                        <span className={styles.progressUserName}>مریم رادمنش</span>
-                        <span className={styles.progressUsers}>
-                          40<span>%</span>
+                        <span className={styles.progressUserName}>{item.name}</span>
+                        <span
+                          style={{
+                            border: `1px solid ${ColorCalc(item.chance).color}`,
+                            color: ColorCalc(item.chance).color,
+                            background: ColorCalc(item.chance).bg,
+                          }}
+                          className={styles.progressUsers}
+                        >
+                          {item.chance}
+                          <span>%</span>
                         </span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              ))}
+              ))}{" "}
             </div>
           </section>
         </div>
