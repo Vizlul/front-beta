@@ -20,7 +20,7 @@ export default function InfoAlert({ questionCounter, desktop, setShowAlert }) {
       ) : (
         <p>جدول‌های زیر نمایانگر پارامترهای موثر بر شانس می‌باشند.</p>
       )}
-      <img onClick={handleClose} src="close.svg" alt="icon" />
+      <img onClick={() => handleClose()} src="close.svg" alt="icon" />
     </div>
   );
 }

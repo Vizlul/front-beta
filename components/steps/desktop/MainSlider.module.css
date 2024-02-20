@@ -198,8 +198,7 @@
 }
 
 .activeChart {
-  background-color: #00554e;
-  color: #fff !important;
+  border: 1px solid #00554e;
   transition: background-color ease 0.3s;
   animation: activeChartShake 0.5s ease-in-out alternate;
 }

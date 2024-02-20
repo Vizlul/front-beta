@@ -248,8 +248,6 @@ export default function MainSlider({ name, setName }) {
 
   const handleSetActiveChart = (value) => {
     setChartSelected(value);
-    ApexCharts.getChartByID(value)?.updateOptions(areaData(chanceHistory, questionCounter).options);
-    ApexCharts.getChartByID(value)?.updateSeries(areaData(chanceHistory, questionCounter).series);
   };
 
   return (

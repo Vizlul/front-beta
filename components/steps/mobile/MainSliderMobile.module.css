@@ -7,7 +7,6 @@
   top: 0;
   left: 0;
   z-index: 99;
-  background-color: #fff;
 }
 
 .main {
@@ -117,7 +116,6 @@
   background-color: #002722;
   color: #fff;
   width: 50px;
-  height: 100%;
   border: none;
   outline: none;
   display: flex;

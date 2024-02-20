@@ -1,6 +1,5 @@
 import styles from "./Navbar.module.css";
 import ButtonComponent from "../shared/button/ButtonComponent.jsx";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import AboutModal from "./popups/desktop/AboutModal.jsx";
 
 export default function Navbar() {
@@ -19,7 +18,7 @@ export default function Navbar() {
           <a href="https://visaland.org">
             <ButtonComponent
               title="وبسایت ویزالند"
-              icon={<AiOutlineArrowLeft style={{ fontSize: "12px" }} />}
+              icon={<img src="forward-arrow.svg" alt="icon" />}
             ></ButtonComponent>
           </a>
         </div>

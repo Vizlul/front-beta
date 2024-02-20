@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import PotentialPopup from "../../shared/popups/mobile/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
 import { useSelector } from "react-redux";
-import CountUp from "react-countup";
 import { SliderState } from "@/constants";
 import FinishSliderPopup from "./FinishSliderPopup";
 import SimilarDocsPopup from "../../shared/popups/mobile/SimilarDocsPopup";
@@ -135,9 +134,7 @@ export default function MainSliderMobile({
           <div className={styles.footerTop}>
             <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
               <p>شناخت ویزارد از شما</p>
-              <p>
-                <CountUp end={predict.potential} />%
-              </p>
+              <p>{predict.potential}%</p>
             </div>
 
             <div className={styles.progressBarBox}>

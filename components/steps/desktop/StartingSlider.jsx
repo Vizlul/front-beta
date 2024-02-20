@@ -67,7 +67,7 @@ export default function StartingSlider({ name, setName }) {
         </div>
 
         <div className={styles.mainHeroLeft}>
-          <Image width="100" height="100" src="visard-character.svg" alt="vizard" />
+          <Image width={300} height={300} src="visard-character.svg" alt="vizard" />
           <div className={styles.absoluteBox}>
             <p className={styles.absoluteText}>ویزارد</p>
           </div>

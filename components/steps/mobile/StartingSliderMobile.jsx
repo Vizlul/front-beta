@@ -4,6 +4,7 @@ import { setToMain } from "@/store/features/sliderSlice";
 import { useEffect, useState } from "react";
 import NamePopup from "../../shared/popups/mobile/NamePopup";
 import { ColorCalc } from "../../../utils/ChanceColors";
+import Image from "next/image";
 
 export default function StartingSliderMobile({ setName, name }) {
   const [namePopup, setNamePopup] = useState(false);
@@ -33,12 +34,24 @@ export default function StartingSliderMobile({ setName, name }) {
     <div>
       <div className={styles.header}>
         <div>
-          <img src="visaland-logo.svg" alt="logo" />
+          <Image
+            width={200}
+            height={200}
+            className={styles.logo}
+            src="visaland-logo.svg"
+            alt="logo"
+          />
         </div>
       </div>
       <div className={styles.main}>
         <div className={styles.imageBox}>
-          <img src="visard-character.svg" alt="visard-character" />
+          <Image
+            width={200}
+            height={200}
+            className={styles.vizard}
+            src="visard-character.svg"
+            alt="visard-character"
+          />
           <div className={styles.absoluteBox}>
             <p className={styles.absoluteText}>ویزارد</p>
           </div>

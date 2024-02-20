@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import styles from "./ProgressBar.module.css";
-import CountUp from "react-countup";
 
 export default function ProgressBar({ isNumberIncreasing, chanceHistory, number, type, notWidth }) {
   return (
@@ -48,7 +46,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
             <img src="/CaretEqual.svg" alt="icon" />
           )}
           <p>
-            <span>%</span> <CountUp end={number} />
+            <span>%</span> {number}
           </p>
         </div>
       ) : (
@@ -78,7 +76,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
               <img src="/CaretEqual.svg" alt="icon" />
             )}
             <p>
-              <span>%</span> <CountUp end={number} />
+              <span>%</span> {number}
             </p>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./AboutModal.module.css";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function AboutModal() {
   return (

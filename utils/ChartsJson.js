@@ -161,7 +161,6 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
           },
         },
       },
-      yaxis: {},
     },
   };
 };
