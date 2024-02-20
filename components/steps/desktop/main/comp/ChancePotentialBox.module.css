@@ -1,0 +1,28 @@
+.chancePotentialBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  height: 100%;
+}
+
+.chanceBox {
+  border: 1px solid #a7a7a7;
+  width: 100%;
+  padding: 1rem 1.25rem;
+}
+
+.potentialBox {
+  border: 1px solid #a7a7a7;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  height: 100%;
+}
+
+.chanceBox > p,
+.potentialBox > p {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 20px;
+}

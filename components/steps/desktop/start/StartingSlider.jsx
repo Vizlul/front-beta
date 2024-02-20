@@ -1,9 +1,9 @@
 import { setToMain } from "@/store/features/sliderSlice";
 import styles from "./StartingSlider.module.css";
 import { useDispatch } from "react-redux";
-import Navbar from "../../shared/Navbar.jsx";
-import Footer from "../../shared/Footer.jsx";
-import ButtonComponent from "../../shared/button/ButtonComponent.jsx";
+import Navbar from "@/components/shared/Navbar.jsx";
+import Footer from "@/components/shared/Footer.jsx";
+import ButtonComponent from "@/components/shared/button/ButtonComponent.jsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ColorCalc } from "@/utils/ChanceColors";

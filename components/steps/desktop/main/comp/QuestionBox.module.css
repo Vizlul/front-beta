@@ -1,0 +1,91 @@
+.questionBox {
+  border: 1px solid rgba(48, 48, 48, 0.3);
+  padding: 20px;
+  height: 100%;
+  max-height: 340px;
+  display: flex;
+  flex-direction: column;
+  /* flex: 1 1 0; */
+}
+
+.questionText {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.questionText p:first-of-type {
+  color: #00554e;
+}
+
+.answerChioces {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.answerChioces button {
+  height: 32px;
+  padding: 0 12px;
+  background-color: #fff;
+  border: 1px solid #a7a7a7;
+  color: #000;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.activeButton {
+  background-color: #00554e !important;
+  color: #fff !important;
+  border: 1px solid #00554e !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttonGroups {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonGroups button {
+  background-color: #002722;
+  border: 1px solid #002722;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  gap: 10px;
+  height: 50px;
+  padding: 0 30px;
+  cursor: pointer;
+}
+
+.questionNumber {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.questionNumber input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #a7a7a7;
+  border-left: none;
+  border-right: none;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.questionNumber button {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+}

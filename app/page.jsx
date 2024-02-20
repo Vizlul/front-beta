@@ -2,14 +2,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
 import { SliderState } from "@/constants";
-import StartingSlider from "@/components/steps/desktop/StartingSlider";
+import StartingSlider from "@/components/steps/desktop/start/StartingSlider";
 
 import { useEffect, useState } from "react";
-import StartingSliderMobile from "@/components/steps/mobile/StartingSliderMobile";
+import StartingSliderMobile from "@/components/steps/mobile/start/StartingSliderMobile";
 import TourProviderCustom from "../components/shared/TourProviderCustom";
-import MainSlider from "@/components/steps/desktop/MainSlider";
-import FinishSlider from "@/components/steps/desktop/FinishSlider";
-import MainSliderMobile from "@/components/steps/mobile/MainSliderMobile";
+import MainSlider from "@/components/steps/desktop/main/MainSlider";
 import LoadingView from "@/components/shared/LoadingView";
 
 export default function Home() {

@@ -12,7 +12,6 @@ export default function Charts({
   type,
   responseExplain,
 }) {
-  console.log(type);
   return (
     <div data-tut={dataTut} ref={firstChartRef} className={styles.mainChartsArea}>
       {questionCounter === 1 && (

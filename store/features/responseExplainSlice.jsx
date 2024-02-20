@@ -12,12 +12,10 @@ const responseExplainSlice = createSlice({
   initialState,
   reducers: {
     setResponse: (state, { payload }) => {
-      console.log(payload)
-      console.log(payload['emotional'])
-      state.purpose = payload['purpose'];
-      state.carreer = payload['carreer'];
-      state.financial = payload['financial'];
-      state.emotional = payload['emotional'];
+      state.purpose = payload["purpose"];
+      state.carreer = payload["carreer"];
+      state.financial = payload["financial"];
+      state.emotional = payload["emotional"];
     },
   },
 });

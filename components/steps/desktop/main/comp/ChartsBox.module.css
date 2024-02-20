@@ -1,0 +1,87 @@
+.mainSliderLeft {
+  padding: 20px;
+  grid-column: span 6 / span 6;
+  border: 1px solid rgba(48, 48, 48, 0.3);
+}
+
+.mainChartsArea {
+  position: relative;
+  border: 1px solid #ccc;
+  direction: ltr !important;
+}
+
+.mainCharts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 26px 0 24px;
+}
+
+.blurChart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2.5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.blurChart p:first-of-type {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.blurChart p {
+  margin: 0;
+}
+
+.noBlur {
+  filter: none; /* Removes the blur effect */
+}
+
+.chartsIconsBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.chartIcon {
+  border: 1px solid rgba(48, 48, 48, 0.3);
+  padding: 36px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background-color ease 0.3s;
+  cursor: pointer;
+}
+
+.activeChart {
+  border: 1px solid #00554e;
+  transition: background-color ease 0.3s;
+  animation: activeChartShake 0.5s ease-in-out alternate;
+}
+
+@keyframes activeChartShake {
+  0% {
+    transform: rotate(5deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

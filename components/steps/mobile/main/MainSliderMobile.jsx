@@ -2,18 +2,18 @@
 import InfoAlert from "@/components/shared/alerts/InfoAlert";
 import styles from "./MainSliderMobile.module.css";
 import { useEffect, useRef, useState } from "react";
-import PotentialPopup from "../../shared/popups/mobile/PotentialPopup";
+import PotentialPopup from "@/components/shared/popups/mobile/PotentialPopup";
 import { questions } from "@/utils/QuestionJson";
 import { useSelector } from "react-redux";
 import { SliderState } from "@/constants";
-import FinishSliderPopup from "./FinishSliderPopup";
-import SimilarDocsPopup from "../../shared/popups/mobile/SimilarDocsPopup";
+import FinishSliderPopup from "../finish/FinishSliderPopup";
+import SimilarDocsPopup from "@/components/shared/popups/mobile/SimilarDocsPopup";
 import AnswerPopup from "@/components/shared/popups/mobile/AnswerPopup";
 import ContactUsPopupMobile from "@/components/shared/popups/mobile/ContactUsPopupMobile";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 import { useTour } from "@reactour/tour";
-import Chance from "./MainSliderComponent/Chance";
-import Charts from "./MainSliderComponent/Charts";
+import Chance from "@/components/shared/Chance";
+import Charts from "@/components/shared/Charts";
 
 export default function MainSliderMobile({
   setName,
@@ -52,8 +52,6 @@ export default function MainSliderMobile({
 
   const [disableIntract, setDisableIntract] = useState(false);
 
-  console.log(responseExplain);
-
   useEffect(() => {
     if (!localStorage.getItem("tour") || localStorage.getItem("tour") === "false") {
       setIsOpen(true);
@@ -65,8 +63,6 @@ export default function MainSliderMobile({
       setCurrentStep((prev) => prev + 1);
     }
   }, [answerPopup]);
-
-  console.log(chanceHistory);
 
   return (
     <>

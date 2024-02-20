@@ -26,7 +26,6 @@ export const areaData = (chanceHistory) => {
 };
 
 export const barNegativeData = (chanceHistory, questionCounter, responseExplain) => {
-  console.log(responseExplain);
   const mapThrough = (key) => {
     if (responseExplain[key] && Array.isArray(responseExplain[key])) {
       return responseExplain[key].map((item) => item.txt);
@@ -38,7 +37,6 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
     chanceHistory.length > 0 && questionCounter >= 2
       ? chanceHistory[questionCounter - 2].chartData
       : [0, 0, 0, 0, 0];
-  console.log(seriesData);
 
   const positiveData = seriesData.map((value) => (value > 0 ? value : 0));
   const negativeData = seriesData.map((value) => (value < 0 ? value : 0));
@@ -107,11 +105,6 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
       },
       tooltip: {
         custom: function ({ series, seriesIndex, dataPointIndex, w, value }) {
-          // const value = w.globals.series[seriesIndex][dataPointIndex];
-          console.log("value", value);
-          console.log("series", series);
-          console.log("dataPointIndex", dataPointIndex);
-          console.log("w", w);
           const emotionalData =
             responseExplain &&
             responseExplain[
@@ -136,8 +129,6 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
           const emotionalContent = emotionalData
             .map((item, index) => `<p>${index + 1}- ${item.txt}</p>`)
             .join("");
-          console.log(emotionalData);
-          console.log(emotionalContent);
 
           return emotionalContent.length > 0
             ? `<div style="direction: rtl; display: grid; gap: 8px; font-size: 14px; padding: 10px" margin: 0>` +

@@ -132,13 +132,10 @@ export default function AnswerPopup({
                     }
                   )
                     .then((res) => {
-                      console.log(res.data);
                       setResponseExplain(res.data);
-                      dispatch(setResponse(res.data))
+                      dispatch(setResponse(res.data));
                     })
-                    .catch((err) => {
-                      console.log(err);
-                    });
+                    .catch((err) => {});
                   dispatch(setPotentialData(response.data.result));
                   if (predict.countAnswer === 1) {
                     dispatch(addCounterQuestionIndex({ payload: "" }));
@@ -199,20 +196,15 @@ export default function AnswerPopup({
                   setPredictData(filteredData);
                   setActiveButtonTour(false);
                 })
-                .catch((error) => {
-                  console.log(error);
-                });
+                .catch((error) => {});
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch((error) => {});
         }
       })
       .catch((error) => {
         // if (error.response.data.detail.includes("max")) {
         //   dispatch(setToFinished());
         // }
-        console.log(error);
       });
   };
 

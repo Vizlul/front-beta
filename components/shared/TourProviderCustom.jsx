@@ -1,5 +1,5 @@
 import { TourProvider, useTour } from "@reactour/tour";
-import MainSliderMobile from "../steps/mobile/MainSliderMobile";
+import MainSliderMobile from "../steps/mobile/main/MainSliderMobile";
 import { useEffect, useRef, useState } from "react";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import styles from "./TourProvider.module.css";
