@@ -21,7 +21,7 @@ export default function ChancePotentialBox({
           })
         }
       >
-        <p>شانس ویزا</p>
+        <p style={{ fontSize: "24px" }}>شانس ویزا</p>
         <ProgressBar
           isNumberIncreasing={isNumberIncreasing}
           chanceHistory={chanceHistory}
@@ -40,7 +40,7 @@ export default function ChancePotentialBox({
           })
         }
       >
-        <p>شناخت ویزارد از شما</p>
+        <p style={{ fontSize: "24px" }}>شناخت ویزارد از شما</p>
         <ProgressBar
           isNumberIncreasing={isNumberIncreasing}
           chanceHistory={chanceHistory}

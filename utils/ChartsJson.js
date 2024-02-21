@@ -1,9 +1,11 @@
+const tour = localStorage.getItem("tour");
+
 export const areaData = (chanceHistory) => {
   return {
     series: [
       {
         name: "درصد شانس شما برای هر سوال",
-        data: chanceHistory.map((item) => item.chance),
+        data: !tour ? [30, 40, 50, 80] : chanceHistory.map((item) => item.chance),
       },
     ],
     options: {
@@ -45,11 +47,11 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
     series: [
       {
         name: "تغییرات پاسخ فعلی (مثبت)",
-        data: positiveData,
+        data: !tour ? [40, 80, 0, 0] : positiveData,
       },
       {
         name: "تغییرات پاسخ فعلی (منفی)",
-        data: negativeData,
+        data: !tour ? [0, 0, -30, -50] : negativeData,
       },
     ],
     options: {
@@ -161,17 +163,19 @@ export const radarData = (chanceHistory, questionCounter) => {
     series: [
       {
         name: "تغییرات پاسخ فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 2
-            ? chanceHistory[questionCounter - 2].chartData
-            : [0, 0, 0, 0, 0],
+        data: !tour
+          ? [40, 80, 60, 100]
+          : chanceHistory.length > 0 && questionCounter >= 2
+          ? chanceHistory[questionCounter - 2].chartData
+          : [0, 0, 0, 0, 0],
       },
       {
         name: "تغییرات پاسخ قبلی نسبت فعلی",
-        data:
-          chanceHistory.length > 0 && questionCounter >= 3
-            ? chanceHistory[questionCounter - 3].chartData
-            : [0, 0, 0, 0, 0],
+        data: !tour
+          ? [100, 40, 40, 20]
+          : chanceHistory.length > 0 && questionCounter >= 3
+          ? chanceHistory[questionCounter - 3].chartData
+          : [0, 0, 0, 0, 0],
       },
     ],
     options: {
@@ -192,7 +196,7 @@ export const columnData = (chanceHistory) => {
     series: [
       {
         name: "درصد شناخت ویزارد",
-        data: chanceHistory.map((item) => item.potential),
+        data: !tour ? [20, 40, 60, 80] : chanceHistory.map((item) => item.potential),
       },
     ],
     options: {

@@ -157,15 +157,15 @@ body
   /* width: 100px; */
 }
 
-.reactour__popover > span{
+.reactour__popover > span {
   background-color: #002722 !important;
 }
 
-.reactour__mask{
+.reactour__mask {
   /* width: 100px; */
 }
 
-.reactour__mask svg{
+.reactour__mask svg {
   /* width: 200px !important; */
 }
 
@@ -173,7 +173,7 @@ body
   top: 10px !important;
 }
 
-.ticker-view{
+.ticker-view {
   flex-direction: row !important;
   gap: 3px;
   width: 65px;
@@ -181,6 +181,17 @@ body
 
 .reactour__close-button {
   display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .ticker-view {
+    width: 28px;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-right: -10px; */
+  }
 }
 
 @media (max-height: 900px) {

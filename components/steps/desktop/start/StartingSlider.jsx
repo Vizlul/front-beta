@@ -57,6 +57,7 @@ export default function StartingSlider({ name, setName }) {
                 value={name}
               />
               <ButtonComponent
+                fontSize="16px"
                 title="شروع بررسی"
                 icon={<img src="forward-arrow.svg" alt="icon" />}
                 onClickFunc={handleClick}

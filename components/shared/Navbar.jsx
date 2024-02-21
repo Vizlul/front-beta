@@ -9,7 +9,7 @@ export default function Navbar() {
         <div className={styles.headerContentBox}>
           <img src="/visaland-logo.svg" alt="logo" />
           <img src="/arrow-nav.svg" alt="arrow-nav" />
-          <p>اولین هوش مصنوعی ویزا</p>
+          <p>هوش مصنوعی ویزارد</p>
         </div>
 
         <div className={styles.headerContentButton}>
@@ -17,8 +17,11 @@ export default function Navbar() {
 
           <a href="https://visaland.org">
             <ButtonComponent
+              width="160px"
+              height="50px"
+              fontSize="18px"
               title="وبسایت ویزالند"
-              icon={<img src="forward-arrow.svg" alt="icon" />}
+              icon={<img style={{ width: "10px", height: "10px" }} src="forward-arrow.svg" alt="icon" />}
             ></ButtonComponent>
           </a>
         </div>

@@ -1,3 +1,4 @@
+import { AnimatedCounter } from "react-animated-counter";
 import styles from "./ProgressBar.module.css";
 
 export default function ProgressBar({ isNumberIncreasing, chanceHistory, number, type, notWidth }) {
@@ -45,8 +46,9 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
           ) : (
             <img src="/CaretEqual.svg" alt="icon" />
           )}
-          <p>
-            <span>%</span> {number}
+          <p style={{ display: "flex", alignItems: "center", width: "fit-content", padding: "6px 12px" }}>
+            <span>%</span>{" "}
+            <AnimatedCounter includeDecimals={false} value={number} color="white" fontSize="24px" />
           </p>
         </div>
       ) : (
@@ -75,8 +77,14 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
             ) : (
               <img src="/CaretEqual.svg" alt="icon" />
             )}
-            <p>
-              <span>%</span> {number}
+            <p style={{ display: "flex", alignItems: "center", width: "fit-content", padding: "6px 12px" }}>
+              <span>%</span>{" "}
+              <AnimatedCounter
+                includeDecimals={false}
+                value={number}
+                color="white"
+                fontSize="24px"
+              />
             </p>
           </div>
         </div>

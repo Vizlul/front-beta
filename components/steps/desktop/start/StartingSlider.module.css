@@ -33,14 +33,14 @@
 }
 
 .mainHeroHeader p:first-of-type {
-  font-size: 30px;
+  font-size: 40px;
   color: #00554e;
   font-weight: 700;
 }
 
 .mainHeroHeader p:last-of-type {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .mainHeroLeft {
@@ -74,7 +74,7 @@
 }
 
 .starterMainHero > p {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -96,7 +96,7 @@
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
   padding: 0 30px;
   cursor: pointer;
 }
@@ -106,20 +106,24 @@
 }
 
 .absoluteBox {
+  width: 134px;
+  height: 80px;
   position: absolute;
-  top: 46%;
-  left: 20%;
+  top: 44%;
+  left: 10%;
   background-color: #fff !important;
   box-shadow: 0px 0px 20px 0px rgba(0, 85, 78, 0.2);
-  padding: 16px 20px;
+  /* padding: 10px 20px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .absoluteText {
   z-index: 2;
-  font-size: 25px;
+  font-size: 40px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 22px; /* 91.667% */
+  font-weight: 700;  
   background: linear-gradient(252deg, #347571 -24.05%, #102625 10.88%, #346d67 58.2%);
   background-clip: text;
   -webkit-background-clip: text;

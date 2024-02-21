@@ -49,7 +49,17 @@ export default function QuestionBox({
           </select>
         ) : questions[currentQuestionIndex].type === "number" ? (
           <div className={styles.questionNumber}>
-            <button onClick={() => setAnswer((prevValue) => Number(prevValue + 1))}>+</button>
+            <button
+              onClick={() =>
+                setAnswer((prevValue) =>
+                  prevValue < questions[currentQuestionIndex].answer.value_fa[1]
+                    ? Number(prevValue + 1)
+                    : Number(prevValue)
+                )
+              }
+            >
+              +
+            </button>
             <input
               style={{ maxWidth: "400px" }}
               type="number"
@@ -59,7 +69,17 @@ export default function QuestionBox({
               defaultValue={questions[currentQuestionIndex].answer.value_fa[0]}
               onChange={(event) => handleChange(event.target.value, "number")}
             />
-            <button onClick={() => setAnswer((prevValue) => Number(prevValue - 1))}>-</button>
+            <button
+              onClick={() =>
+                setAnswer((prevValue) =>
+                  prevValue > questions[currentQuestionIndex].answer.value_fa[0]
+                    ? Number(prevValue - 1)
+                    : Number(prevValue)
+                )
+              }
+            >
+              -
+            </button>
           </div>
         ) : questions[currentQuestionIndex].type === "radio_multi" ? (
           questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
@@ -86,12 +106,15 @@ export default function QuestionBox({
       <div className={styles.buttonGroups}>
         {finsihed ? (
           <ButtonComponent
+            fontSize="16px"
             onClickFunc={() => setOpenSimilarDocsPopup(true)}
             title="مشاهده پرونده مشابه شما"
             width="200px"
           ></ButtonComponent>
         ) : (
           <ButtonComponent
+            fontSize="16px"
+            width="140px"
             title="ثبت پاسخ"
             onClickFunc={handleSubmit}
             disabledFunc={answer === null && true}
@@ -101,6 +124,8 @@ export default function QuestionBox({
         )}
 
         <ButtonComponent
+          fontSize="16px"
+          width="145px"
           title="اطلاعات بیشتر"
           onClickFunc={() => setVideoPopup(true)}
           disabledFunc={!finsihed && true}

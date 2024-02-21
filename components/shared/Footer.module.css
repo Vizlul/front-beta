@@ -15,8 +15,13 @@
 }
 
 .footerRight p:first-of-type {
+  font-size: 24px;
+}
+
+.footerRight p:last-of-type {
   font-size: 20px;
 }
+
 
 .footerRight p {
   margin: 0;
