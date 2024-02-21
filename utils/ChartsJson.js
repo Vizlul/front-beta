@@ -1,4 +1,6 @@
 const tour = localStorage.getItem("tour");
+const primaryColors = "#06a77d";
+const secondaryColor = "#ce2323";
 
 export const areaData = (chanceHistory) => {
   return {
@@ -13,9 +15,14 @@ export const areaData = (chanceHistory) => {
         id: "area",
         toolbar: {
           show: false,
+          tools: {
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+          },
         },
       },
-      colors: ["#00E396"],
+      colors: [primaryColors],
       dataLabels: {
         enabled: false,
       },
@@ -59,13 +66,18 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
         stacked: true,
         toolbar: {
           show: false,
+          tools: {
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+          },
         },
       },
       labels: Object.keys(responseExplain).reduce((acc, key) => {
         acc[key] = mapThrough(key);
         return acc;
       }, {}),
-      colors: ["#00E396", "#FF0000"], // Assuming green for positive and red for negative
+      colors: [primaryColors, secondaryColor], // Assuming green for positive and red for negative
       plotOptions: {
         bar: {
           horizontal: true,
@@ -147,10 +159,11 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
         categories: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
         min: -100,
         max: 100,
-        tickAmount: 4,
+        tickAmount: 8,
         labels: {
           formatter: function (val) {
-            return Math.abs(Math.round(val)) + "%";
+            console.log(val);
+            return val + "%";
           },
         },
       },
@@ -170,7 +183,7 @@ export const radarData = (chanceHistory, questionCounter) => {
           : [0, 0, 0, 0, 0],
       },
       {
-        name: "تغییرات پاسخ قبلی نسبت فعلی",
+        name: "تغییرات پاسخ قبلی",
         data: !tour
           ? [100, 40, 40, 20]
           : chanceHistory.length > 0 && questionCounter >= 3
@@ -183,40 +196,125 @@ export const radarData = (chanceHistory, questionCounter) => {
         id: "radar",
         toolbar: {
           show: false,
+          tools: {
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+          },
         },
       },
-      colors: ["#00E396", "#2E93FA"],
+      colors: [primaryColors, secondaryColor],
       yaxis: {},
     },
   };
 };
 
-export const columnData = (chanceHistory) => {
+export const columnData = (chanceHistory, questionCounter) => {
   return {
     series: [
       {
-        name: "درصد شناخت ویزارد",
+        name: "شناخت ویزارد از شما",
         data: !tour ? [20, 40, 60, 80] : chanceHistory.map((item) => item.potential),
       },
     ],
     options: {
       chart: {
-        id: "column",
+        type: "bar",
         toolbar: {
           show: false,
+          tools: {
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+          },
+          zoom: {
+            enabled: false,
+          },
         },
       },
-      colors: ["#00E396", "#2E93FA"],
+      colors: [primaryColors, "#2E93FA"],
       plotOptions: {
         bar: {
-          horizontal: false,
-          columnWidth: "20%",
+          dataLabels: {
+            position: "top", // top, center, bottom
+          },
         },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#303030"],
+        },
       },
-      yaxis: {},
+
+      xaxis: {
+        min: 1,
+        max: questionCounter,
+        position: "top",
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        min: 0,
+        max: 100,
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
+      title: {
+        text: "شناخت ویزارد از شما در هر مرحله",
+        floating: true,
+        offsetY: 299,
+        align: "center",
+        style: {
+          color: "#303030",
+          fontWeight: "normal",
+          fontSize: "14px",
+        },
+      },
+      responsive: [
+        {
+          breakpoint: undefined,
+          options: {
+            interactivity: {
+              enabled: false,
+            },
+          },
+        },
+      ],
     },
   };
 };

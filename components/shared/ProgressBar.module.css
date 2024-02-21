@@ -7,7 +7,7 @@
 }
 
 .progressFull > path {
-  stroke: #e6f3e6;
+  /* stroke: #e6f3e6; */
 }
 
 .progress {
@@ -27,11 +27,11 @@
 }
 
 .progress > path {
-  stroke: #008000;
+  /* stroke: #008000; */
 }
 
 .potential > path {
-  stroke: #008000;
+  /* stroke: #008000; */
 }
 .chanceNumber {
   position: absolute;
@@ -43,7 +43,7 @@
 }
 
 .chanceNumber p {
-  background-color: #008000;
+  background-color: #e6f3e6;
   color: #fff;
   padding: 4px;
   font-size: 16px;
@@ -76,7 +76,7 @@
 }
 
 .potentialNumberIcon p {
-  background-color: #008000;
+  background-color: #e6f3e6;
   color: #fff;
   padding: 4px;
   font-size: 16px;

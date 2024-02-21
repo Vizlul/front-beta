@@ -1,5 +1,6 @@
 import { AnimatedCounter } from "react-animated-counter";
 import styles from "./ProgressBar.module.css";
+import { ColorCalc } from "@/utils/ChanceColors";
 
 export default function ProgressBar({ isNumberIncreasing, chanceHistory, number, type, notWidth }) {
   return (
@@ -11,8 +12,14 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
         height="220"
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
+        stroke={number > 0 ? ColorCalc(number).color : "#e6f3e6"}
+        style={{ opacity: "0.2" }}
       >
-        <path d="M100 200L0 200L0 0L200 0L200 200L100 200" strokeWidth="40" />
+        <path
+          stroke={ColorCalc(number).color}
+          d="M100 200L0 200L0 0L200 0L200 200L100 200"
+          strokeWidth="40"
+        />
       </svg>
       <svg
         fill="none"
@@ -22,7 +29,11 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M100 200L0 200L0 0L200 0L200 200L100 200" strokeWidth="40" />
+        <path
+          stroke={ColorCalc(number).color}
+          d="M100 200L0 200L0 0L200 0L200 200L100 200"
+          strokeWidth="40"
+        />
       </svg>
       {type === "chance" ? (
         <div className={styles.chanceNumber}>
@@ -46,7 +57,15 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
           ) : (
             <img src="/CaretEqual.svg" alt="icon" />
           )}
-          <p style={{ display: "flex", alignItems: "center", width: "fit-content", padding: "6px 12px" }}>
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "fit-content",
+              padding: "6px 12px",
+              backgroundColor: ColorCalc(number).color,
+            }}
+          >
             <span>%</span>{" "}
             <AnimatedCounter includeDecimals={false} value={number} color="white" fontSize="24px" />
           </p>
@@ -77,7 +96,15 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
             ) : (
               <img src="/CaretEqual.svg" alt="icon" />
             )}
-            <p style={{ display: "flex", alignItems: "center", width: "fit-content", padding: "6px 12px" }}>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "fit-content",
+                padding: "6px 12px",
+                backgroundColor: ColorCalc(number).color,
+              }}
+            >
               <span>%</span>{" "}
               <AnimatedCounter
                 includeDecimals={false}

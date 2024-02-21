@@ -17,7 +17,7 @@ export default function NamePopup({ namePopup, setNamePopup, handleClick, setNam
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
-          <button onClick={handleClick} className={styles.submitButton}>
+          <button disabled={!name} onClick={handleClick} className={styles.submitButton}>
             شروع بررسی
             <Image src="forward-arrow.svg" width="30" height="30" alt="arrow" />
           </button>
