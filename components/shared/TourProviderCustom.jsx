@@ -1,3 +1,4 @@
+"use client"
 import { TourProvider, useTour } from "@reactour/tour";
 import MainSliderMobile from "../steps/mobile/main/MainSliderMobile";
 import { useEffect, useRef, useState } from "react";

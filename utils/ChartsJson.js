@@ -1,4 +1,4 @@
-const tour = localStorage.getItem("tour");
+const tour = typeof window !== "undefined" && localStorage.getItem("tour");
 const primaryColors = "#06a77d";
 const secondaryColor = "#ce2323";
 

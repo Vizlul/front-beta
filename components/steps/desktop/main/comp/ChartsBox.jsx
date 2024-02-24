@@ -1,3 +1,4 @@
+"use client"
 import styles from "./ChartsBox.module.css";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 import Charts from "@/components/shared/Charts";
