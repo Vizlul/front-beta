@@ -254,7 +254,11 @@ export default function AnswerPopup({
               <button
                 onClick={() =>
                   setAnswer((prevValue) =>
-                    prevValue < questions[currentQuestionIndex].answer.value_fa[1]
+                    questions[currentQuestionIndex].question_value === "bank_balance"
+                      ? prevValue < questions[currentQuestionIndex].answer.value_fa[1]
+                        ? Number(prevValue + 50)
+                        : Number(prevValue)
+                      : prevValue < questions[currentQuestionIndex].answer.value_fa[1]
                       ? Number(prevValue + 1)
                       : Number(prevValue)
                   )
@@ -273,7 +277,11 @@ export default function AnswerPopup({
               <button
                 onClick={() =>
                   setAnswer((prevValue) =>
-                    prevValue > questions[currentQuestionIndex].answer.value_fa[0]
+                    questions[currentQuestionIndex].question_value === "bank_balance"
+                      ? prevValue > questions[currentQuestionIndex].answer.value_fa[0]
+                        ? Number(prevValue - 50)
+                        : Number(prevValue)
+                      : prevValue > questions[currentQuestionIndex].answer.value_fa[0]
                       ? Number(prevValue - 1)
                       : Number(prevValue)
                   )

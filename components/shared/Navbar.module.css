@@ -45,7 +45,7 @@
   border: none;
   background-color: #00554e !important;
   height: 40px;
-  width: 130px;
+  /* width: 130px; */
   display: flex;
   align-items: center;
   justify-content: center;

@@ -31,14 +31,6 @@ export default function SimilarDocsPopupDesktop({
           </p>
           <div className={styles.buttonGroups}>
             <ButtonComponent
-              title="تماس با ویزالند"
-              width="100%"
-              height="56px"
-              background="#00554e"
-              color="#fff"
-              fontSize="18px"
-            />
-            <ButtonComponent
               title="33143 026"
               width="100%"
               height="56px"
@@ -48,6 +40,14 @@ export default function SimilarDocsPopupDesktop({
               icon={<img src="phone-icon.svg" alt="phone" />}
               fontSize="18px"
               onClickFunc={() => window.open("tel:02633143")}
+            />
+            <ButtonComponent
+              title="تماس با ویزالند"
+              width="100%"
+              height="56px"
+              background="#00554e"
+              color="#fff"
+              fontSize="18px"
             />
           </div>
         </div>

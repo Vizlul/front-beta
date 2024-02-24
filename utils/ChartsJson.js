@@ -12,6 +12,7 @@ export const areaData = (chanceHistory) => {
     ],
     options: {
       chart: {
+        background: "#fff",
         id: "area",
         toolbar: {
           show: false,
@@ -63,6 +64,7 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
     ],
     options: {
       chart: {
+        background: "#fff",
         stacked: true,
         toolbar: {
           show: false,
@@ -124,20 +126,20 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
             responseExplain[
               dataPointIndex === 0
                 ? "purpose"
-                : dataPointIndex === 1
-                ? "emotional"
                 : dataPointIndex === 2
                 ? "career"
-                : "financial"
+                : dataPointIndex === 3
+                ? "financial"
+                : "emotional"
             ]
               ? responseExplain[
                   dataPointIndex === 0
                     ? "purpose"
-                    : dataPointIndex === 1
-                    ? "emotional"
                     : dataPointIndex === 2
                     ? "career"
-                    : "financial"
+                    : dataPointIndex === 3
+                    ? "financial"
+                    : "emotional"
                 ]
               : [];
           const emotionalContent = emotionalData
@@ -193,6 +195,7 @@ export const radarData = (chanceHistory, questionCounter) => {
     ],
     options: {
       chart: {
+        background: "#fff",
         id: "radar",
         toolbar: {
           show: false,
@@ -219,6 +222,7 @@ export const columnData = (chanceHistory, questionCounter) => {
     ],
     options: {
       chart: {
+        background: "#fff",
         type: "bar",
         toolbar: {
           show: false,
@@ -241,7 +245,7 @@ export const columnData = (chanceHistory, questionCounter) => {
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: window.innerWidth > 768 ? true : false,
         formatter: function (val) {
           return val + "%";
         },
@@ -281,17 +285,16 @@ export const columnData = (chanceHistory, questionCounter) => {
       yaxis: {
         min: 0,
         max: 100,
+        labels: {
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
         axisBorder: {
           show: false,
         },
         axisTicks: {
           show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val) {
-            return val + "%";
-          },
         },
       },
       title: {

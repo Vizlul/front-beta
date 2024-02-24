@@ -11,9 +11,15 @@ export default function Charts({
   questionCounter,
   type,
   responseExplain,
+  onClickFunc,
 }) {
   return (
-    <div data-tut={dataTut} ref={firstChartRef} className={styles.mainChartsArea}>
+    <div
+      data-tut={dataTut}
+      ref={firstChartRef}
+      className={styles.mainChartsArea}
+      onClick={onClickFunc}
+    >
       {questionCounter === 1 && (
         <div className={styles.blurChart}>
           <p className={styles.noBlur}>نامشخص</p>

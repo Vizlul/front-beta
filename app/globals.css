@@ -159,6 +159,7 @@ body
 
 .reactour__popover > span {
   background-color: #002722 !important;
+  border-radius: 0 !important;
 }
 
 .reactour__mask {

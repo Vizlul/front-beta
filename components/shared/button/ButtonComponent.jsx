@@ -2,9 +2,11 @@ import styles from "./ButtonComponent.module.css";
 import Loading from "../../shared/Loading";
 
 export default function ButtonComponent({
+  padding,
   title,
   size,
   background,
+  borderColor,
   color,
   onClickFunc,
   icon,
@@ -21,9 +23,10 @@ export default function ButtonComponent({
       size={size}
       className={styles.button}
       style={{
+        padding: padding && padding,
         background: background,
         color: color,
-        border: `1px solid ${background}`,
+        border: `1px solid ${borderColor ? borderColor : background}`,
         width: width && width,
         height: height && height,
         fontSize: fontSize && fontSize,

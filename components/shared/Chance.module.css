@@ -81,3 +81,29 @@
     transform: rotate(0deg);
   }
 }
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  transform: translateY(0);
+  transition: all ease 0.3s;
+  background-color: #000c0acc !important;
+  z-index: 99999;
+}
+
+.popupNot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  transform: translateY(-100%);
+  transition: all ease 0.3s;
+  background-color: #000c0acc !important;
+  z-index: 99999;
+}

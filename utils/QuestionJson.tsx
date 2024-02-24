@@ -222,7 +222,7 @@ export const questions: any = [
     answer: { value_fa: [0, 50] },
     question_value: "previous_marriage_period",
     type: "number",
-    step:5,
+    step: 5,
     options: [
       { value: 0, label: 0 },
       { value: 50, label: 50 },
@@ -408,7 +408,7 @@ export const questions: any = [
 
   //new
   {
-    question: "چقدر میخوای برای هر نفر همراهت سر کیسه رو شل کنی؟ 💰",
+    question: "چقدر میخوای برای هر نفر همراهت سر کیسه رو شل کنی؟ 💰 (100 - 600 دلار)",
     answer: { value_fa: [100, 600] },
     question_value: "bank_balance",
     type: "number",

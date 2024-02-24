@@ -12,7 +12,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
         height="220"
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
-        stroke={number > 0 ? ColorCalc(number).color : "#e6f3e6"}
+        stroke={number > 0 ? ColorCalc(number).color : "rgba(66, 66, 66, 1)"}
         style={{ opacity: "0.2" }}
       >
         <path
@@ -63,7 +63,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
               alignItems: "center",
               width: "fit-content",
               padding: "6px 12px",
-              backgroundColor: ColorCalc(number).color,
+              backgroundColor: number > 0 ? ColorCalc(number).color : "rgba(66, 66, 66, 1)",
             }}
           >
             <span>%</span>{" "}
@@ -102,7 +102,7 @@ export default function ProgressBar({ isNumberIncreasing, chanceHistory, number,
                 alignItems: "center",
                 width: "fit-content",
                 padding: "6px 12px",
-                backgroundColor: ColorCalc(number).color,
+                backgroundColor: number > 0 ? ColorCalc(number).color : "rgba(66, 66, 66, 1)",
               }}
             >
               <span>%</span>{" "}

@@ -14,6 +14,7 @@ import { areaData, barNegativeData, radarData, columnData } from "@/utils/Charts
 import { useTour } from "@reactour/tour";
 import Chance from "@/components/shared/Chance";
 import Charts from "@/components/shared/Charts";
+import ResponsePopup from "@/components/shared/popups/mobile/ResponsePopup";
 
 export default function MainSliderMobile({
   setName,
@@ -24,6 +25,7 @@ export default function MainSliderMobile({
   setAnswer,
   setActiveButtonTour,
 }) {
+  const [responsePopup, setResponsePopup] = useState(false);
   const { isOpen, currentStep, steps, setIsOpen, setCurrentStep, setSteps } = useTour();
   const predict = useSelector((state) => state.predict);
   const slider = useSelector((state) => state.slider);
@@ -51,6 +53,7 @@ export default function MainSliderMobile({
   };
 
   const [disableIntract, setDisableIntract] = useState(false);
+  const [chartsClicked, setChartsClicked] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("tour") || localStorage.getItem("tour") === "false") {
@@ -64,6 +67,10 @@ export default function MainSliderMobile({
     }
   }, [answerPopup]);
 
+  const handleChartsClick = () => {
+    setChartsClicked((prev) => !prev);
+  };
+
   return (
     <>
       <div data-tut="reactour__1">
@@ -72,8 +79,10 @@ export default function MainSliderMobile({
         </div>
         <div className={styles.main}>
           {showAlert && <InfoAlert questionCounter={questionCounter} setShowAlert={setShowAlert} />}
-
-          <div className={styles.mainCharts}>
+          <div
+            className={styles.mainCharts}
+            onClick={() => questionCounter === 1 && handleChartsClick()}
+          >
             <Charts
               firstChartRef={firstChartRef}
               dataTut="reactour__4"
@@ -85,6 +94,7 @@ export default function MainSliderMobile({
             />
 
             <Charts
+              onClickFunc={() => setResponsePopup(true)}
               firstChartRef={secondChartRef}
               dataTut="reactour__5"
               chartSelected={chartSelected}
@@ -121,54 +131,58 @@ export default function MainSliderMobile({
               className={styles.moreInfoButton}
               disabled={slider.name !== SliderState.FINISHED && true}
             >
-              اطلاعات بیشتر
+              اطلاعات بیشتر {chartsClicked}
             </button>
           </div>
         </div>
 
         <div data-tut="reactour__8" className={styles.footer}>
-          <div className={styles.footerTop}>
-            <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
-              <p>شناخت ویزارد از شما</p>
-              <p>{predict.potential}%</p>
-            </div>
-
-            <div className={styles.progressBarBox}>
-              <div
-                style={{
-                  width: predict.potential + "%",
-                }}
-                className={styles.progressBar}
-              ></div>
-            </div>
-
-            <div className={styles.footerVisHead}>
-              <img src="vizard-head.svg" alt="vizard-head" />
-            </div>
-          </div>
-          {slider.name === SliderState.FINISHED ? (
-            <div className={styles.footerFinished}>
-              <button onClick={() => setSimilarDocsPopup(true)}>مشاهده پرونده‌های مشابه شما</button>
-            </div>
-          ) : (
-            <div
-              onClick={() => {
-                setAnswerPopup(true);
-                setDisableIntract(false);
-              }}
-              data-tut="reactour__2"
-              className={styles.footerDown}
-            >
-              <div className={styles.footerDownQuestion}>
-                <p>{questionCounter}</p>
-                <p>{questions[currentQuestionIndex].question}</p>
+          <div key={chartsClicked} className={styles.shakeAnimation}>
+            <div className={styles.footerTop}>
+              <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
+                <p>شناخت ویزارد از شما</p>
+                <p>{predict.potential}%</p>
               </div>
 
-              <button className={styles.submitButton}>
-                <img src="forward-arrow.svg" alt="forward-arrow" />
-              </button>
+              <div className={styles.progressBarBox}>
+                <div
+                  style={{
+                    width: predict.potential + "%",
+                  }}
+                  className={styles.progressBar}
+                ></div>
+              </div>
+
+              <div className={styles.footerVisHead}>
+                <img src="vizard-head.svg" alt="vizard-head" />
+              </div>
             </div>
-          )}
+            {slider.name === SliderState.FINISHED ? (
+              <div className={styles.footerFinished}>
+                <button onClick={() => setSimilarDocsPopup(true)}>
+                  مشاهده پرونده‌های مشابه شما
+                </button>
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  setAnswerPopup(true);
+                  setDisableIntract(false);
+                }}
+                data-tut="reactour__2"
+                className={styles.footerDown}
+              >
+                <div className={styles.footerDownQuestion}>
+                  <p>{questionCounter}</p>
+                  <p>{questions[currentQuestionIndex].question}</p>
+                </div>
+
+                <button className={styles.submitButton}>
+                  <img src="forward-arrow.svg" alt="forward-arrow" />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <div
@@ -243,6 +257,11 @@ export default function MainSliderMobile({
           setFinishPopup={setFinishPopup}
         />
       </div>
+
+      <div className={responsePopup ? styles.responsePopup : styles.responsePopupNot}>
+        {responsePopup && <ResponsePopup setResponsePopup={setResponsePopup} />}
+      </div>
+
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />
     </>
   );
