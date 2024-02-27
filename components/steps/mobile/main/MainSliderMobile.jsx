@@ -79,38 +79,35 @@ export default function MainSliderMobile({
         </div>
         <div className={styles.main}>
           {showAlert && <InfoAlert questionCounter={questionCounter} setShowAlert={setShowAlert} />}
-          <div
-            className={styles.mainCharts}
-            onClick={() => questionCounter === 1 && handleChartsClick()}
-          >
-            <Charts
-              firstChartRef={firstChartRef}
-              dataTut="reactour__4"
-              chartSelected={chartSelected}
-              series={areaData(chanceHistory, questionCounter, responseExplain).series}
-              options={areaData(chanceHistory, questionCounter, responseExplain).options}
-              questionCounter={questionCounter}
-              type="area"
-            />
-
+          <div className={styles.mainCharts} onClick={() => questionCounter === 1 && handleChartsClick()}>
             <Charts
               onClickFunc={() => setResponsePopup(true)}
               firstChartRef={secondChartRef}
               dataTut="reactour__5"
               chartSelected={chartSelected}
-              series={barNegativeData(chanceHistory, questionCounter, responseExplain).series}
-              options={barNegativeData(chanceHistory, questionCounter, responseExplain).options}
+              series={barNegativeData(chanceHistory, questionCounter, responseExplain, setResponsePopup).series}
+              options={barNegativeData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="bar"
               responseExplain={responseExplain}
             />
 
             <Charts
+              firstChartRef={firstChartRef}
+              dataTut="reactour__4"
+              chartSelected={chartSelected}
+              series={areaData(chanceHistory, questionCounter, responseExplain, setResponsePopup).series}
+              options={areaData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
+              questionCounter={questionCounter}
+              type="area"
+            />
+
+            <Charts
               firstChartRef={thirdChartRef}
               dataTut="reactour__6"
               chartSelected={chartSelected}
-              series={radarData(chanceHistory, questionCounter, responseExplain).series}
-              options={radarData(chanceHistory, questionCounter, responseExplain).options}
+              series={radarData(chanceHistory, questionCounter, responseExplain, setResponsePopup).series}
+              options={radarData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="radar"
             />
@@ -119,8 +116,8 @@ export default function MainSliderMobile({
               firstChartRef={fourthChartRef}
               dataTut="reactour__7"
               chartSelected={chartSelected}
-              series={columnData(chanceHistory, questionCounter, responseExplain).series}
-              options={columnData(chanceHistory, questionCounter, responseExplain).options}
+              series={columnData(chanceHistory, questionCounter, responseExplain, setResponsePopup).series}
+              options={columnData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="bar"
             />
@@ -159,9 +156,7 @@ export default function MainSliderMobile({
             </div>
             {slider.name === SliderState.FINISHED ? (
               <div className={styles.footerFinished}>
-                <button onClick={() => setSimilarDocsPopup(true)}>
-                  مشاهده پرونده‌های مشابه شما
-                </button>
+                <button onClick={() => setSimilarDocsPopup(true)}>مشاهده پرونده‌های مشابه شما</button>
               </div>
             ) : (
               <div
@@ -192,19 +187,13 @@ export default function MainSliderMobile({
           <div onClick={() => firstChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/LineChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => secondChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => secondChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => thirdChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/RadarChartIcon.svg" alt="chart-icon" />
           </div>
-          <div
-            onClick={() => fourthChartRef.current.scrollIntoView()}
-            className={styles.chartsIcon}
-          >
+          <div onClick={() => fourthChartRef.current.scrollIntoView()} className={styles.chartsIcon}>
             <img src="chart/BarChartIcon.svg" alt="chart-icon" />
           </div>
           <div onClick={() => setCloseChart((prev) => !prev)} className={styles.closeIconBox}>
@@ -235,9 +224,7 @@ export default function MainSliderMobile({
       </div>
 
       <div className={finishPopup ? styles.finishPopup : styles.finishPopupNot}>
-        {finishPopup && (
-          <FinishSliderPopup finishPopup={finishPopup} setContactUsPopup={setContactUsPopup} />
-        )}
+        {finishPopup && <FinishSliderPopup finishPopup={finishPopup} setContactUsPopup={setContactUsPopup} />}
       </div>
 
       <div className={similarDocsPopup ? styles.similarDocsPopup : styles.similarDocsPopupNot}>
@@ -258,8 +245,17 @@ export default function MainSliderMobile({
         />
       </div>
 
-      <div className={responsePopup ? styles.responsePopup : styles.responsePopupNot}>
-        {responsePopup && <ResponsePopup setResponsePopup={setResponsePopup} />}
+      <div
+        className={responsePopup ? styles.responsePopup : styles.responsePopupNot}
+        onClick={() => setResponsePopup(false)}
+      >
+        {responsePopup && (
+          <ResponsePopup
+            responseExplain={responseExplain}
+            responsePopup={responsePopup}
+            setResponsePopup={setResponsePopup}
+          />
+        )}
       </div>
 
       <PotentialPopup chancePopup={chancePopup} setChancePopup={setChancePopup} />

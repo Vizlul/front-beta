@@ -1,23 +1,22 @@
 import ButtonComponent from "../../button/ButtonComponent";
 import styles from "./ResponsePopup.module.css";
 
-export default function ResponsePopup({ setResponsePopup }) {
+export default function ResponsePopup({ responseExplain, setResponsePopup, responsePopup }) {
+  console.log(responseExplain);
+  console.log(responsePopup);
   return (
     <div className={styles.popupLayout}>
       <div className={styles.popup}>
-        <div>
-          <img src="/CaretDown.svg" />
-          فلان گزینه خوب است
-        </div>
-        <div>
-          <img src="/CaretDown.svg" />
-          فلان گزینه بد است
-        </div>
-        <div>
-          <img src="/CaretUp.svg" />
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-          است
-        </div>
+        {responseExplain[responsePopup]?.length > 0 ? (
+          responseExplain[responsePopup]?.map((item) => (
+            <div>
+              {item.good_influence ? <img src="/CaretUp.svg" /> : <img src="/CaretDown.svg" />}
+              {item.txt}
+            </div>
+          ))
+        ) : (
+          <div>برای مشاوره به سوالات بیشتری پاسخ دهید</div>
+        )}
 
         <ButtonComponent
           title="متوجه شدم"

@@ -1,4 +1,5 @@
 const tour = typeof window !== "undefined" && localStorage.getItem("tour");
+const mobile = typeof window !== "undefined" && window.innerWidth < 768;
 const primaryColors = "#06a77d";
 const secondaryColor = "#ce2323";
 
@@ -35,7 +36,7 @@ export const areaData = (chanceHistory) => {
   };
 };
 
-export const barNegativeData = (chanceHistory, questionCounter, responseExplain) => {
+export const barNegativeData = (chanceHistory, questionCounter, responseExplain, setResponsePopup) => {
   const mapThrough = (key) => {
     if (responseExplain[key] && Array.isArray(responseExplain[key])) {
       return responseExplain[key].map((item) => item.txt);
@@ -44,9 +45,7 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
   };
 
   const seriesData =
-    chanceHistory.length > 0 && questionCounter >= 2
-      ? chanceHistory[questionCounter - 2].chartData
-      : [0, 0, 0, 0, 0];
+    chanceHistory.length > 0 && questionCounter >= 2 ? chanceHistory[questionCounter - 2].chartData : [0, 0, 0, 0, 0];
 
   const positiveData = seriesData.map((value) => (value > 0 ? value : 0));
   const negativeData = seriesData.map((value) => (value < 0 ? value : 0));
@@ -121,6 +120,17 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
       },
       tooltip: {
         custom: function ({ series, seriesIndex, dataPointIndex, w, value }) {
+          if (mobile) {
+            if (dataPointIndex === 0) {
+              setResponsePopup("purpose");
+            } else if (dataPointIndex === 2) {
+              setResponsePopup("career");
+            } else if (dataPointIndex === 3) {
+              setResponsePopup("financial");
+            } else if (dataPointIndex === 1) {
+              setResponsePopup("emotional");
+            }
+          }
           const emotionalData =
             responseExplain &&
             responseExplain[
@@ -142,19 +152,19 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain)
                     : "emotional"
                 ]
               : [];
-          const emotionalContent = emotionalData
-            .map((item, index) => `<p>${index + 1}- ${item.txt}</p>`)
-            .join("");
+          const emotionalContent = emotionalData.map((item, index) => `<p>${index + 1}- ${item.txt}</p>`).join("");
 
-          return emotionalContent.length > 0
-            ? `<div style="direction: rtl; display: grid; gap: 8px; font-size: 14px; padding: 10px" margin: 0>` +
+          return !mobile
+            ? emotionalContent.length > 0
+              ? `<div style="direction: rtl; display: grid; gap: 8px; font-size: 14px; padding: 10px" margin: 0>` +
                 `<div style="grid-column: span 6 / span 6;">` +
                 `<p style="margin: 0;">` +
                 emotionalContent +
                 `</p>` +
                 `</div>` +
                 `</div>`
-            : `<p>برای نمایش مشاوره بیشتر تمامی سوالات را پاسخ دهید</p>`;
+              : `<p>برای نمایش مشاوره بیشتر تمامی سوالات را پاسخ دهید</p>`
+            : "";
         },
       },
       xaxis: {
@@ -207,7 +217,17 @@ export const radarData = (chanceHistory, questionCounter) => {
         },
       },
       colors: [primaryColors, secondaryColor],
-      yaxis: {},
+      yaxis: {
+        min: 0,
+        max: 100,
+        tickAmount: 4,
+        labels: {
+          formatter: function (val) {
+            console.log(val);
+            return val + "%";
+          },
+        },
+      },
     },
   };
 };
