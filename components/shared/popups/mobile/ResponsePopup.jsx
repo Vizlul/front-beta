@@ -8,8 +8,8 @@ export default function ResponsePopup({ responseExplain, setResponsePopup, respo
     <div className={styles.popupLayout}>
       <div className={styles.popup}>
         {responseExplain[responsePopup]?.length > 0 ? (
-          responseExplain[responsePopup]?.map((item) => (
-            <div>
+          responseExplain[responsePopup]?.map((item, index) => (
+            <div key={index}>
               {item.good_influence ? <img src="/CaretUp.svg" /> : <img src="/CaretDown.svg" />}
               {item.txt}
             </div>
