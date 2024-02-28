@@ -307,6 +307,25 @@
   z-index: 99;
 }
 
+.mainChartsArea {
+  position: relative;
+  border: 1px solid #ccc;
+  direction: ltr !important;
+  height: 340px;
+}
+
+.mainChartsNegativeBar {
+  position: relative;
+  border: 1px solid #ccc;
+  direction: ltr !important;
+  height: 340px;
+}
+
+.mainChartsNegativeBar path {
+  animation: shakeY infinite 0.8s ease;
+}
+
+
 .shakeAnimation {
   animation: shake 0.5s ease;
 }
@@ -328,3 +347,23 @@
     transform: translateX(0);
   }
 }
+
+@keyframes shakeY {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform:  translateX(-2px);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform:  translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+

@@ -24,6 +24,17 @@ export const areaData = (chanceHistory) => {
           },
         },
       },
+      title: {
+        text: "نمودار شانس اخذ ویزا شما در هر مرحله",
+        floating: true,
+        offsetY: 0,
+        align: "center",
+        style: {
+          color: "#303030",
+          fontWeight: "normal",
+          fontSize: "14px",
+        },
+      },
       colors: [primaryColors],
       dataLabels: {
         enabled: false,
@@ -31,7 +42,16 @@ export const areaData = (chanceHistory) => {
       stroke: {
         curve: "smooth",
       },
-      yaxis: {},
+      yaxis: {
+        min: 0,
+        max: 100,
+        tickAmount: 5,
+        labels: {
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
     },
   };
 };
@@ -167,6 +187,17 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain,
             : "";
         },
       },
+      title: {
+        text: "نمودار تاثیر پاسخ های شما بر وابستگی ها",
+        floating: true,
+        offsetY: 0,
+        align: "center",
+        style: {
+          color: "#303030",
+          fontWeight: "normal",
+          fontSize: "14px",
+        },
+      },
       xaxis: {
         categories: ["هدف", "عاطفی", "شغلی", "اقتصادی"],
         min: -100,
@@ -174,7 +205,6 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain,
         tickAmount: 8,
         labels: {
           formatter: function (val) {
-            console.log(val);
             return val + "%";
           },
         },
@@ -192,7 +222,7 @@ export const radarData = (chanceHistory, questionCounter) => {
           ? [40, 80, 60, 100]
           : chanceHistory.length > 0 && questionCounter >= 2
           ? chanceHistory[questionCounter - 2].chartData
-          : [0, 0, 0, 0, 0],
+          : [0, 0, 0, 0],
       },
       {
         name: "تغییرات پاسخ قبلی",
@@ -200,7 +230,7 @@ export const radarData = (chanceHistory, questionCounter) => {
           ? [100, 40, 40, 20]
           : chanceHistory.length > 0 && questionCounter >= 3
           ? chanceHistory[questionCounter - 3].chartData
-          : [0, 0, 0, 0, 0],
+          : [0, 0, 0, 0],
       },
     ],
     options: {
@@ -216,16 +246,30 @@ export const radarData = (chanceHistory, questionCounter) => {
           },
         },
       },
-      colors: [primaryColors, secondaryColor],
+      colors: [primaryColors, "#008ffb"],
+      xaxis: {
+        categories: ["عاطفی", "شغلی", "هدف", "اقتصادی"],
+      },
       yaxis: {
         min: 0,
         max: 100,
         tickAmount: 4,
+
         labels: {
           formatter: function (val) {
-            console.log(val);
             return val + "%";
           },
+        },
+      },
+      title: {
+        text: "نمودار وابستگی های شما",
+        floating: true,
+        offsetY: 290,
+        align: "center",
+        style: {
+          color: "#303030",
+          fontWeight: "normal",
+          fontSize: "14px",
         },
       },
     },
@@ -320,7 +364,7 @@ export const columnData = (chanceHistory, questionCounter) => {
       title: {
         text: "شناخت ویزارد از شما در هر مرحله",
         floating: true,
-        offsetY: 299,
+        offsetY: 312,
         align: "center",
         style: {
           color: "#303030",

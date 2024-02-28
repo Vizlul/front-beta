@@ -34,31 +34,20 @@ export default function StartingSliderMobile({ setName, name }) {
     <div>
       <div className={styles.header}>
         <div>
-          <Image
-            width={200}
-            height={200}
-            className={styles.logo}
-            src="visaland-logo.svg"
-            alt="logo"
-          />
+          <Image width={200} height={200} className={styles.logo} src="visaland-logo.svg" alt="logo" />
         </div>
       </div>
       <div className={styles.main}>
         <div className={styles.imageBox}>
-          <Image
-            width={200}
-            height={200}
-            className={styles.vizard}
-            src="visard-character.svg"
-            alt="visard-character"
-          />
+          <Image width={200} height={200} className={styles.vizard} src="visard-character.svg" alt="visard-character" />
           <div className={styles.absoluteBox}>
             <p className={styles.absoluteText}>ویزارد</p>
           </div>
         </div>
         <p>اولین هوش مصنوعی ویزا</p>
         <p>
-          ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود دهید.
+          ویزارد با بررسی 100 ها پرونده مشابه و نتایج آن به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید
+          و آن را بهبود دهید.
         </p>
       </div>
       <section className={styles.slideOption}>

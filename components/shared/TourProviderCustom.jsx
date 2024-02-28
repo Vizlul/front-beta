@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { TourProvider, useTour } from "@reactour/tour";
 import MainSliderMobile from "../steps/mobile/main/MainSliderMobile";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ const tourSteps = (setDisableIntract, setActiveButtonTour) => {
     },
     {
       selector: '[data-tut="reactour__2"]',
-      content: `برای مشاهده سوال و پاسخ به اون روی این قسمت ضربه بزنید`,
+      content: `برای مشاهده سوال و پاسخ به اون روی قسمت سبز رنگ ضربه بزنید`,
       action: (node) => {
         setDisableIntract(true);
       },
@@ -21,22 +21,23 @@ const tourSteps = (setDisableIntract, setActiveButtonTour) => {
     },
     {
       selector: '[data-tut="reactour__3"]',
-      content: `یکی از گزینه های زیر را انتخاب کنید`,
+      content: `این قسمت به عنوان محل ثبت پاسخ به پرسش‌های ویزارد می باشد. لازم است حداقل یک گزینه را انتخاب و سپس بر روی دکمه "ثبت پاسخ" ضربه بزنید تا وارد مرحله بعدی شوید.`,
       action: (node) => {
         setActiveButtonTour(true);
       },
     },
     {
-      selector: '[data-tut="reactour__4"]',
-      content: `اینجا نمودار شناخت شما رو داریم`,
+      selector: '[data-tut="reactour__5"]',
+      content: `در این بخش، نمودار وابستگی‌ها و مشاوره‌های شما در چهار پارامتر اصلی شامل وابستگی عاطفی، شغلی، اقتصادی و هدف از سفر را ارائه می‌دهیم. با پاسخ دادن به هر سوال، می‌توانید با ضربه زدن روی هر پارامتر تأثیر جواب انتخابی و مشاوره لحظه ای بهره مند شوید.`,
     },
     {
-      selector: '[data-tut="reactour__5"]',
-      content: `اینجا نمودار وابستگی های شما رو داریم`,
+      selector: '[data-tut="reactour__4"]',
+      content: `این قسمت نمودار شانس اخذ ویزا شما به نسبت نوع پاسخی که به هر سوال داده می شود نمایش می دهیم.`,
     },
     {
       selector: '[data-tut="reactour__6"]',
-      content: `اینجا نمودار توانایی های شما رو داریم`,
+      content: `
+      در این بخش، نمودار تغییرات پارامترهای وابستگی در سوال فعلی نسبت به سوال قبلی را نمایش می‌دهیم`,
     },
     {
       selector: '[data-tut="reactour__7"]',
@@ -44,11 +45,11 @@ const tourSteps = (setDisableIntract, setActiveButtonTour) => {
     },
     {
       selector: '[data-tut="reactour__8"]',
-      content: `شناخت ویزارد از شما`,
+      content: `این بخش درصد شناخت هوش مصنوعی ویزارد از شما را نمایش می دهیم`,
     },
     {
       selector: '[data-tut="reactour__9"]',
-      content: `شانس اخذ ویزا شما`,
+      content: `این قسمت شانس اخذ ویزا شما به صورت لحظه ای در واکنش به هر سوال تغییر پیدا می کند`,
     },
   ];
 };
@@ -57,7 +58,7 @@ export default function TourProviderCustom({ isMobile }) {
   const [answerPopup, setAnswerPopup] = useState(false);
   const [answer, setAnswer] = useState(null);
   const [disableInteraction, setDisableIntract] = useState(false);
-  const { setCurrentStep } = useTour();
+  const { currentStep, setCurrentStep } = useTour();
   const [activeButtonTour, setActiveButtonTour] = useState(false);
   // disable body scroll
   const disableBody = (target) => disableBodyScroll(target);
@@ -73,24 +74,28 @@ export default function TourProviderCustom({ isMobile }) {
   };
   // close button react tour
   const onClickClose = ({ setCurrentStep, currentStep, steps, setIsOpen }) => {
-    if (steps) {
-      if (currentStep === steps.length - 1) {
-        setIsOpen(false);
-      }
-      setCurrentStep((s) => (s === steps.length - 1 ? 0 : s + 1));
-    }
+    console.log("adbgausygda");
+    setIsOpen(true);
   };
   // prev button react tour
   const prevButton = ({ currentStep, setCurrentStep, steps }) => {
     const first = currentStep === 0;
+    console.log(currentStep);
     return (
       <button
         className={styles.button}
+        disabled={currentStep === 0}
         onClick={() => {
           if (first) {
             setCurrentStep((s) => steps.length - 1);
             setActiveButtonTour(false);
             setDisableIntract(false);
+          } else if (currentStep === 2) {
+            setAnswerPopup(false);
+            setCurrentStep((s) => s - 1);
+          } else if (currentStep === 3) {
+            setAnswerPopup(true);
+            setCurrentStep((s) => s - 1);
           } else {
             setCurrentStep((s) => s - 1);
             setActiveButtonTour(false);
@@ -116,6 +121,8 @@ export default function TourProviderCustom({ isMobile }) {
               setIsOpen(false);
               localStorage.setItem("tour", "true");
               window.location.reload();
+            } else if (currentStep === 2) {
+              setCurrentStep((s) => s + 1);
             } else {
               if (currentStep === 2) {
                 setAnswerPopup(false);
@@ -142,19 +149,18 @@ export default function TourProviderCustom({ isMobile }) {
 
   return (
     <TourProvider
-      // afterOpen={disableBody}
-      // beforeClose={enableBody}
+      afterOpen={disableBody}
+      beforeClose={enableBody}
       rtl
       steps={tourSteps(setDisableIntract, setActiveButtonTour)}
       disableDotsNavigation
       disableInteraction={disableInteraction}
       onClickHighlighted={onClickHighlighted}
-      // onClickClose={onClickClose}
+      onClickMask={onClickClose}
       prevButton={prevButton}
       nextButton={nextButton}
-      badgeContent={({ totalSteps, currentStep }) => (
-        <span>{`${currentStep + 1} از ${totalSteps}`}</span>
-      )}
+      position="bottom"
+      badgeContent={({ totalSteps, currentStep }) => <span>{`${currentStep + 1} از ${totalSteps}`}</span>}
     >
       <MainSliderMobile
         answerPopup={answerPopup}

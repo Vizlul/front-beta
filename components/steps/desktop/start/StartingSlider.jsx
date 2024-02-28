@@ -42,20 +42,15 @@ export default function StartingSlider({ name, setName }) {
           </div>
 
           <p className={styles.mainHeroInfo}>
-            ویزارد به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین بزنید و آن را بهبود
-            دهید.
+            ویزارد با بررسی 100 ها پرونده مشابه و نتایج آن به شما کمک میکند قبل از اقدام برای ویزا شانس خود را تخمین
+            بزنید و آن را بهبود دهید.
           </p>
 
           <div className={styles.starterMainHero}>
             <p>برای شروع یک نام را انتخاب کنید.</p>
 
             <div>
-              <input
-                type="text"
-                placeholder="نام"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
+              <input type="text" placeholder="نام" onChange={(e) => setName(e.target.value)} value={name} />
               <ButtonComponent
                 fontSize="16px"
                 title="شروع بررسی"

@@ -12,14 +12,10 @@ export default function Charts({
   type,
   responseExplain,
   onClickFunc,
+  className,
 }) {
   return (
-    <div
-      data-tut={dataTut}
-      ref={firstChartRef}
-      className={styles.mainChartsArea}
-      onClick={onClickFunc}
-    >
+    <div data-tut={dataTut} ref={firstChartRef} className={className} onClick={onClickFunc}>
       {questionCounter === 1 && (
         <div className={styles.blurChart}>
           <p className={styles.noBlur}>نامشخص</p>
@@ -29,7 +25,7 @@ export default function Charts({
 
       <ApexCharts
         width="100%"
-        height={320}
+        height="100%"
         key={chartSelected}
         options={options}
         series={series}

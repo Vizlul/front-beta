@@ -14,7 +14,7 @@ export default function Chance({ chanceHistory }) {
     <>
       <div className={styles.chance} onClick={() => setOpenPopup(true)}>
         <img src="visaland-logo2.svg" alt="visaland-logo" />
-        <div>
+        <div data-tut="reactour__9">
           <p>شانس اخذ ویزا</p>
           <p>
             <ArrowChanceIcon

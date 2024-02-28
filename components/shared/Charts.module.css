@@ -5,6 +5,10 @@
   height: 340px;
 }
 
+.mainChartsArea path {
+  animation: shake infinite 0.5s ease;
+}
+
 .blurChart {
   position: absolute;
   top: 0;
@@ -32,4 +36,22 @@
 
 .noBlur {
   filter: none; /* Removes the blur effect */
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

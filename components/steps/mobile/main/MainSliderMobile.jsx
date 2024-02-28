@@ -62,7 +62,7 @@ export default function MainSliderMobile({
   }, []);
 
   useEffect(() => {
-    if (!answerPopup && questionCounter === 2) {
+    if (!answerPopup && currentStep === 2) {
       setCurrentStep((prev) => prev + 1);
     }
   }, [answerPopup]);
@@ -74,22 +74,27 @@ export default function MainSliderMobile({
   return (
     <>
       <div data-tut="reactour__1">
-        <div data-tut="reactour__9" className={styles.header}>
+        <div className={styles.header}>
           <Chance chanceHistory={chanceHistory} />
         </div>
         <div className={styles.main}>
           {showAlert && <InfoAlert questionCounter={questionCounter} setShowAlert={setShowAlert} />}
           <div className={styles.mainCharts} onClick={() => questionCounter === 1 && handleChartsClick()}>
             <Charts
-              onClickFunc={() => setResponsePopup(true)}
+              onClickFunc={() => !isOpen && setResponsePopup(true)}
               firstChartRef={secondChartRef}
               dataTut="reactour__5"
               chartSelected={chartSelected}
-              series={barNegativeData(chanceHistory, questionCounter, responseExplain, setResponsePopup).series}
-              options={barNegativeData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
+              series={
+                barNegativeData(chanceHistory, questionCounter, responseExplain, !isOpen && setResponsePopup).series
+              }
+              options={
+                barNegativeData(chanceHistory, questionCounter, responseExplain, !isOpen && setResponsePopup).options
+              }
               questionCounter={questionCounter}
               type="bar"
               responseExplain={responseExplain}
+              className={isOpen ? styles.mainChartsNegativeBar : styles.mainChartsArea}
             />
 
             <Charts
@@ -100,6 +105,7 @@ export default function MainSliderMobile({
               options={areaData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="area"
+              className={styles.mainChartsArea}
             />
 
             <Charts
@@ -110,6 +116,7 @@ export default function MainSliderMobile({
               options={radarData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="radar"
+              className={styles.mainChartsArea}
             />
 
             <Charts
@@ -120,6 +127,7 @@ export default function MainSliderMobile({
               options={columnData(chanceHistory, questionCounter, responseExplain, setResponsePopup).options}
               questionCounter={questionCounter}
               type="bar"
+              className={styles.mainChartsArea}
             />
 
             <button
@@ -133,9 +141,9 @@ export default function MainSliderMobile({
           </div>
         </div>
 
-        <div data-tut="reactour__8" className={styles.footer}>
+        <div className={styles.footer}>
           <div key={chartsClicked} className={styles.shakeAnimation}>
-            <div className={styles.footerTop}>
+            <div data-tut="reactour__8" className={styles.footerTop}>
               <div onClick={() => setChancePopup(true)} className={styles.footerTopChance}>
                 <p>شناخت ویزارد از شما</p>
                 <p>{predict.potential}%</p>
