@@ -12,7 +12,7 @@ export default function InfoAlert({ questionCounter, desktop, setShowAlert }) {
   return (
     <div
       className={`${styles.infoAlertBox} ${fadeOut ? styles.fadeOut : ""}`}
-      style={{ width: desktop && "80%" }}
+      style={{ width: desktop && "90%" }}
     >
       <img src="InfoIcon.svg" alt="icon" />
       {questionCounter === 1 ? (

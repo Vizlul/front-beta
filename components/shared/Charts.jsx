@@ -13,6 +13,7 @@ export default function Charts({
   responseExplain,
   onClickFunc,
   className,
+  height
 }) {
   return (
     <div data-tut={dataTut} ref={firstChartRef} className={className} onClick={onClickFunc}>
@@ -25,7 +26,7 @@ export default function Charts({
 
       <ApexCharts
         width="100%"
-        height="100%"
+        height={height}
         key={chartSelected}
         options={options}
         series={series}

@@ -3,18 +3,21 @@ const mobile = typeof window !== "undefined" && window.innerWidth < 768;
 const primaryColors = "#06a77d";
 const secondaryColor = "#ce2323";
 
+console.log(tour);
+
 export const areaData = (chanceHistory) => {
   return {
     series: [
       {
         name: "درصد شانس شما برای هر سوال",
-        data: !tour ? [30, 40, 50, 80] : chanceHistory.map((item) => item.chance),
+        data: !tour && mobile ? [30, 40, 50, 80] : chanceHistory.map((item) => item.chance),
       },
     ],
     options: {
       chart: {
         background: "#fff",
         id: "area",
+        height: "400px",
         toolbar: {
           show: false,
           tools: {
@@ -56,7 +59,12 @@ export const areaData = (chanceHistory) => {
   };
 };
 
-export const barNegativeData = (chanceHistory, questionCounter, responseExplain, setResponsePopup) => {
+export const barNegativeData = (
+  chanceHistory,
+  questionCounter,
+  responseExplain,
+  setResponsePopup
+) => {
   const mapThrough = (key) => {
     if (responseExplain[key] && Array.isArray(responseExplain[key])) {
       return responseExplain[key].map((item) => item.txt);
@@ -65,7 +73,9 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain,
   };
 
   const seriesData =
-    chanceHistory.length > 0 && questionCounter >= 2 ? chanceHistory[questionCounter - 2].chartData : [0, 0, 0, 0, 0];
+    chanceHistory.length > 0 && questionCounter >= 2
+      ? chanceHistory[questionCounter - 2].chartData
+      : [0, 0, 0, 0, 0];
 
   const positiveData = seriesData.map((value) => (value > 0 ? value : 0));
   const negativeData = seriesData.map((value) => (value < 0 ? value : 0));
@@ -74,11 +84,11 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain,
     series: [
       {
         name: "تغییرات پاسخ فعلی (مثبت)",
-        data: !tour ? [40, 80, 0, 0] : positiveData,
+        data: !tour && mobile ? [40, 80, 0, 0] : positiveData,
       },
       {
         name: "تغییرات پاسخ فعلی (منفی)",
-        data: !tour ? [0, 0, -30, -50] : negativeData,
+        data: !tour && mobile ? [0, 0, -30, -50] : negativeData,
       },
     ],
     options: {
@@ -172,7 +182,9 @@ export const barNegativeData = (chanceHistory, questionCounter, responseExplain,
                     : "emotional"
                 ]
               : [];
-          const emotionalContent = emotionalData.map((item, index) => `<p>${index + 1}- ${item.txt}</p>`).join("");
+          const emotionalContent = emotionalData
+            .map((item, index) => `<p>${index + 1}- ${item.txt}</p>`)
+            .join("");
 
           return !mobile
             ? emotionalContent.length > 0
@@ -218,19 +230,21 @@ export const radarData = (chanceHistory, questionCounter) => {
     series: [
       {
         name: "تغییرات پاسخ فعلی",
-        data: !tour
-          ? [40, 80, 60, 100]
-          : chanceHistory.length > 0 && questionCounter >= 2
-          ? chanceHistory[questionCounter - 2].chartData
-          : [0, 0, 0, 0],
+        data:
+          !tour && mobile
+            ? [40, 80, 60, 100]
+            : chanceHistory.length > 0 && questionCounter >= 2
+            ? chanceHistory[questionCounter - 2].chartData
+            : [0, 0, 0, 0],
       },
       {
         name: "تغییرات پاسخ قبلی",
-        data: !tour
-          ? [100, 40, 40, 20]
-          : chanceHistory.length > 0 && questionCounter >= 3
-          ? chanceHistory[questionCounter - 3].chartData
-          : [0, 0, 0, 0],
+        data:
+          !tour && mobile
+            ? [100, 40, 40, 20]
+            : chanceHistory.length > 0 && questionCounter >= 3
+            ? chanceHistory[questionCounter - 3].chartData
+            : [0, 0, 0, 0],
       },
     ],
     options: {
@@ -281,7 +295,7 @@ export const columnData = (chanceHistory, questionCounter) => {
     series: [
       {
         name: "شناخت ویزارد از شما",
-        data: !tour ? [20, 40, 60, 80] : chanceHistory.map((item) => item.potential),
+        data: !tour && mobile ? [20, 40, 60, 80] : chanceHistory.map((item) => item.potential),
       },
     ],
     options: {
