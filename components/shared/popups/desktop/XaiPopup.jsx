@@ -24,7 +24,7 @@ export default function XaiPopup({ responseExplain }) {
             ?.map((item) => ({ txt: item.txt, good_influence: item.good_influence }))
             ?.map((el, index) =>
               el.txt.includes("جنسیت") ? null : (
-                <div className={styles.item}>
+                <div key={index} className={styles.item}>
                   {el.good_influence ? <img src="/CaretUp.svg" /> : <img src="/CaretDown.svg" />}
                   <p>{el.txt}.</p>
                 </div>
