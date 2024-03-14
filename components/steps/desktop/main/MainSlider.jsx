@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import CallApi from "@/utils/CallApi";
+import XaiPopup from "@/components/shared/popups/desktop/XaiPopup";
 import {
   addCounterQuestionIndex,
   setChanceData,
@@ -52,6 +53,7 @@ export default function MainSlider({ name, setName }) {
   const [videoPopup, setVideoPopup] = useState(false);
   const [similarDocsData, setSimilarDocsData] = useState([]);
   const [responseExplain, setResponseExplain] = useState([]);
+  const charts = useSelector((state) => state.charts);
 
   function isNumberIncreasing(previousNumber, currentNumber) {
     return currentNumber > previousNumber
@@ -308,6 +310,10 @@ export default function MainSlider({ name, setName }) {
         />
       </div>
 
+      <div className={charts.name ? styles.videoPopup : styles.videoPopupNot}>
+        <XaiPopup responseExplain={responseExplain} />
+      </div>
+
       <div className={videoPopup || contactUs ? styles.videoPopup : styles.videoPopupNot}>
         {videoPopup && (
           <VideoPlayer
@@ -316,6 +322,7 @@ export default function MainSlider({ name, setName }) {
             setVideoPopup={setVideoPopup}
           />
         )}
+
         {!videoPopup && contactUs && (
           <SimilarDocsPopupDesktop
             contactUs={contactUs}

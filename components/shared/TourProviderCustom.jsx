@@ -60,6 +60,7 @@ export default function TourProviderCustom({ isMobile }) {
   const [disableInteraction, setDisableIntract] = useState(false);
   const { currentStep, setCurrentStep } = useTour();
   const [activeButtonTour, setActiveButtonTour] = useState(false);
+  const [tourWidth, setTourWidth] = useState(0);
   // disable body scroll
   const disableBody = (target) => disableBodyScroll(target);
   const enableBody = (target) => enableBodyScroll(target);
@@ -143,14 +144,18 @@ export default function TourProviderCustom({ isMobile }) {
     }
   }, [answerPopup]);
 
+  let wind = typeof window !== "undefined" && window;
+  let iphone = !wind.navigator.userAgent.indexOf("iPhone") != -1;
+
   useEffect(() => {
-    document.documentElement.style.setProperty("--tour-width", `${window.innerWidth}px`);
+    setTourWidth(wind.innerWidth);
+    // document.documentElement.style.setProperty("--tour-width", window.innerWidth);
   }, []);
 
   return (
     <TourProvider
-      afterOpen={disableBody}
-      beforeClose={enableBody}
+      afterOpen={!iphone && disableBody}
+      beforeClose={!iphone && enableBody}
       rtl
       steps={tourSteps(setDisableIntract, setActiveButtonTour)}
       disableDotsNavigation
@@ -160,7 +165,9 @@ export default function TourProviderCustom({ isMobile }) {
       prevButton={prevButton}
       nextButton={nextButton}
       position="bottom"
-      badgeContent={({ totalSteps, currentStep }) => <span>{`${currentStep + 1} از ${totalSteps}`}</span>}
+      badgeContent={({ totalSteps, currentStep }) => (
+        <span>{`${currentStep + 1} از ${totalSteps}`}</span>
+      )}
     >
       <MainSliderMobile
         answerPopup={answerPopup}
@@ -168,6 +175,7 @@ export default function TourProviderCustom({ isMobile }) {
         answer={answer}
         setAnswer={setAnswer}
         setActiveButtonTour={setActiveButtonTour}
+        tourWidth={tourWidth}
       />
     </TourProvider>
   );

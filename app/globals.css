@@ -191,14 +191,12 @@ body
     display: flex;
     align-items: center;
     justify-content: center;
-    /* margin-right: -10px; */
   }
 }
 
 @media (max-height: 900px) {
   .mainLayout {
     height: 100%;
-    /* margin: 40px 0; */
   }
 }
 
@@ -208,6 +206,11 @@ body
     min-width: var(--tour-width);
     height: 100%;
     margin: 0 auto;
+  }
+
+  .mainContainer {
+    min-width: var(--tour-width);
+    width: var(--tour-width);
   }
 
   body > main > div {

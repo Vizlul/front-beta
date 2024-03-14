@@ -11,6 +11,7 @@ export default function NamePopup({ namePopup, setNamePopup, handleClick, setNam
         <div className={styles.namePopupBox}>
           <p>برای شروع یک نام انتخاب کنید</p>
           <input
+            style={{ fontSize: "18px" }}
             className={styles.nameInput}
             type="text"
             placeholder="نام"

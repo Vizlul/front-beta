@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import styles from "./ChartsBox.module.css";
 import { areaData, barNegativeData, radarData, columnData } from "@/utils/ChartsJson";
 import Charts from "@/components/shared/Charts";
@@ -14,7 +14,7 @@ export default function ChartsBox({
   handleSetActiveChart,
   responseExplain,
 }) {
-  console.log(chartSelected)
+  console.log(chartSelected);
   return (
     <div className={styles.mainSliderLeft}>
       {showAlert && <InfoAlert setShowAlert={setShowAlert} desktop={true} />}
@@ -79,14 +79,14 @@ export default function ChartsBox({
           className={`${styles.chartIcon} ${chartSelected === "bar" && styles.activeChart}`}
         >
           <Image width="25" height="25" src="chart/NegativeBarChart Icon.svg" alt="chart-icon" />
-          <p>نام جدول</p>
+          <p>وابستگی ویزا</p>
         </div>
         <div
           onClick={() => handleSetActiveChart("radar")}
           className={`${styles.chartIcon} ${chartSelected === "radar" && styles.activeChart}`}
         >
           <Image width="25" height="25" src="chart/RadarChartIcon.svg" alt="chart-icon" />
-          <p>نام جدول</p>
+          <p>تغییرات وابستگی </p>
         </div>
         <div
           onClick={() => handleSetActiveChart("column")}

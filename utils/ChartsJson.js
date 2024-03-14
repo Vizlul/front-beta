@@ -1,3 +1,6 @@
+import { setChartName } from "@/store/features/chartsSlice";
+import { useDispatch } from "react-redux";
+
 const tour = typeof window !== "undefined" && localStorage.getItem("tour");
 const mobile = typeof window !== "undefined" && window.innerWidth < 768;
 const primaryColors = "#06a77d";
@@ -65,6 +68,8 @@ export const barNegativeData = (
   responseExplain,
   setResponsePopup
 ) => {
+  const dispatch = useDispatch();
+
   const mapThrough = (key) => {
     if (responseExplain[key] && Array.isArray(responseExplain[key])) {
       return responseExplain[key].map((item) => item.txt);
@@ -101,6 +106,21 @@ export const barNegativeData = (
             zoom: false,
             zoomin: false,
             zoomout: false,
+          },
+        },
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            dispatch(
+              setChartName(
+                config.dataPointIndex === 0
+                  ? "purpose"
+                  : config.dataPointIndex === 1
+                  ? "emotional"
+                  : config.dataPointIndex === 2
+                  ? "career"
+                  : "financial"
+              )
+            );
           },
         },
       },
@@ -146,57 +166,6 @@ export const barNegativeData = (
         max: 5,
         title: {
           // text: 'Age',
-        },
-      },
-      tooltip: {
-        custom: function ({ series, seriesIndex, dataPointIndex, w, value }) {
-          if (mobile) {
-            if (dataPointIndex === 0) {
-              setResponsePopup("purpose");
-            } else if (dataPointIndex === 2) {
-              setResponsePopup("career");
-            } else if (dataPointIndex === 3) {
-              setResponsePopup("financial");
-            } else if (dataPointIndex === 1) {
-              setResponsePopup("emotional");
-            }
-          }
-          const emotionalData =
-            responseExplain &&
-            responseExplain[
-              dataPointIndex === 0
-                ? "purpose"
-                : dataPointIndex === 2
-                ? "career"
-                : dataPointIndex === 3
-                ? "financial"
-                : "emotional"
-            ]
-              ? responseExplain[
-                  dataPointIndex === 0
-                    ? "purpose"
-                    : dataPointIndex === 2
-                    ? "career"
-                    : dataPointIndex === 3
-                    ? "financial"
-                    : "emotional"
-                ]
-              : [];
-          const emotionalContent = emotionalData
-            .map((item, index) => `<p>${index + 1}- ${item.txt}</p>`)
-            .join("");
-
-          return !mobile
-            ? emotionalContent.length > 0
-              ? `<div style="direction: rtl; display: grid; gap: 8px; font-size: 14px; padding: 10px" margin: 0>` +
-                `<div style="grid-column: span 6 / span 6;">` +
-                `<p style="margin: 0;">` +
-                emotionalContent +
-                `</p>` +
-                `</div>` +
-                `</div>`
-              : `<p>برای نمایش مشاوره بیشتر تمامی سوالات را پاسخ دهید</p>`
-            : "";
         },
       },
       title: {
@@ -278,7 +247,7 @@ export const radarData = (chanceHistory, questionCounter) => {
       title: {
         text: "نمودار وابستگی های شما",
         floating: true,
-        offsetY: 290,
+        offsetY: mobile ? 290 : 270,
         align: "center",
         style: {
           color: "#303030",
