@@ -20,16 +20,21 @@ export default function XaiPopup({ responseExplain }) {
       </div>
       <div className={styles.progressInfoBox}>
         <div className={styles.items}>
-          {responseExplain[charts.name]
-            ?.map((item) => ({ txt: item.txt, good_influence: item.good_influence }))
-            ?.map((el, index) =>
-              el.txt.includes("جنسیت") ? null : (
+          {responseExplain[charts.name]?.length > 0 ? (
+            responseExplain[charts.name]
+              ?.filter((item) => !item.txt.includes("جنسیت"))
+              .map((el, index) => (
                 <div key={index} className={styles.item}>
                   {el.good_influence ? <img src="/CaretUp.svg" /> : <img src="/CaretDown.svg" />}
                   <p>{el.txt}.</p>
                 </div>
-              )
-            )}
+              ))
+          ) : (
+            <div className={styles.item}>
+              <div></div>
+              <p>برای مشاوره به سوالات بیشتری پاسخ دهید</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
