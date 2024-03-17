@@ -65,7 +65,9 @@ export default function MainSlider({ name, setName }) {
       : "";
   }
 
-  const handleChange = (value, type) => {
+  const handleChange = (value, type, key) => {
+    console.log(value);
+    console.log(type);
     if (type === "number") {
       setAnswer(Number(value));
     } else if (type === "radio_multi") {
@@ -76,10 +78,24 @@ export default function MainSlider({ name, setName }) {
       } else {
         setAnswer((prev) => [...(prev || []), value]);
       }
+    } else if (type === "radio_unique") {
+      console.log(key)
+      setAnswer((prev) => {
+        const updatedAnswer = [...(prev || [])];
+        const existingIndex = updatedAnswer.findIndex(item => item.hasOwnProperty(key));
+        if (existingIndex !== -1) {
+          updatedAnswer[existingIndex] = { [key]: value };
+        } else {
+          updatedAnswer.push({ [key]: value });
+        }
+        return updatedAnswer;
+      });
     } else {
       setAnswer(value);
     }
   };
+
+  console.log(answer);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -240,6 +256,8 @@ export default function MainSlider({ name, setName }) {
   const handleSetActiveChart = (value) => {
     setChartSelected(value);
   };
+
+  console.log(predictData);
 
   return (
     <div key={slider.name} className={`${styles.mainSliderPage} `}>

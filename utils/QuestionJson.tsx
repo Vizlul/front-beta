@@ -10,101 +10,6 @@ export const questions: any = [
     ],
   },
   {
-    question: "کدام کشور را برای انگشت‌نگاری انتخاب می‌کنید؟",
-    answer: {
-      value_fa: ["ترکیه", "ارمنستان", "گرجستان", "امارات", "سایر"],
-      value_en: ["TURKEY", "ARMENIA", "GEORGIA", "UAE", "OTHER"],
-    },
-    question_value: "country_where_applying_country",
-    type: "radio",
-    options: [
-      { value: "TURKEY", label: "ترکیه" },
-      { value: "ARMENIA", label: "ارمنستان" },
-      { value: "GEORGIA", label: "گرجستان" },
-      { value: "UAE", label: "امارات" },
-      { value: "OTHER", label: "سایر" },
-    ],
-  },
-  {
-    question: "وضعیت اقامت شما در کشور مدنظرتان برای انگشت‌ نگاری چگونه است؟",
-    answer: {
-      value_fa: ["ملاقات کننده", "شهروند/اقامت دائم", "سایر"],
-      value_en: ["visitor", "citizen", "OTHER"],
-    },
-    question_value: "country_where_applying_status",
-    type: "radio",
-    options: [
-      { value: "visitor", label: "ملاقات کننده" },
-      { value: "citizen", label: "شهروند/اقامت دائم" },
-      { value: "OTHER", label: "سایر" },
-    ],
-  },
-  {
-    question: "آیا تا به حال ازدواج کرده‌اید؟",
-    answer: { value_fa: ["بله", "خیر"], value_en: ["true", "false"] },
-    question_value: "previous_marriage_indicator",
-    type: "radio",
-    options: [
-      { value: "true", label: "بله" },
-      { value: "false", label: "خیر" },
-    ],
-  },
-  {
-    question: "هدف شما برای اخذ ویزا چیست؟ ",
-    answer: {
-      value_fa: ["ملاقات خانواده درجه یک", "ملاقات با سایر اقوام و دوستان", "توریسم", "سایر"],
-      value_en: ["family visit", "visit", "tourism", "other"],
-    },
-    question_value: "purpose_of_visit",
-    type: "radio",
-    options: [
-      { value: "family visit", label: "ملاقات خانواده درجه یک" },
-      { value: "visit", label: "ملاقات با سایر اقوام و دوستان" },
-      { value: "tourism", label: "توریسم" },
-      { value: "other", label: "سایر" },
-    ],
-  },
-  {
-    question: "بودجه سفر (مقدار پول همراه برای سفر) شما چقدر است؟",
-    answer: { value_fa: [1000, 10000] },
-    question_value: "funds",
-    type: "number",
-    step: 1000,
-    options: [
-      { value: 1000, label: 1000 },
-      { value: 10000, label: 10000 },
-    ],
-  },
-  {
-    question: "نوع ارتباط شما با شخص یا سازمانی که بابت آن به سفر می‌روید؟ ",
-    answer: {
-      value_fa: ["اقوام درجه یک", "اقوام درجه دو", "دوستان", "هتل", "سایر"],
-      value_en: ["f1", "f2", "friend", "hotel", "ukn"],
-    },
-    question_value: "contact_relation_to_me",
-    type: "radio",
-    options: [
-      { value: "f1", label: "اقوام درجه یک" },
-      { value: "f2", label: "اقوام درجه دو" },
-      { value: "friend", label: "دوستان" },
-      { value: "hotel", label: "هتل" },
-      { value: "ukn", label: "سایر" },
-    ],
-  },
-  // {
-  //   question: "نوع ارتباط شما با شخص یا سازمانی که بابت آن به سفر می‌روید. (اگر دو هدف هستند) (اگر دو هدف هست)؟",
-  //   answer: { value_fa: ["اقوام درجه یک", "اقوام درجه دو", "دوستان", "هتل", "سایر"], value_en: ["f1", "f2", "friend", "hotel", "ukn"] },
-  //   question_value: "contact_relation_to_me2",
-  //   type: "radio",
-  //   options: [
-  //     { "value": "f1", "label": "اقوام درجه یک" },
-  //     { "value": "f2", "label": "اقوام درجه دو" },
-  //     { "value": "friend", "label": "دوستان" },
-  //     { "value": "hotel", "label": "هتل" },
-  //     { "value": "ukn", "label": "سایر" }
-  //   ]
-  // },
-  {
     question: "از مدرک تحصیلیت برام بگو؟ 🔭",
     answer: {
       value_fa: ["بدون تحصیلات", "کارورزی", "دیپلم", "کارشناسی", "ارشد", "دکترا"],
@@ -139,29 +44,9 @@ export const questions: any = [
     ],
   },
   {
-    question: "آیا تا به حال بیشتر از زمان قانونی در کشوری اقامت داشته اید؟",
-    answer: { value_fa: ["بله", "خیر"], value_en: ["true", "false"] },
-    question_value: "no_authorized_stay",
-    type: "radio",
-    options: [
-      { value: "true", label: "بله" },
-      { value: "false", label: "خیر" },
-    ],
-  },
-  {
     question: "تا حالا از جایی دیپورت شدی؟ 💀",
     answer: { value_fa: ["بله", "خیر"], value_en: ["true", "false"] },
     question_value: "refused_entry_or_deport",
-    type: "radio",
-    options: [
-      { value: "true", label: "بله" },
-      { value: "false", label: "خیر" },
-    ],
-  },
-  {
-    question: "آیا تا به‌حال برای اخذ ویزا اقدام کرده‌اید؟ ",
-    answer: { value_fa: ["بله", "خیر"], value_en: ["true", "false"] },
-    question_value: "previous_apply",
     type: "radio",
     options: [
       { value: "true", label: "بله" },
@@ -177,17 +62,6 @@ export const questions: any = [
     options: [
       { value: 18, label: 18 },
       { value: 50, label: 50 },
-    ],
-  },
-  {
-    question: "در کشور مدنظرتان برای انگشت‌نگاری، چه‌قدر اقامت می‌کنید؟  (روز)",
-    answer: { value_fa: [0, 30] },
-    question_value: "country_where_applying_period",
-    type: "number",
-    step: 5,
-    options: [
-      { value: 0, label: 0 },
-      { value: 30, label: 30 },
     ],
   },
   {
@@ -218,50 +92,6 @@ export const questions: any = [
     ],
   },
   {
-    question: "چه مدت زمانی را در رابطه قبلی‌تان متاهل بوده‌اید؟  (اگر مجرد هستید, پاسخ ندهید)",
-    answer: { value_fa: [0, 50] },
-    question_value: "previous_marriage_period",
-    type: "number",
-    step: 5,
-    options: [
-      { value: 0, label: 0 },
-      { value: 50, label: 50 },
-    ],
-  },
-  {
-    question: "درحال‌حاضر پاسپورت شما چه‌قدر اعتبار دارد؟ (1 - 5 ) سال",
-    answer: { value_fa: [1, 5] },
-    question_value: "passport_expiry_date_remaining",
-    type: "number",
-    step: 1,
-    options: [
-      { value: 1, label: 1 },
-      { value: 5, label: 5 },
-    ],
-  },
-  {
-    question: "چه مدت در کشور مقصد اقامت می‌کنید؟ ",
-    answer: { value_fa: [1, 30] },
-    question_value: "how_long_stay_period",
-    type: "number",
-    step: 5,
-    options: [
-      { value: 1, label: 1 },
-      { value: 30, label: 30 },
-    ],
-  },
-  {
-    question: "برای دریافت آخرین مدرک تحصیلی‌تان چند سال تحصیل کرده‌اید؟ ",
-    answer: { value_fa: [0, 10] },
-    question_value: "education_period",
-    type: "number",
-    step: 2,
-    options: [
-      { value: 0, label: 0 },
-      { value: 10, label: 10 },
-    ],
-  },
-  {
     question: "چند سال تو آخرین شغلت، مشغول  به کار بودی؟ 🤔",
     answer: { value_fa: [0, 35] },
     question_value: "occupation_period",
@@ -270,39 +100,6 @@ export const questions: any = [
     options: [
       { value: 0, label: 0 },
       { value: 70, label: 70 },
-    ],
-  },
-  {
-    question: "قبلا در چند کشور سکونت داشته‌اید؟ ",
-    answer: { value_fa: [0, 50] },
-    question_value: "previous_country_of_residence_count",
-    type: "number",
-    step: 5,
-    options: [
-      { value: 0, label: 0 },
-      { value: 50, label: 50 },
-    ],
-  },
-  {
-    question: "چند نفر از خواهران و برادران شما در کشورهای خارجی زندگی می‌کنند؟",
-    answer: { value_fa: [0, 7] },
-    question_value: "sibling_foreigner_count",
-    type: "number",
-    step: 1,
-    options: [
-      { value: 0, label: 0 },
-      { value: 7, label: 7 },
-    ],
-  },
-  {
-    question: "به جز خواهر و برادر، چند نفر از اعضای درجه یک شما در خارج از کشور زندگی می‌کنند؟",
-    answer: { value_fa: [0, 7] },
-    question_value: "child_mother_father_spouse_foreigner_count",
-    type: "number",
-    step: 1,
-    options: [
-      { value: 0, label: 0 },
-      { value: 7, label: 7 },
     ],
   },
   {
@@ -317,17 +114,18 @@ export const questions: any = [
     ],
   },
   {
-    question: "پدر مادر هم میان؟ 👪",
+    question: "چه افرادی را همراه خود می برید؟ 👪",
     answer: {
       value_fa: ["هیچ‌کدام", "پدر و مادر با یکدیگر", "فقط پدر / مادر"],
       value_en: ["0", "1", "2"],
+      key_en: ["parent_accompany", "parent_accompany", "parent_accompany"]
     },
     question_value: "parent_accompany",
-    type: "radio",
+    type: "radio_unique",
     options: [
-      { value: "0", label: "هیچ‌کدام" },
-      { value: "1", label: "پدر و مادر با یکدیگر" },
-      { value: "2", label: "فقط پدر / مادر" },
+      { value: "0", label: "هیچ‌کدام", key: "parent_accompany" },
+      { value: "1", label: "پدر و مادر با یکدیگر", key: "parent_accompany" },
+      { value: "2", label: "فقط پدر / مادر", key: "parent_accompany" },
     ],
   },
   {
@@ -352,17 +150,6 @@ export const questions: any = [
     ],
   },
   {
-    question: "میانگین سن فرزندان‌تان چقدر است؟",
-    answer: { value_fa: [1, 30] },
-    question_value: "child_average_age",
-    type: "number",
-    step: 5,
-    options: [
-      { value: 1, label: 1 },
-      { value: 30, label: 30 },
-    ],
-  },
-  {
     question: "صاحب چند تا فرزندی؟🍼 ",
     answer: { value_fa: [0, 4] },
     question_value: "child_count",
@@ -373,39 +160,6 @@ export const questions: any = [
       { value: 11, label: 11 },
     ],
   },
-  {
-    question: "میانگین سن برادران و خواهران شما چقدر است؟",
-    answer: { value_fa: [0, 50] },
-    question_value: "sibling_average_age",
-    type: "number",
-    step: 10,
-  },
-  {
-    question: "چند خواهر یا برادر دارید؟ ",
-    answer: { value_fa: [0, 7] },
-    question_value: "sibling_count",
-    type: "number",
-    step: 1,
-  },
-  {
-    question: "چه تعداد از اقوام درجه یک شما در خارج از شهر محل اقامت‌تان زندگی می‌کنند؟ ",
-    answer: { value_fa: [0, 11] },
-    question_value: "long_distance_child_sibling_count",
-    type: "number",
-    step: 1,
-    options: [
-      { value: 0, label: 0 },
-      { value: 11, label: 11 },
-    ],
-  },
-  {
-    question: "چه تعداد از اقوام درجه یک شما در خارج از کشور زندگی می‌کنند؟",
-    answer: { value_fa: [0, 11] },
-    question_value: "foreign_living_child_sibling_count",
-    type: "number",
-    step: 1,
-  },
-
   //new
   {
     question: "چقدر میخوای برای هر نفر همراهت سر کیسه رو شل کنی؟ 💰 (100 - 600 دلار)",

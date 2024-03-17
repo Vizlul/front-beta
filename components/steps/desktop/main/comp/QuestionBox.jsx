@@ -39,6 +39,19 @@ export default function QuestionBox({
               {item}
             </button>
           ))
+        ) : questions[currentQuestionIndex].type === "radio_unique" ? (
+          questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
+            <button
+              className={activeButton === index && styles.activeButton}
+              key={index}
+              onClick={() => {
+                handleChange(index, questions[currentQuestionIndex].type, questions[currentQuestionIndex].answer.key_en[index]);
+                setActiveButton(index);
+              }}
+            >
+              {item}
+            </button>
+          ))
         ) : questions[currentQuestionIndex].type === "dropdown" ? (
           <select onChange={(event) => handleChange(event.target.value)}>
             {questions[currentQuestionIndex].answer.value_fa.map((item, index) => (
